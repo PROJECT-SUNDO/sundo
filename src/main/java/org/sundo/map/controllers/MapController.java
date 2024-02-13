@@ -33,9 +33,11 @@ public class MapController {
 		
 		if(mode.equals("map")) {
 			pageTitle = "지도";
-			addCommonScript.add("map");
+			addScript.add("map/map");
+			addCss.add("map/map");
 		}
 		
-		model.addAttribute("addCommonScript", addCommonScript);
+		model.addAttribute("addScript", addScript);
+		model.addAttribute("addCss", addCss);
 	}
 }
