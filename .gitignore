@@ -10,9 +10,9 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-application.*
+application-dev1.*
+application-dev2.*
 logback.*
-persistence.*
 .classpath
 
 # External tool builders
