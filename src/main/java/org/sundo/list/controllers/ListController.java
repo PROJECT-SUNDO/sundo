@@ -14,7 +14,7 @@ public class ListController {
 	
 	@GetMapping
 	public String list(Model model) {
-		return "front/list/list";
+		return "front/list/list";  
 	}
 	
 
