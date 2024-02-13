@@ -1,44 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <!-- <meta name="_csrf" th:content="${_csrf.token}"> -->  <!--csrf 토큰 추가-->
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <meta name="_csrf" th:content="${_csrf.token}"> -->
+    <!--csrf 토큰 추가-->
     <!-- <meta name="_csrf_header" th:content="${_csrf.headerName}"> -->
     <title>
-        <th:block th:if="${pageTitle != null}" th:text="${pageTitle + ' - '}"></th:block>
-        <th:block th:text="#{한강수자원관리플랫폼}"></th:block>
+      <th:block th:if="${pageTitle != null}" th:text="${pageTitle + ' -
+      '}"></th:block> <th:block th:text="#{한강수자원관리플랫폼}"></th:block>
     </title>
 
-   <!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/common/css/style.css)}">
-    <link rel="stylesheet" type="text/css"
-          th:each="cssFile : ${addCommonCss}"
-          th:href="@{/common/css/{file}.css(file=${cssFile})}">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
+    />
+    <link rel="stylesheet" type="text/css" th:href="@{/common/css/style.css}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:each="cssFile : ${addCommonCss}"
+      th:href="@{/common/css/{file}.css(file=${cssFile})}"
+    />
 
-    <link rel="stylesheet" type="text/css" th:href="@{/front/css/style.css}">
-    <link rel="stylesheet" type="text/css"
-          th:each="cssFile : ${addCss}"
-          th:href="@{/front/css/{file}.css(file=${cssFile})}">
+    <link rel="stylesheet" type="text/css" th:href="@{/front/css/style.css}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:each="cssFile : ${addCss}"
+      th:href="@{/front/css/{file}.css(file=${cssFile})}"
+    />
 
     <th:block layout:fragment="addCss"></th:block>
 
-    
     <script th:src="@{/common/js/common.js}"></script>
-    <script th:each="jsFile : ${addCommonScript}"
-            th:src="@{/common/js/{file}.js(file=${jsFile})}"></script>
+    <script
+      th:each="jsFile : ${addCommonScript}"
+      th:src="@{/common/js/{file}.js(file=${jsFile})}"
+    ></script>
 
     <script th:src="@{/front/js/common.js}"></script>
-    <script th:each="jsFile : ${addScript}"
-            th:src="@{/front/js/{file}.js(file=${jsFile})}"></script> -->
-            
+    <script
+      th:each="jsFile : ${addScript}"
+      th:src="@{/front/js/{file}.js(file=${jsFile})}"
+    ></script>
+
     <th:block layout:fragment="addScript"></th:block>
-</head>
-<body>
+
+    <!-- open layers -->
+    <script th:src="@{common/js/map/ol.js}"></script>
+    <link rel="stylesheet" th:href="@{common/css/map/ol.css}" />
+  </head>
+  <body>
     <header th:replace="~{front/outlines/header::common}"></header>
-    <main layout:fragment="content">
-    </main>
+    <main layout:fragment="content"></main>
 
     <iframe name="ifrmProcess" class="dn"></iframe>
-</body>
+  </body>
 </html>
