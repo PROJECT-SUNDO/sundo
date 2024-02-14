@@ -75,8 +75,6 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.viewResolver(thymeleafViewResolver());
 	}
 
-
-
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
