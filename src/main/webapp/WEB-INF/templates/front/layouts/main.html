@@ -50,8 +50,8 @@
     <th:block layout:fragment="addScript"></th:block>
 
     <!-- open layers -->
-    <script th:src="@{front/js/map/ol.js}"></script>
-    <link rel="stylesheet" th:href="@{front/css/map/ol.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/css/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/build/ol.js"></script>
   </head>
   <body>
     <header th:replace="~{front/outlines/header::common}"></header>
