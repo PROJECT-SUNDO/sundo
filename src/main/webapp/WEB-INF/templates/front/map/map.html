@@ -3,7 +3,11 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
-
+	<div class="map_btns">
+		<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
+		<button type="button" class="map_btn" data-map="Satellite" th:text="#{위성지도}"></button>
+	</div>
+	<div id="map" class="map"></div>
 
 </main>
 </html>
