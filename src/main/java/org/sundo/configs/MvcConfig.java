@@ -2,10 +2,13 @@ package org.sundo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -71,8 +74,19 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		registry.viewResolver(thymeleafViewResolver());
 	}
-	
+
 	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource ms = new ResourceBundleMessageSource();
+		ms.setDefaultEncoding("UTF-8");
+		ms.setUseCodeAsDefaultMessage(true);
+		ms.setBasenames("messages.commons", "messages.errors", "messages.validations");
+
+		return ms;
+	}
+
+	@Bean
+	@Profile("default")
 	public static PropertySourcesPlaceholderConfigurer properties() {
 		PropertySourcesPlaceholderConfigurer conf = new PropertySourcesPlaceholderConfigurer();
 		
@@ -81,6 +95,37 @@ public class MvcConfig implements WebMvcConfigurer {
 		return conf;
 		
 	}
+	@Bean
+	@Profile("dev1")
+	public static PropertySourcesPlaceholderConfigurer propertiesDev1() {
+		PropertySourcesPlaceholderConfigurer conf = new PropertySourcesPlaceholderConfigurer();
+		
+		conf.setLocations(new ClassPathResource("application-dev1.properties"));
+		
+		return conf;
+		
+	}
+	@Bean
+	@Profile("dev2")
+	public static PropertySourcesPlaceholderConfigurer propertiesDev2() {
+		PropertySourcesPlaceholderConfigurer conf = new PropertySourcesPlaceholderConfigurer();
+		
+		conf.setLocations(new ClassPathResource("application-dev2.properties"));
+		
+		return conf;
+		
+	}
+	@Bean
+	@Profile("prod")
+	public static PropertySourcesPlaceholderConfigurer propertiesProd() {
+		PropertySourcesPlaceholderConfigurer conf = new PropertySourcesPlaceholderConfigurer();
+		
+		conf.setLocations(new ClassPathResource("application-prod.properties"));
+		
+		return conf;
+		
+	}
+	
 	
 	
 	
