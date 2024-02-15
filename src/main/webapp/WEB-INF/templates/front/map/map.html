@@ -3,11 +3,32 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
-	<div class="map_btns">
-		<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
-		<button type="button" class="map_btn" data-map="Satellite" th:text="#{위성지도}"></button>
+	<div class="flex">
+		<section class="aside">
+			<button type="button" th:text="#{수위}"></button>
+			<button type="button" >
+				<i class="xi-pouring"></i>
+				<span th:text="#{강수량}"></span>
+			</button>
+			<button type="button" th:text="#{유량}"></button>
+			<button type="button">
+				<i class="xi-videocam"></i>
+				<span th:text="#{CCTV}"></span>
+			</button>
+		</section>
+		<section class="map_area">
+			<div class="map_btns">
+				<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
+				<button type="button" class="map_btn" data-map="Satellite" th:text="#{위성지도}"></button>
+				<button type="button" id="all">
+					<span th:text="#{전체}"></span>
+				</button>
+				<button type="button" id="distance">
+					<span th:text="#{거리}"></span>
+				</button>
+			</div>
+			<div id="map" class="map"></div>
+		</section>
 	</div>
-	<div id="map" class="map"></div>
-
 </main>
 </html>

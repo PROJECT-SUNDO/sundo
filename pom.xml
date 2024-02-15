@@ -113,12 +113,12 @@
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
-			<version>5.0.0</version>
+			<version>4.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
-			<version>5.0.0</version>
+			<version>4.4.0</version>
 		</dependency>
 		
 		<!-- 표준프레임워크 실행환경 -->
@@ -364,8 +364,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>surefire-report-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<inherited>true</inherited>
+                <inherited>true</inherited>
                 <reportSets>
                     <reportSet>
                         <reports>
