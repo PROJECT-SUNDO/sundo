@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{front/layouts/main}">
-<main layout:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org">
     <h1>관측소 정보</h1>
     <form action="/search" method="get">
-        <label for="searchQuery">검색:</label>
-        <input type="text" id="searchQuery" name="q" placeholder="검색어를 입력하세요">
+        <h2>검색</h2>
+        <label for="Ocode">관측소 코드 </label>
+        <input type="text" id="Ocode" name="code" placeholder="xxxxxxx">
+        <label for="Oname">관측소명</label>
+        <input type="text" id="Oname" name="code" placeholder="관측소 명을 입력하세요">
+        <label for="Oanaysis">관측변수</label>
+        <input type="text" id="Oanaysis" name="code" placeholder="전체">
         <button type="submit">검색</button>
     </form>
     <table border="1">
