@@ -121,6 +121,4 @@ $RECYCLE.BIN/
 *.lnk
 
 target/
-
 .idea/
-project.iml
