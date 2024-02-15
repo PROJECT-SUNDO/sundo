@@ -2,11 +2,14 @@ package org.sundo.list.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/list")
@@ -36,6 +39,14 @@ public class ListController {
 	@GetMapping("/info/{seq}")
 	public String info(@PathVariable("seq") Long seq, Model model) {
 		return "front/list/info";
+	}
+
+	/**
+	 * 관측소 등록
+	 */
+	@GetMapping("/add/{seq}")
+	public String add(Model model) {
+		return null;
 	}
 
 	/**
@@ -71,6 +82,20 @@ public class ListController {
 	@GetMapping("/setting/{seq}")
 	public String setting(@PathVariable("seq") Long seq, Model model) {
 		return "front/list/setting";
+	}
+
+	/**
+	 * 공통 작업
+	 */
+	public void commonProcess(String mode, Model model) {
+		mode = StringUtils.hasText(mode) ? mode :  "list";
+		String pageTitle = "목록";
+
+		List<String> addCss = new ArrayList<>();
+		List<String> addCommonScript = new ArrayList<>();
+		List<String> addScript = new ArrayList<>();
+
+
 	}
 
 
