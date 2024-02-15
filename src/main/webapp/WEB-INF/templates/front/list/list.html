@@ -1,1 +1,35 @@
-<h1>리스트</h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<h1>관측소 정보</h1>
+<form action="/search" method="get">
+    <label for="searchQuery">검색:</label>
+    <input type="text" id="searchQuery" name="q" placeholder="검색어를 입력하세요">
+    <button type="submit">검색</button>
+</form>
+<table border="1">
+    <tr>
+        <th width="50">연번</th>
+        <th width="50">관측소 명</th>
+        <th width="50">관측소 유형</th>
+        <th width="50">관측소 코드</th>
+        <th width="50">관측 정보</th>
+        <th width="50">수정</th>
+        <th width="50">삭제</th>
+        <th width="50">환경설정</th>
+    </tr>
+    <!-- 조회 결과가 존재 한다면 리스트 돌리기-->
+    <tr>
+        <th width="50"></th>
+        <th width="50"></th>
+        <th width="50"></th>
+        <th width="50"></th>
+        <th width="50"></th>
+        <th width="50"></th>
+        <th width="50"></th>
+        <th width="50"></th>
+    </tr>
+
+</table>
+
+</main>
+</html>
