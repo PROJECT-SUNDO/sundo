@@ -30,11 +30,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		})
 	});
 
-	/* 지도 축적 표시 */
-	const scaleLine = new ol.control.ScaleLine();
-    map.addControl(scaleLine);
-
-	/*  지도 표시 E */
 	/* 거리 측정 S */
     /* 지도에 선 긋기 */
     lineSource = new ol.source.Vector();
@@ -107,16 +102,19 @@ window.addEventListener("DOMContentLoaded", function(){
 			url: 'http://3.39.34.98:8080/geoserver/wms',
 			params: {
 				'VERSION' : '1.1.0',
-				'LAYERS' : 'Hangang River',
-				'BBOX' : [157399.453125,377790.5,271335.40625,526259.5],
+				'LAYERS' : 'HangangRiver',
+				'BBOX' : [156556.1947859727,277468.6485166226,272050.4658484871,426497.85228758736],
 				'SRS' : 'EPSG:5174',
 				'FORMAT' : 'image/png'
 			},
+
+
 			serverType: 'geoserver',
+
 		}),
 	});
 
-    river.setOpacity(0.3);
+    river.setOpacity(0.5);
 	map.addLayer(river);
 	/* geoserver - 한강하천, 한강수계 E */
 
@@ -131,6 +129,7 @@ window.addEventListener("DOMContentLoaded", function(){
 
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
 });
+
 
 function addDraw(isDraw, map, lineSource, lineVector){
     const draw = new ol.interaction.Draw({
