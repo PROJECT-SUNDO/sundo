@@ -34,6 +34,7 @@ public class MapController {
 		if(mode.equals("map")) {
 			pageTitle = "지도";
 			addScript.add("map/map");
+			addScript.add("map/aside");
 			addCss.add("map/map");
 		}
 		
