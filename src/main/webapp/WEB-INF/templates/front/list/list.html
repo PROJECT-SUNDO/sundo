@@ -1,1 +1,18 @@
-<h1>리스트</h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+<main layout:fragment="content">
+    <h1>리스트</h1>
+
+    <button type="button" id="detail" th:text="#{관측소명}"></button>
+
+
+</main>
+
+<script>
+    const { popup } = commonLib;
+    const detail = document.getElementById("detail");
+    detail.onclick = () => popup.open('/list/detail', 450, 450);
+</script>
+</html>
