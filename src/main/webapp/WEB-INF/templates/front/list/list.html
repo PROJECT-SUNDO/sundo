@@ -32,10 +32,10 @@
 
             <div class="divTableRow">
                 <div th:text="${status.count}" class="divTableCell">cell1_1</div>
-                <div th:text="*{obsnm}" class="divTableCell">cell2_1</div>
-                <div th:text="*{obstype}" class="divTableCell">cell3_1</div>
-                <div th:text="*{obscd}" class="divTableCell">cell4_1</div>
-                <div class="divTableCell">
+                <div th:text="*{obsnm}" class="divTableCell"></div>
+                <div class="divTableCell"><span th:text="*{관측소유형.title}"></span><input type="hidden" name="관측소유형" th:value="*{관측유형}" th:id="*{'관측소유형_' + status.count}"></div>
+                <div class="divTableCell"><span th:text="*{obscd}"></span><input type="hidden" name="obscd" th:value="*{obscd}" th:id="*{'obscd_' + status.count}"></div>
+                <div class="divTableCell" th:data-obscd-id="*{'obscd_' + status.count}" th:data-관측소유형-id="*{'관측소유형_' + status.count}">
                     <i class="xi-search"></i>
                 </div>
                 <div class="divTableCell">
@@ -51,6 +51,7 @@
             <th:block th:unless="*{items != null}" th:text="#{데이터가 없습니다.}"></th:block>
         </div>
     </div>
+    <th:block th:replace="~{common/_pagination::pagination}"></th:block>
 </main>
 
 <!--<script>

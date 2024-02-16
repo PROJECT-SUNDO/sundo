@@ -1,3 +1,4 @@
+/*
 package org.sundo.wamis.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,18 +10,12 @@ import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
 
 import org.sundo.wamis.entities.*;
-import org.sundo.wamis.repositories.RfObservatoryRepository;
 import org.sundo.wamis.repositories.WaterLevelFlowRepository;
-import org.sundo.wamis.repositories.WlfObservatoryRepository;
 import org.sundo.wamis.repositories.PrecipitationRepository;
 
 
 import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -34,10 +29,12 @@ public class WamisApiService {
     private final PrecipitationRepository precipitationRepository;
 
 
-    /**
+    */
+/**
      * 수위 + 유량 관측소 목록 조회
      *
-     */
+     *//*
+
     public List<WlfObservatory> getWlfObservatories() {
         String url = ApiURL.WLF_OBSERVATORY_LIST;
 
@@ -58,11 +55,13 @@ public class WamisApiService {
     }
 
 
-    /**
+    */
+/**
      * 강수량 관측소 목록 조회
      *
-     */
-    public List<RfObservatory> getRfObservatories() {
+     *//*
+
+    public List<RfObservatory> getRfObservatories(String string) {
         String url = ApiURL.RF_OBSERVATORY_LIST;
 
         String data = restTemplate.getForObject(URI.create(url), String.class);
@@ -82,10 +81,12 @@ public class WamisApiService {
     }
 
 
-    /**
+    */
+/**
      * 수위 + 유량 최근 1건 출력
      * @param obscd : 관측소 코드
-     */
+     *//*
+
     public void updateWaterLevelFlow(String obscd) {
         String url = ApiURL.WATER_LEVEL_FLOW + "/" + obscd +".json";
         String data = restTemplate.getForObject(URI.create(url), String.class);
@@ -108,3 +109,4 @@ public class WamisApiService {
 
 
 }
+*/
