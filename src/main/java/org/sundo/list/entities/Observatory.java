@@ -1,3 +1,4 @@
+/*
 package org.sundo.list.entities;
 
 
@@ -11,9 +12,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+*/
 /**
  * 수정 필요
- */
+ *//*
+
 @Entity
 @Data
 @Builder
@@ -48,3 +51,4 @@ public class Observatory {
 	
 
 }
+*/
