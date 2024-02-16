@@ -1,1 +1,47 @@
-<h1>리스트</h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <h1>관측소 정보</h1>
+    <form action="/search" method="get">
+        <h2>검색</h2>
+        <label for="Ocode">관측소 코드 </label>
+        <input type="text" id="Ocode" name="code" placeholder="xxxxxxx">
+        <label for="Oname">관측소명</label>
+        <input type="text" id="Oname" name="code" placeholder="관측소 명을 입력하세요">
+        <label for="Oanaysis">관측변수</label>
+        <input type="text" id="Oanaysis" name="code" placeholder="전체">
+        <button type="submit">검색</button>
+    </form>
+    <table border="1">
+        <tr>
+            <th width="50">연번</th>
+            <th width="50">관측소 명</th>
+            <th width="50">관측소 유형</th>
+            <th width="50">관측소 코드</th>
+            <th width="50">관측 정보</th>
+            <th width="50">수정</th>
+            <th width="50">삭제</th>
+            <th width="50">환경설정</th>
+        </tr>
+        <!-- 조회 결과가 존재 한다면 리스트 돌리기-->
+        <tr>
+            <th width="50"></th>
+            <th width="50"></th>
+            <th width="50"></th>
+            <th width="50"></th>
+            <th width="50"></th>
+            <th width="50"></th>
+            <th width="50"></th>
+            <th width="50"></th>
+        </tr>
+
+    </table>
+
+
+</main>
+
+<!--<script>
+    const { popup } = commonLib;
+    const detail = document.getElementById("detail");
+    detail.onclick = () => popup.open('/list/detail', 450, 450);
+</script>-->
+</html>

@@ -1,3 +1,4 @@
+/*
 package org.sundo.list.entities;
 
 
@@ -10,6 +11,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+*/
+/**
+ * 수정 필요
+ *//*
 
 @Entity
 @Data
@@ -29,7 +35,7 @@ public class Observatory {
 	
 	private String org; // 운영기관
 	
-	private String type; // 수위, 강수량, 유량, cctv
+	private String type; // 관측 유형 (수위, 강수량, 유량, cctv)
 	
 	private boolean active; // 사용여부
 	
@@ -45,3 +51,4 @@ public class Observatory {
 	
 
 }
+*/
