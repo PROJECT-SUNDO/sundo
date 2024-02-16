@@ -21,3 +21,9 @@
     background: var(--main-color);
     width: 100px;
 }
+
+.ol-tooltip-measure{
+    color: #222;
+    font-weight: 700;
+    font-size: 15px;
+}
