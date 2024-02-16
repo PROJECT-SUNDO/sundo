@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RfObservatory {
+public class FlwObservatory {
     @Id
     @Column(length=10)
     private String obscd; // 관측소 코드
@@ -31,16 +31,16 @@ public class RfObservatory {
     private String obstype; // enum
 
     @Column(length=40)
-    private String clsyn; // 운영여부
-
-    @Column(length=40)
-    private String obsknd; // 관측방법
-
-    @Column(length=40)
     private String sbsncd; // 표준유역코드
 
     @Column(length=40)
     private String mngorg; // 관할기관
+
+    @Column(length=40)
+    private String minyear; // 자료보유기간-시작
+
+    @Column(length=40)
+    private String maxyear; // 자료보유기간-종료
 
     // 10분
     @Column(length = 20)

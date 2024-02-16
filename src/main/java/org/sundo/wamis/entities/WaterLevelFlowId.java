@@ -1,4 +1,3 @@
-/*
 package org.sundo.wamis.entities;
 
 import lombok.AllArgsConstructor;
@@ -8,11 +7,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@EqualsAndHashCode
+/*@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class WaterFlowLevelId implements Serializable {
+public class WaterLevelFlowId implements Serializable {
     private String obscd;
-    private LocalDateTime ymdhi;
-}
-*/
+    private String ymdhm;
+}*/
