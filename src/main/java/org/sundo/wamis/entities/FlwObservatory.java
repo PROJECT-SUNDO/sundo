@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FlwObservatory {
+public class FlwObservatory extends Observatory{
     @Id
     @Column(length=10)
     private String obscd; // 관측소 코드
