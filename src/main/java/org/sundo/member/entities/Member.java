@@ -1,3 +1,4 @@
+/*
 package org.sundo.member.entities;
 
 import javax.persistence.*;
@@ -13,3 +14,4 @@ public class Member {
 	@Column(length=40, unique=true)
 	private String userId;
 }
+*/

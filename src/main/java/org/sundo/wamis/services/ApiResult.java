@@ -4,8 +4,8 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
+/*@Data
 public class ApiResult {
-    private String code;
-    private String msg;
-}
+    private String rel;
+    private String href;
+}*/
