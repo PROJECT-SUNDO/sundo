@@ -6,6 +6,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
+import org.sundo.common.ListData;
+import org.sundo.list.service.ListInfoService;
+import org.sundo.wamis.entities.Observatory;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -15,12 +18,18 @@ import java.util.List;
 @RequestMapping("/list")
 @RequiredArgsConstructor
 public class ListController {
+
+	private final ListInfoService listInfoService;
 	
 	@GetMapping
-	public String list(@ModelAttribute RequestObservatory form, Model model) {
+	public String list(@ModelAttribute ListDataSearch search, Model model) {
 		commonProcess("list", model);
 
-		return "front/list/list";  
+		ListData<Observatory> data = listInfoService.getList(search);
+		model.addAttribute("items",data.getItems());
+		model.addAttribute("pagination", data.getPagination());
+
+		return "front/list/list";
 	}
 
 	/**

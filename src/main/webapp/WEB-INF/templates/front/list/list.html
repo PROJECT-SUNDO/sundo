@@ -15,7 +15,7 @@
         <button type="submit">검색</button>
     </form>
 
-    <div class="divTable minimalistBlack" th:object="${RequestObservatory}" th:each="item : ${}">
+    <div class="divTable minimalistBlack" th:object="${RequestObservatory}">
         <div class="divTableHeading">
             <div class="divTableRow">
                 <div th:text="#{연번}" class="divTableHead">head1</div>
@@ -28,18 +28,27 @@
                 <div th:text="#{환경설정}" class="divTableHead">head4</div>
             </div>
         </div>
-        <div class="divTableBody">
-            <div class="divTableRow">
-                <div class="divTableCell">cell1_1</div>
-                <div class="divTableCell">cell2_1</div>
-                <div class="divTableCell">cell3_1</div>
-                <div class="divTableCell">cell4_1</div>
-                <div class="divTableCell">cell5_1</div>
-                <div class="divTableCell">cell6_1</div>
-                <div class="divTableCell">cell7_1</div>
-                <div class="divTableCell">cell8_1</div>
-            </div>
+        <div class="divTableBody" th:each="item, status : ${items}" th:if="*{items != null}">
 
+            <div class="divTableRow">
+                <div th:text="${status.count}" class="divTableCell">cell1_1</div>
+                <div th:text="*{obsnm}" class="divTableCell">cell2_1</div>
+                <div th:text="*{obstype}" class="divTableCell">cell3_1</div>
+                <div th:text="*{obscd}" class="divTableCell">cell4_1</div>
+                <div class="divTableCell">
+                    <i class="xi-search"></i>
+                </div>
+                <div class="divTableCell">
+                    <i class="xi-pen"></i>
+                </div>
+                <div class="divTableCell">
+                    <i class="xi-trash"></i>
+                </div>
+                <div class="divTableCell">
+                    <i class="xi-cog"></i>
+                </div>
+            </div>
+            <th:block th:unless="*{items != null}" th:text="#{데이터가 없습니다.}"></th:block>
         </div>
     </div>
 </main>
