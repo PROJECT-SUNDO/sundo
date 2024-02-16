@@ -6,12 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.sundo.configs.DbConfig;
 import org.sundo.wamis.constants.ApiURL;
-import org.sundo.wamis.entities.Observatory;
-import org.sundo.wamis.entities.WaterFlowLevel;
-import org.sundo.wamis.entities.WaterLevel;
+import org.sundo.wamis.entities.*;
 import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.repositories.PrecipitationRepository;
 import org.sundo.wamis.repositories.WaterFlowLevelRepository;
 import org.sundo.wamis.repositories.WaterLevelRepository;
 
@@ -28,6 +26,7 @@ public class WamisApiService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final ObservatoryRepository observatoryRepository;
+    private final PrecipitationRepository precipitationRepository;
     private final WaterLevelRepository waterLevelRepository;
     private final WaterFlowLevelRepository waterFlowLevelRepository;
 
@@ -60,6 +59,21 @@ public class WamisApiService {
         return null;
     }
 
+    public void updatePrecipitation(String obscd) {
+        String url = ApiURL.PRECIPITATION+"?obscd=" + obscd;
+        String data = restTemplate.getForObject(URI.create(url), String.class);
+
+        try {
+            ApiResultList<Precipitation> result= objectMapper.readValue(data,new TypeReference<ApiResultList<Precipitation>>() {});
+
+            List<Precipitation> items = result.getList();
+            items.forEach(item -> item.setObscd(obscd));
+            precipitationRepository.saveAllAndFlush(items);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();;
+        }
+    }
 
     /**
      * 수위 시자료

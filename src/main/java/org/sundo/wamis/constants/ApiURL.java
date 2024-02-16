@@ -11,6 +11,9 @@ public class ApiURL {
     // 유량 관측소 목록 API 주소
     public static final String FLW_OBSERVATORY_LIST = "http://www.wamis.go.kr:8080/wamis/openapi/wkw/flw_dubobsif";
 
+    // 강수량 조회 API 주소
+    public static final String PRECIPITATION = "http://www.wamis.go.kr:8080/wamis/openapi/wkw/rf_hrdata";
+
     // 수위 조회 API 주소
     public static final String WATER_LEVEL = "http://www.wamis.go.kr:8080/wamis/openapi/wkw/wl_hrdata";
 
