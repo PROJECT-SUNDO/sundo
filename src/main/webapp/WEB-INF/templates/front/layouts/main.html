@@ -36,6 +36,7 @@
     <th:block layout:fragment="addCss"></th:block>
 
     <script th:src="@{/common/js/common.js}"></script>
+    <script th:src="@{/common/js/layer.js}"></script>
     <script
       th:each="jsFile : ${addCommonScript}"
       th:src="@{/common/js/{file}.js(file=${jsFile})}"
