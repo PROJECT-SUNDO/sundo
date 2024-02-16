@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class ApiResultList<T> {
-    private Object[] links;
-    private List<T> content;
+    private ApiResult result;
+    private int count;
+    private List<T> list;
 }

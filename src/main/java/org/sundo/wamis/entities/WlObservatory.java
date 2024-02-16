@@ -1,5 +1,6 @@
 package org.sundo.wamis.entities;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -9,14 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 /**
- * 강수량 관측소
+ * 수위 관측소
  */
-
 
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RfObservatory {
+public class WlObservatory {
     @Id
     @Column(length=10)
     private String obscd; // 관측소 코드
@@ -50,5 +50,9 @@ public class RfObservatory {
     @Transient
     private boolean active;
 
-}
 
+
+
+
+
+}

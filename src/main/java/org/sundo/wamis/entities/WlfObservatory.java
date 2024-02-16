@@ -1,3 +1,4 @@
+/*
 package org.sundo.wamis.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -5,9 +6,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+*/
 /**
  * 수위 + 유량 관측소
- */
+ *//*
+
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,6 +18,9 @@ public class WlfObservatory {
     @Id
     @Column(length = 10)
     private String wlobscd; // 관측소 코드
+
+    @Column
+    private boolean type; // 수위+유량 모두 존재 -> 1, 수위만 존재 -> 0
 
     @Column(length = 40)
     private String obsnm; // 관측소명
@@ -58,8 +64,10 @@ public class WlfObservatory {
     private String fstnyn; // 특보지점여부
 
     // api에 없지만 필요
+*/
 /*    @Column(length=40)
-    private String obsknd; // 관측방법*/
+    private String obsknd; // 관측방법*//*
+
 
     // 사용 여부
     @Transient
@@ -68,3 +76,4 @@ public class WlfObservatory {
 
 }
 
+*/

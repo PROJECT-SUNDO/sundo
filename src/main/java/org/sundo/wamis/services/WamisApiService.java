@@ -9,18 +9,13 @@ import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
 
 import org.sundo.wamis.entities.*;
+import org.sundo.wamis.repositories.FlwObservatoryRepository;
 import org.sundo.wamis.repositories.RfObservatoryRepository;
-import org.sundo.wamis.repositories.WaterLevelFlowRepository;
-import org.sundo.wamis.repositories.WlfObservatoryRepository;
-import org.sundo.wamis.repositories.PrecipitationRepository;
+import org.sundo.wamis.repositories.WlObservatoryRepository;
 
 
 import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -28,27 +23,47 @@ public class WamisApiService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    private final WlfObservatoryRepository wlfObservatoryRepository; // 수위 + 유량 관측소
     private final RfObservatoryRepository rfObservatoryRepository; // 강수량 관측소
-    private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량
-    private final PrecipitationRepository precipitationRepository;
-
+    private final WlObservatoryRepository wlObservatoryRepository; // 수위 관측소
+    private final FlwObservatoryRepository flwObservatoryRepository; // 유량 관측소
 
     /**
-     * 수위 + 유량 관측소 목록 조회
+     * 수위 관측소 목록
      *
      */
-    public List<WlfObservatory> getWlfObservatories() {
-        String url = ApiURL.WLF_OBSERVATORY_LIST;
+    public List<WlObservatory> getWlObservatories() {
+        String url = ApiURL.WL_OBSERVATORY_LIST;
+
+        String data = restTemplate.getForObject(URI.create(url), String.class);
+        try {
+            ApiResultList<WlObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<WlObservatory>>() {
+            });
+            List<WlObservatory> items = result.getList();
+
+            wlObservatoryRepository.saveAllAndFlush(items);
+
+            return items;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 유량 관측소 목록
+     *
+     */
+    public List<FlwObservatory> getFlwObservatories() {
+        String url = ApiURL.FLW_OBSERVATORY_LIST;
 
 
         String data = restTemplate.getForObject(URI.create(url), String.class);
         try {
-            ApiResultList<WlfObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<WlfObservatory>>() {
+            ApiResultList<FlwObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<FlwObservatory>>() {
             });
-            List<WlfObservatory> items = result.getContent();
+            List<FlwObservatory> items = result.getList();
 
-            wlfObservatoryRepository.saveAllAndFlush(items);
+            flwObservatoryRepository.saveAllAndFlush(items);
 
             return items;
         } catch (JsonProcessingException e) {
@@ -59,7 +74,7 @@ public class WamisApiService {
 
 
     /**
-     * 강수량 관측소 목록 조회
+     * 강수량 관측소 목록
      *
      */
     public List<RfObservatory> getRfObservatories() {
@@ -69,7 +84,7 @@ public class WamisApiService {
         try {
             ApiResultList<RfObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<RfObservatory>>() {
             });
-            List<RfObservatory> items = result.getContent();
+            List<RfObservatory> items = result.getList();
             items.forEach(System.out::println);
 
             rfObservatoryRepository.saveAllAndFlush(items);
@@ -82,10 +97,10 @@ public class WamisApiService {
     }
 
 
-    /**
+/*    *//**
      * 수위 + 유량 최근 1건 출력
      * @param obscd : 관측소 코드
-     */
+     *//*
     public void updateWaterLevelFlow(String obscd) {
         String url = ApiURL.WATER_LEVEL_FLOW + "/" + obscd +".json";
         String data = restTemplate.getForObject(URI.create(url), String.class);
@@ -103,7 +118,7 @@ public class WamisApiService {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
 
 
