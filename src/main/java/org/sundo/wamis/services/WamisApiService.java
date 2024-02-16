@@ -1,4 +1,3 @@
-/*
 package org.sundo.wamis.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,8 +9,9 @@ import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
 
 import org.sundo.wamis.entities.*;
-import org.sundo.wamis.repositories.WaterLevelFlowRepository;
-import org.sundo.wamis.repositories.PrecipitationRepository;
+import org.sundo.wamis.repositories.FlwObservatoryRepository;
+import org.sundo.wamis.repositories.RfObservatoryRepository;
+import org.sundo.wamis.repositories.WlObservatoryRepository;
 
 
 import java.net.URI;
@@ -23,18 +23,36 @@ public class WamisApiService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    private final WlfObservatoryRepository wlfObservatoryRepository; // 수위 + 유량 관측소
     private final RfObservatoryRepository rfObservatoryRepository; // 강수량 관측소
-    private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량
-    private final PrecipitationRepository precipitationRepository;
+    private final WlObservatoryRepository wlObservatoryRepository; // 수위 관측소
+    private final FlwObservatoryRepository flwObservatoryRepository; // 유량 관측소
 
+    /**
+     * 수위 관측소 목록
+     *
+     */
+    public List<WlObservatory> getWlObservatories() {
+        String url = ApiURL.WL_OBSERVATORY_LIST;
 
-    */
-/**
+        String data = restTemplate.getForObject(URI.create(url), String.class);
+        try {
+            ApiResultList<WlObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<WlObservatory>>() {
+            });
+            List<WlObservatory> items = result.getList();
+
+            wlObservatoryRepository.saveAllAndFlush(items);
+
+            return items;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * 수위 + 유량 관측소 목록 조회
      *
-     *//*
-
+     */
     public List<WlfObservatory> getWlfObservatories() {
         String url = ApiURL.WLF_OBSERVATORY_LIST;
 
@@ -55,13 +73,11 @@ public class WamisApiService {
     }
 
 
-    */
-/**
+    /**
      * 강수량 관측소 목록 조회
      *
-     *//*
-
-    public List<RfObservatory> getRfObservatories(String string) {
+     */
+    public List<RfObservatory> getRfObservatories() {
         String url = ApiURL.RF_OBSERVATORY_LIST;
 
         String data = restTemplate.getForObject(URI.create(url), String.class);
@@ -81,12 +97,10 @@ public class WamisApiService {
     }
 
 
-    */
-/**
+    /**
      * 수위 + 유량 최근 1건 출력
      * @param obscd : 관측소 코드
-     *//*
-
+     */
     public void updateWaterLevelFlow(String obscd) {
         String url = ApiURL.WATER_LEVEL_FLOW + "/" + obscd +".json";
         String data = restTemplate.getForObject(URI.create(url), String.class);
@@ -109,4 +123,3 @@ public class WamisApiService {
 
 
 }
-*/
