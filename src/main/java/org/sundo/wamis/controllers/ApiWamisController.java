@@ -13,13 +13,10 @@ public class ApiWamisController {
     private final WamisApiService apiService;
     @GetMapping("/test")
     public void test() {
-//        apiService.getObservatories();
-//        apiService.getObservatories("rf");
-//        apiService.getObservatories("wl");
-//        apiService.getObservatories("flw");
-//        apiService.updateWaterLevel("1001602");
+//        apiService.getRfObservatories();
+//        apiService.getWlfObservatories();
 //        apiService.updatePrecipitation("10011100");
-        apiService.updateWaterFlowLevel("1001670");
+        apiService.updateWaterLevelFlow("1018683");
 
     }
 

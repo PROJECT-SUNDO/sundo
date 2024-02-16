@@ -1,3 +1,4 @@
+/*
 package org.sundo.wamis.entities;
 
 import lombok.AllArgsConstructor;
@@ -14,3 +15,4 @@ public class WaterFlowLevelId implements Serializable {
     private String obscd;
     private LocalDateTime ymdhi;
 }
+*/
