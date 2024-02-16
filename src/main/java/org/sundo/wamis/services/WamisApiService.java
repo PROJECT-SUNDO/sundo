@@ -6,14 +6,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.sundo.configs.DbConfig;
 import org.sundo.wamis.constants.ApiURL;
-import org.sundo.wamis.entities.RfObservatory;
-import org.sundo.wamis.entities.WaterLevelFlow;
-import org.sundo.wamis.entities.WlfObservatory;
+
+import org.sundo.wamis.entities.*;
 import org.sundo.wamis.repositories.RfObservatoryRepository;
 import org.sundo.wamis.repositories.WaterLevelFlowRepository;
 import org.sundo.wamis.repositories.WlfObservatoryRepository;
+import org.sundo.wamis.repositories.PrecipitationRepository;
+
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -27,9 +27,11 @@ import java.util.Objects;
 public class WamisApiService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+
     private final WlfObservatoryRepository wlfObservatoryRepository; // 수위 + 유량 관측소
     private final RfObservatoryRepository rfObservatoryRepository; // 강수량 관측소
     private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량
+    private final PrecipitationRepository precipitationRepository;
 
 
     /**
@@ -54,6 +56,7 @@ public class WamisApiService {
         }
         return null;
     }
+
 
     /**
      * 강수량 관측소 목록 조회
