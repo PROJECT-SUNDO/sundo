@@ -9,11 +9,9 @@ import org.springframework.web.client.RestTemplate;
 import org.sundo.configs.DbConfig;
 import org.sundo.wamis.constants.ApiURL;
 import org.sundo.wamis.entities.Observatory;
-import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.WaterFlowLevel;
 import org.sundo.wamis.entities.WaterLevel;
 import org.sundo.wamis.repositories.ObservatoryRepository;
-import org.sundo.wamis.repositories.PrecipitationRepository;
 import org.sundo.wamis.repositories.WaterFlowLevelRepository;
 import org.sundo.wamis.repositories.WaterLevelRepository;
 
