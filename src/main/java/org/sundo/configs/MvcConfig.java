@@ -93,7 +93,6 @@ public class MvcConfig implements WebMvcConfigurer {
 		conf.setLocations(new ClassPathResource("application.properties"));
 		
 		return conf;
-		
 	}
 	@Bean
 	@Profile("dev1")
