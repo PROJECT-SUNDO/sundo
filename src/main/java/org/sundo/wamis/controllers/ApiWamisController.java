@@ -16,7 +16,13 @@ public class ApiWamisController {
 //        apiService.getRfObservatories();
 //        apiService.getWlfObservatories();
 //        apiService.updatePrecipitation("10011100");
-        apiService.updateWaterLevelFlow("1018683");
+//        apiService.updateWaterLevelFlow("all", null);
+//        apiService.updateWaterLevelFlow("period", "1001602");
+//        apiService.updateWaterLevelFlow("recent", "1001602");
+
+        apiService.getFlwObservatories();
+        apiService.getWlObservatories();
+        apiService.getRfObservatories();
 
     }
 
