@@ -1,1 +1,52 @@
-<h1>리스트</h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+<main layout:fragment="content" >
+    <h1>관측소 정보</h1>
+    <form action="/search" method="get">
+        <h2>검색</h2>
+        <label for="Ocode">관측소 코드 </label>
+        <input type="text" id="Ocode" name="code" placeholder="xxxxxxx">
+        <label for="Oname">관측소명</label>
+        <input type="text" id="Oname" name="code" placeholder="관측소 명을 입력하세요">
+        <label for="Oanaysis">관측변수</label>
+        <input type="text" id="Oanaysis" name="code" placeholder="전체">
+        <button type="submit">검색</button>
+    </form>
+
+    <div class="divTable minimalistBlack" th:object="${RequestObservatory}" th:each="item : ${}">
+        <div class="divTableHeading">
+            <div class="divTableRow">
+                <div th:text="#{연번}" class="divTableHead">head1</div>
+                <div th:text="#{관측소 명}" class="divTableHead">head2</div>
+                <div th:text="#{관측소 유형}" class="divTableHead">head3</div>
+                <div th:text="#{관측소 코드}" class="divTableHead">head4</div>
+                <div th:text="#{관측 정보}" class="divTableHead">head4</div>
+                <div th:text="#{수정}" class="divTableHead">head4</div>
+                <div th:text="#{삭제}" class="divTableHead">head4</div>
+                <div th:text="#{환경설정}" class="divTableHead">head4</div>
+            </div>
+        </div>
+        <div class="divTableBody">
+            <div class="divTableRow">
+                <div class="divTableCell">cell1_1</div>
+                <div class="divTableCell">cell2_1</div>
+                <div class="divTableCell">cell3_1</div>
+                <div class="divTableCell">cell4_1</div>
+                <div class="divTableCell">cell5_1</div>
+                <div class="divTableCell">cell6_1</div>
+                <div class="divTableCell">cell7_1</div>
+                <div class="divTableCell">cell8_1</div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<!--<script>
+    const { popup } = commonLib;
+    const detail = document.getElementById("detail");
+    detail.onclick = () => popup.open('/list/detail', 450, 450);
+</script>-->
+</html>
