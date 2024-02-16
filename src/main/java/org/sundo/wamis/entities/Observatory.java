@@ -13,6 +13,7 @@ import javax.persistence.IdClass;
 @IdClass(ObservatoryId.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Observatory {
+
     @Id
     @Column(length = 10)
     private String obscd; // 관측소 코드
