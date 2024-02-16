@@ -10,10 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
 
 import org.sundo.wamis.entities.*;
-import org.sundo.wamis.repositories.FlwObservatoryRepository;
-import org.sundo.wamis.repositories.RfObservatoryRepository;
-import org.sundo.wamis.repositories.WaterLevelFlowRepository;
-import org.sundo.wamis.repositories.WlObservatoryRepository;
+import org.sundo.wamis.repositories.*;
 
 
 import java.net.URI;
@@ -32,11 +29,45 @@ public class WamisApiService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
+    private final ObservatoryRepository observatoryRepository; // 모든 관측소
     private final RfObservatoryRepository rfObservatoryRepository; // 강수량 관측소
     private final WlObservatoryRepository wlObservatoryRepository; // 수위 관측소
     private final FlwObservatoryRepository flwObservatoryRepository; // 유량 관측소
 
     private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량 데이터
+
+
+    /**
+     * 모든 관측소
+     * @param type
+     * @return
+     */
+    public List<Observatory> getObservatories(String type) {
+        String url = ApiURL.RF_OBSERVATORY_LIST;
+        if (type.equals("wl")) {
+            url = ApiURL.WL_OBSERVATORY_LIST;
+        } else if (type.equals("flw")) {
+            url = ApiURL.FLW_OBSERVATORY_LIST;
+        }
+
+        String data = restTemplate.getForObject(URI.create(url), String.class);
+        try {
+            ApiResultList<Observatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<Observatory>>() {});
+
+            List<Observatory> items = result.getList();
+            items.forEach(item -> item.setType(type));
+            items.forEach(System.out::println);
+
+            observatoryRepository.saveAllAndFlush(items);
+
+            return items;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     /**
      * 수위 관측소 목록
