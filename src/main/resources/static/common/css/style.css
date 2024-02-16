@@ -1,9 +1,19 @@
+:root{
+    --main-color: #191D31;
+    --font-color: #D9D9DD;
+}
+
 .dn {
 	display: none;
 }
 
 .flex{
     display: flex;
+}
+
+.font-18px{
+    font-size: 18px;
+    font-weight: 500;
 }
 
 /* 팝업 공통 S */
