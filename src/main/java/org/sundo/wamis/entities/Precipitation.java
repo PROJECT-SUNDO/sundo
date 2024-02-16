@@ -1,4 +1,3 @@
-/*
 package org.sundo.wamis.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -9,28 +8,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
-@IdClass(WaterFlowLevelId.class)
-public class WaterFlowLevel{
-    @Id
-    @Column(length = 10)
-    private String obscd;
+@IdClass(PrecipitationId.class)
+@JsonIgnoreProperties(ignoreUnknown = true) //JSON -> 자바 객체 변환시 없는 필드 무시
+public class Precipitation {
 
     @Id
-    private LocalDateTime ymdhi;
-
-    @JsonFormat(pattern = "yyyyMMdd")
-    private LocalDate ymd;
-
     @Column(length = 10)
-    private String flw;
+    private String obscd;//관측소 코드
 
+    @Id
+    @JsonFormat(pattern = "yyyyMMddHH")
+    private LocalDateTime ymdh; // 관측 일시
+
+    private double rf; //강수량
 
 }
-*/
