@@ -91,43 +91,55 @@ window.addEventListener("DOMContentLoaded", function(){
     map.addLayer(river);
     /* geoserver - 한강하천, 한강수계 E */
 
-
-
-	/* 거리 측정 S */
+    /* 거리 측정 S */
     /* 지도에 선 긋기 */
-    lineSource = new ol.source.Vector();
-    const lineVector = new ol.layer.Vector({
-        source: lineSource,
-        style: function(feature){
-            var style = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: '#ffcc33',
-                    width: 2,
-                })
-            })
-        }
+    const vectorStyle = new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: 'rgba(255, 255, 255, 0.2)',
+        }),
+        stroke: new ol.style.Stroke({
+            color: 'rgba(2, 2, 2, 1)',
+            lineDash: [10, 10],
+            width: 2,
+        }),
+        image: new ol.style.Circle({
+            radius: 5
+        }),
     });
 
-    var sketch;
-    var measureTooltipElement;
-    var measureTooltip;
 
     const distanceBtn = document.querySelector("#distance");
+    const distanceEl = document.querySelector("#distance span");
     distanceBtn.addEventListener("click", function(){
+
         if(distanceBtn.classList.contains("on")){
             distanceBtn.classList.remove("on");
-            map.removeLayer(lineVector);
+            distanceEl.innerText = '거리';
         }else{
             distanceBtn.classList.add("on");
-            map.addLayer(lineVector);
+            distanceEl.innerText = '거리 초기화';
         }
 
         let draw = distanceBtn.classList.contains("on");
 
-        addDraw(draw, map, lineSource, lineVector);
+        if(!draw){
+            const lineVector = map.getLayers().getArray();
+            map.removeLayer(lineVector[3]);
+            manageMeasureTooltip(map, false);
+        }else{
+            const lineSource = new ol.source.Vector();
+
+            const lineVector = new ol.layer.Vector({
+               source: lineSource,
+               style: vectorStyle,
+           });
+            map.addLayer(lineVector);
+            addDraw(draw, map, lineSource);
+        }
     });
 
     /* 거리 측정 E */
+
 
     /* 지도 전환 버튼 S */
     const mapArray = map.getLayers().getArray();
@@ -167,8 +179,6 @@ window.addEventListener("DOMContentLoaded", function(){
    	}
     /* 지도 전환 버튼 E */
 
-
-
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 S */
 	const allBtn = document.querySelector("#all");
 	allBtn.addEventListener("click", function(){
@@ -181,31 +191,31 @@ window.addEventListener("DOMContentLoaded", function(){
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
 });
 
-
-function addDraw(isDraw, map, lineSource, lineVector){
+function addDraw(isDraw, map, lineSource){
     const draw = new ol.interaction.Draw({
         source: lineSource,
         type: 'LineString',
+        maxPoints: 2,
         style: new ol.style.Style({
             fill: new ol.style.Fill({
                 color: 'rgba(255, 255, 255, 0.2)',
             }),
             stroke: new ol.style.Stroke({
-                color: 'rgba(0, 0, 0, 0.5)',
+                color: 'rgba(2, 2, 2, 1)',
                 lineDash: [10, 10],
                 width: 2,
             }),
             image: new ol.style.Circle({
                 radius: 5
             }),
-        })
+        }),
     });
 
-    map.addInteraction(draw);
-    let measureTooltip = createMeasureTooltip(map);
-    let measureTooltipEl = document.querySelector("#ol-tooltip-measure");
-
     if(isDraw){
+
+        map.addInteraction(draw);
+        let measureTooltip = manageMeasureTooltip(map, true);
+        let measureTooltipEl = document.querySelector(".ol-tooltip-measure");
 
         draw.addEventListener("drawstart", function(e){
            const sketch = e.feature;
@@ -217,43 +227,41 @@ function addDraw(isDraw, map, lineSource, lineVector){
 
                 if(measureTooltipEl) measureTooltipEl.innerHTML = output;
                 measureTooltip.setPosition(tooltipCoord);
-
            });
         });
 
         draw.addEventListener("drawend", function(){
-            console.log("그리기끝");
-            measureTooltip.setOffset([0, -7]);
-
-            sketch = null;
-            measureTooltipEl = null;
-            createMeasureTooltip(map);
+            draw.finishDrawing();
             map.removeInteraction(draw);
-            lineVector.getSource().clear(true);
-            map.removeLayer(lineVector);
-            new ol.Observable(listener);
         });
+
+    }else{
+        map.removeInteraction(draw);
+        manageMeasureTooltip(map,false);
     }
 }
 
 
-function createMeasureTooltip(map) {
-    let measureTooltipEl = document.querySelector("#ol-tooltip-measure");
+function manageMeasureTooltip(map, make) {
+    let measureTooltipEl = document.querySelector(".ol-tooltip-measure");
 
     if (measureTooltipEl) {
         measureTooltipEl.parentNode.removeChild(measureTooltipEl);
     }
+    if(make){
+        measureTooltipEl = document.createElement('div');
+        measureTooltipEl.className = 'ol-tooltip-measure';
+        measureTooltip = new ol.Overlay({
+            element: measureTooltipEl,
+            offset: [0, -15],
+            positioning: 'bottom-center',
+        });
+        map.addOverlay(measureTooltip);
 
-    measureTooltipEl = document.createElement('div');
-    measureTooltipEl.id = 'ol-tooltip-measure';
-    measureTooltip = new ol.Overlay({
-        element: measureTooltipEl,
-        offset: [0, -15],
-        positioning: 'bottom-center',
-    });
-    map.addOverlay(measureTooltip);
+        return measureTooltip;
+    }else{
 
-    return measureTooltip;
+    }
 }
 
 
@@ -267,3 +275,4 @@ function formatLength(geom){
        return Math.round(length * 100) / 100 + ' ' + 'm';
     }
 }
+
