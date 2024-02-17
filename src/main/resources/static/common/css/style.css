@@ -10,6 +10,9 @@
 .flex{
     display: flex;
 }
+.align-center{
+    align-items: center;
+}
 
 .font-18px{
     font-size: 18px;
