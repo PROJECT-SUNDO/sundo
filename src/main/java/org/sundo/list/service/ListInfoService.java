@@ -6,7 +6,6 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,7 @@ import org.sundo.common.Utils;
 import org.sundo.list.controllers.ListDataSearch;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.QObservatory;
-import org.sundo.wamis.entities.RfObservatory;
-import org.sundo.wamis.repositories.RfObservatoryRepository;
+import org.sundo.wamis.repositories.ObservatoryRepository;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ListInfoService {
 
+    private final ObservatoryRepository repository;
     private final Observatory observatory;
     private final HttpServletRequest request;
     private final EntityManager em;
@@ -64,8 +63,11 @@ public class ListInfoService {
 
         // 단일 테이블 불러올때
         // Page<Observatory> data = observatory.findAll(andBuilder, pageable);
+        // Pagination pagination = new Pagination(page, (int) items.getTotalElements(), 10, limit, request);
 
-        Pagination pagination = new Pagination(page, (int) items.getTotalElements(), 10, limit, request);
+        int total = (int) repository.count(andBuilder);
+
+        Pagination pagination = new Pagination(page, total, 10, limit, request);
         /* 페이징 처리 E */
 
         return new ListData<>(items, pagination);
