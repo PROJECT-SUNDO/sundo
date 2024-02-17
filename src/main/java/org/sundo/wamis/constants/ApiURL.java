@@ -12,7 +12,9 @@ public class ApiURL {
 
 
     // 수위 + 유량 데이터 조회 API 주소
-    public static final String WATER_LEVEL_FLOW = "https://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/waterlevel/list/10M";
+    public static final String WATER_LEVEL_FLOW = "https://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/waterlevel/list/";
+
+
 
 
 }
