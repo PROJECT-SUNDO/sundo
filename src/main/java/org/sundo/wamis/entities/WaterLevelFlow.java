@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-//@IdClass(WaterLevelFlowId.class)
 public class WaterLevelFlow {
     @Id @GeneratedValue
     private Long seq;

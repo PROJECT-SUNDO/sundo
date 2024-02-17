@@ -5,16 +5,22 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
 
 import org.sundo.wamis.entities.*;
-import org.sundo.wamis.repositories.FlwObservatoryRepository;
-import org.sundo.wamis.repositories.RfObservatoryRepository;
-import org.sundo.wamis.repositories.WlObservatoryRepository;
+import org.sundo.wamis.repositories.*;
 
 
 import java.net.URI;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
@@ -23,9 +29,45 @@ public class WamisApiService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
+    private final ObservatoryRepository observatoryRepository; // 모든 관측소
     private final RfObservatoryRepository rfObservatoryRepository; // 강수량 관측소
     private final WlObservatoryRepository wlObservatoryRepository; // 수위 관측소
     private final FlwObservatoryRepository flwObservatoryRepository; // 유량 관측소
+
+    private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량 데이터
+
+
+    /**
+     * 모든 관측소
+     * @param type
+     * @return
+     */
+    public List<Observatory> getObservatories(String type) {
+        String url = ApiURL.RF_OBSERVATORY_LIST;
+        if (type.equals("wl")) {
+            url = ApiURL.WL_OBSERVATORY_LIST;
+        } else if (type.equals("flw")) {
+            url = ApiURL.FLW_OBSERVATORY_LIST;
+        }
+
+        String data = restTemplate.getForObject(URI.create(url), String.class);
+        try {
+            ApiResultList<Observatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<Observatory>>() {});
+
+            List<Observatory> items = result.getList();
+            items.forEach(item -> item.setType(type));
+            items.forEach(System.out::println);
+
+            observatoryRepository.saveAllAndFlush(items);
+
+            return items;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     /**
      * 수위 관측소 목록
@@ -50,20 +92,20 @@ public class WamisApiService {
     }
 
     /**
-     * 수위 + 유량 관측소 목록 조회
+     * 유량 관측소 목록
      *
      */
-    public List<WlfObservatory> getWlfObservatories() {
-        String url = ApiURL.WLF_OBSERVATORY_LIST;
+    public List<FlwObservatory> getFlwObservatories() {
+        String url = ApiURL.FLW_OBSERVATORY_LIST;
 
 
         String data = restTemplate.getForObject(URI.create(url), String.class);
         try {
-            ApiResultList<WlfObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<WlfObservatory>>() {
+            ApiResultList<FlwObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<FlwObservatory>>() {
             });
-            List<WlfObservatory> items = result.getContent();
+            List<FlwObservatory> items = result.getList();
 
-            wlfObservatoryRepository.saveAllAndFlush(items);
+            flwObservatoryRepository.saveAllAndFlush(items);
 
             return items;
         } catch (JsonProcessingException e) {
@@ -74,7 +116,7 @@ public class WamisApiService {
 
 
     /**
-     * 강수량 관측소 목록 조회
+     * 강수량 관측소 목록
      *
      */
     public List<RfObservatory> getRfObservatories() {
@@ -84,7 +126,7 @@ public class WamisApiService {
         try {
             ApiResultList<RfObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<RfObservatory>>() {
             });
-            List<RfObservatory> items = result.getContent();
+            List<RfObservatory> items = result.getList();
             items.forEach(System.out::println);
 
             rfObservatoryRepository.saveAllAndFlush(items);
@@ -96,27 +138,56 @@ public class WamisApiService {
         return null;
     }
 
-
     /**
-     * 수위 + 유량 최근 1건 출력
+     * 수위 + 유량 데이터
+     * 기간별 출력
+     *
+     * @param timeUnit : 단위별 출력
+     *  - 10M : 10분
+     *  - 1H : 1시간
+     *  - 1D : 1일
      * @param obscd : 관측소 코드
      */
-    public void updateWaterLevelFlow(String obscd) {
-        String url = ApiURL.WATER_LEVEL_FLOW + "/" + obscd +".json";
+    public void updateWaterLevelFlow(String timeUnit, String obscd) {
+        timeUnit = StringUtils.hasText(timeUnit) ? timeUnit : "10M";
+        if(timeUnit.equals("1H")) {
+            timeUnit = "1H";
+        } else if (timeUnit.equals("1D")) {
+            timeUnit = "1D";
+        }
+
+        String url = ApiURL.WATER_LEVEL_FLOW + timeUnit + "/" + obscd + "/" + getPeriod()+ ".json";
+
         String data = restTemplate.getForObject(URI.create(url), String.class);
+
+
         try {
-            ApiResultList<WaterLevelFlow> result = objectMapper.readValue(data,
-                    new TypeReference<ApiResultList<WaterLevelFlow>>() {
+            ApiDataResultList<WaterLevelFlow> result = objectMapper.readValue(data,
+                    new TypeReference<ApiDataResultList<WaterLevelFlow>>() {
                     });
 
             List<WaterLevelFlow> items = result.getContent();
-            items.forEach(item -> item.setObscd(obscd));
+
             items.forEach(System.out::println);
             waterLevelFlowRepository.saveAllAndFlush(items);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 날짜 조회 임시
+     * 기본값 : 현재 기준 24시간 전까지
+     */
+    public String getPeriod() {
+        Calendar calendar = new GregorianCalendar();
+        SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMddHHmm");
+        String EdateTime = SDF.format(calendar.getTime()); // 현재
+        calendar.add(Calendar.DATE, -1);
+        String SdateTime = SDF.format(calendar.getTime()); // 하루 전
+
+        return SdateTime + "/" + EdateTime;
 
     }
 
