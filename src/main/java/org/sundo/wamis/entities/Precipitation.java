@@ -6,24 +6,28 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
-@IdClass(PrecipitationId.class)
-@JsonIgnoreProperties(ignoreUnknown = true) //JSON -> 자바 객체 변환시 없는 필드 무시
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Precipitation {
-
     @Id
+    @GeneratedValue
+    private Long seq;
+
     @Column(length = 10)
-    private String obscd;//관측소 코드
+    private String rfobscd;//강수량 관측소
 
-    @Id
-    @JsonFormat(pattern = "yyyyMMddHH")
-    private LocalDateTime ymdh; // 관측 일시
+    @Column(length = 12)
+    private String ymdhm;////년월일시분
 
-    private double rf; //강수량
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDate ymd;//년월일
+
+    @Column(length = 10)
+    private double rf; // 강수량
 
 }
