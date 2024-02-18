@@ -19,19 +19,12 @@ window.addEventListener("DOMContentLoaded", function(){
         url: 'http://api.vworld.kr/req/wmts/1.0.0/241FCB6A-1BD1-38F9-AF43-74053FB44469/Satellite/{z}/{y}/{x}.jpeg'
     });
     const geoSource = new ol.source.TileWMS({
-        /*url: 'http://3.39.34.98:8080/geoserver/wms',
+
+        url: 'http://3.39.34.98:8080/geoserver/wms',
         params: {
             'VERSION' : '1.1.0',
-            'LAYERS' : 'HangangRiver',
-            'BBOX' : [156556.1947859727,277468.6485166226,272050.4658484871,426497.85228758736],
-            'SRS' : 'EPSG:5174',
-            'FORMAT' : 'image/png'
-        },*/
-        url: 'http://localhost:8080/geoserver/wms',
-        params: {
-            'VERSION' : '1.1.0',
-            'LAYERS' : 'hanriver',
-            'BBOX' : [157399.453125,377790.5,271335.40625,526259.5],
+            'LAYERS' : 'hangangRiver',
+            'BBOX' : [157399.453125,377790.5,271335.40625 ,526259.5],
             'SRS' : 'EPSG:5174',
             'FORMAT' : 'image/png'
         },
