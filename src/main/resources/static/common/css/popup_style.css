@@ -12,13 +12,12 @@ a { color:#222; text-decoration: none; }
 .dn { display: none !important; }
 
 .title{
-    position: absolute;
-    left: 50%;
-    top: 10px;
-    transform: translate(50%, 0);
+    width: 100%;
+    text-align: center;
 }
 
 .popup_close{
+    cursor: pointer;
     border: none;
     background: none;
     position: absolute;
