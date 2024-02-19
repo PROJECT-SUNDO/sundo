@@ -40,6 +40,9 @@ public class Observatory implements Serializable {
     private String sbsncd; // 표준유역코드
     @Column(length=40)
     private String mngorg; // 관할기관
+
+    private double latitude; // 위도
+    private double longitude; // 경도
     private String cctvUrlH; // 고화질 주소
     private String cctvUrlL; // 저화질 주소
 }

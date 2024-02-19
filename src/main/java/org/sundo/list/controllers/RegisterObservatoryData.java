@@ -6,28 +6,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
-@Data @Builder
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestObservatory {
+public class RegisterObservatoryData {
 
-    private String mode = "write";
+    private String seq;
 
     @NotBlank
-    private String obscd; // 관측소 코드
-
-    private String obsnm; // 관측소명
+    private String obsnm;//관측소 이름
 
     @NotBlank
     private String obstype; // 관측유형
 
-    private String sbsncd; // 표준 유역 코드
+    @NotBlank
+    private String sbsncd; // 표준유역코드
 
+    @NotBlank
     private double latitude; // 위도
 
+    @NotBlank
     private double longitude; // 경도
 
+    @NotBlank
     private String obsknd; // 관측방식
 
+    @NotBlank
     private String mngorg; // 운영기관
 }

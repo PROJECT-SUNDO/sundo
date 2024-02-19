@@ -4,11 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.list.service.ListInfoService;
 import org.sundo.wamis.entities.Observatory;
 
+import lombok.RequiredArgsConstructor;
+import org.sundo.list.services.ListSaveService;
+
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +21,12 @@ import java.util.List;
 @RequestMapping("/list")
 @RequiredArgsConstructor
 public class ListController {
+	private final ListSaveService listSaveService;
+	private final ObservatoryValidator observatoryValidator;
+
+	@GetMapping("")
+	public String list(Model model) {
+		return "front/list/list";  
 
 	private final ListInfoService listInfoService;
 
@@ -55,6 +66,12 @@ public class ListController {
 	 * 관측소 등록
 	 */
 	@GetMapping("/add")
+	public String add(@ModelAttribute RequestObservatory form, Model model) {
+		commonProcess("write", model);
+
+
+		return "front/list/write";
+	@GetMapping("/add")
 	public String add(Model model) {
 		return null;
 	}
@@ -66,20 +83,35 @@ public class ListController {
 	public String update(@PathVariable("seq") Long seq ,Model model) {
 		return "front/list/update";
 	}
+
+
 	/**
-	 * 관측소 저장하기
+	 * 관측소 저장 및 수정 하기
 	 */
-	@PostMapping("save")
-	public String save(Model model) {
+	@PostMapping("/save")
+	public String save(@Valid RequestObservatory form, Errors errors, Model model) {
+		commonProcess(form.getMode(), model);
+		//form에서 검증하고 실패하면 errors로 보냄
+
+		observatoryValidator.validate(form, errors);
+
+		if(errors.hasErrors()) {
+			//실패할시 다시 양식데이터를 보여주고 필요한부분을 다시 쓰게 함
+			return "front/list/" + form.getMode();
+		}
+
+		listSaveService.save(form);
+
 		return "redirect:/list";
 	}
+
 
 	/**
 	 * 관측소 삭제 -> 삭제 여부 팝업
 	 */
 	@GetMapping("/delete/{seq}")
 	public String delete(@PathVariable("seq") Long seq, Model model) {
-		return null;
+		return "front/list/delete";
 	}
 
 	/**
@@ -101,6 +133,7 @@ public class ListController {
 		mode = StringUtils.hasText(mode) ? mode :  "list";
 		String pageTitle = "목록";
 
+		List<String> addCss = new ArrayList<>();
 		List<String> addCommonScript = new ArrayList<>();
 		List<String> addScript = new ArrayList<>();
 		List<String> addCommonCss = new ArrayList<>();
