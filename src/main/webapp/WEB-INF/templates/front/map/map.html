@@ -3,70 +3,80 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
-	<div class="flex">
-		<section class="asideBtns">
-			<button class="font-18px" type="button" data-target="wl">
-				<br />
-				<span th:text="#{수위}"></span>
-			</button>
-			<button class="font-18px" type="button" data-target="rf">
-				<i class="xi-pouring"></i><br />
-				<span th:text="#{강수량}"></span>
-			</button>
-			<button class="font-18px" type="button" data-target="flw">
-				<br />
-				<span th:text="#{유량}"></span>
-			</button>
-			<button class="font-18px" type="button" data-target="cctv">
-				<i class="xi-videocam"></i><br />
-				<span th:text="#{CCTV}"></span>
-			</button>
-		</section>
-
-		<section class="aside dn">
-			<form class="searchFrm flex">
-				<input type="hidden" id="target">
-				<input type="text" th:placeholder="#{관측소명_입력}">
-				<button type="button">
-					<i class="xi-search"></i>
+	<div class="flex content">
+		<div class="side flex">
+			<section class="asideBtns">
+				<button class="font-15px" type="button" data-target="wl">
+					<br />
+					<span th:text="#{수위}"></span>
 				</button>
-			</form>
-			<div>
-				<span class="targetNm"></span>
+				<button class="font-15px" type="button" data-target="rf">
+					<i class="xi-pouring"></i><br />
+					<span th:text="#{강수량}"></span>
+				</button>
+				<button class="font-15px" type="button" data-target="flw">
+					<br />
+					<span th:text="#{유량}"></span>
+				</button>
+				<button class="font-15px" type="button" data-target="cctv">
+					<i class="xi-videocam"></i><br />
+					<span th:text="#{CCTV}"></span>
+				</button>
+			</section>
 
-				<select class="order" name="order">
-					<option class="orderNm" selected></option>
-					<option value="obserNm" th:text="#{관측소명}"></option>
-				</select>
-			</div>
-			<table>
-				<thead>
-					<tr>
-						<th id="colNm"></th>
-						<th id="colVal"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>나중에 관측소명이랑</td>
-						<td>실시간관측값 넣기(반복문)</td>
-					</tr>
-				</tbody>
-			</table>
-			<th:block></th:block>
-		</section>
-		<div>
-			<button type="button" class="angleBtn">
-				<i class="xi-angle-right-thin"></i>
-			</button>
+			<section class="flex align-center aside-area">
+				<div class="aside dn">
+					<form class="searchFrm flex">
+						<input type="hidden" id="target">
+						<input type="text" class="searchInp" th:placeholder="#{관측소명_입력}">
+						<button type="button" class="searchBtn">
+							<i class="xi-search"></i>
+						</button>
+					</form>
+					<div>
+						<span class="targetNm"></span>
+
+						<select class="order" name="order">
+							<option class="orderNm" selected></option>
+							<option value="obserNm" th:text="#{관측소명}"></option>
+						</select>
+					</div>
+					<div class="divTable">
+						<div class="divTableRow">
+							<div class="divTableHead" id="colNm"></div>
+							<div class="divTableHead" id="colVal"></div>
+						</div>
+						<div class="divTableRow">
+							<div class="divTableCell">나중에 관측소명이랑</div>
+							<div class="divTableCell">실시간관측값 넣기(반복문)</div>
+						</div>
+					</div>
+					<th:block></th:block>
+				</div>
+				<div>
+					<button type="button" class="angleBtn">
+						<i class="xi-angle-right-thin"></i>
+					</button>
+				</div>
+			</section>
 		</div>
 		<section class="map_area">
-			<div class="map_btns">
-				<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
-				<button type="button" class="map_btn" data-map="Satellite" th:text="#{위성지도}"></button>
-				<button type="button" id="all">
+			<div class="map_btns flex-column">
+				<div class="mgn-bottom-10px">
+					<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
+					<button type="button" class="map_btn" data-map="Satellite" th:text="#{위성지도}"></button>
+				</div>
+				<button type="button" id="all" class="align-right mgn-bottom-10px wd-50px ht-50px">
 					<span th:text="#{전체}"></span>
 				</button>
+				<div class="flex-column mgn-bottom-10px">
+					<button type="button" class="wd-50px ht-50px align-right" id="distance">
+						<span th:text="#{거리}"></span>
+					</button>
+					<button type="button" class="wd-50px ht-50px align-right" id="area">
+						<span th:text="#{면적}"></span>
+					</button>
+				</div>
 				<button type="button" id="distance">
 					<span th:text="#{거리}"></span>
                 </button>
