@@ -1,5 +1,18 @@
-window.addEventListener("DOMContentLoaded",function() {
-/* 양식 공통 처리 S*/
+window.addEventListener("DOMContentLoaded", function(){
+    const pageBtns = document.querySelectorAll(".page-link button")
+
+    for(const el of pageBtns){
+        el.addEventListener("click", function(){
+            const url = this.dataset.url;
+            location.replace(url);
+        })
+
+        if(window.location.pathname === el.dataset.url){
+            el.classList.add("on");
+        }
+    }
+
+    /* 양식 공통 처리 S*/
     const formActions = document.getElementsByClassName("form_action");
     for(const el of formActions) {
         el.addEventListener("click"),function() {
@@ -28,3 +41,4 @@ window.addEventListener("DOMContentLoaded",function() {
     }
     /* 양식 공통 처리 E */
 });
+

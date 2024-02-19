@@ -1,6 +1,21 @@
+.align-right{
+    margin-left: auto;
+}
+
+.map_area{
+    width: 100%;
+    height: 100%;
+}
 .map{
-	width: 500px;
-	height: 500px;
+	width: 100%;
+	height: 100%;
+}
+
+.asideBtns{
+    background: var(--main-color);
+    width: 100px;
+    height: 100%;
+    padding-left: 0px;
 }
 
 .asideBtns button{
@@ -8,7 +23,7 @@
     background: none;
     color: var(--font-color);
     width: 100%;
-    height: 150px;
+    height: 100px;
     cursor: pointer;
 }
 
@@ -17,13 +32,56 @@
     padding: 10px;
 }
 
-.asideBtns{
-    background: var(--main-color);
-    width: 100px;
+.aside-area{
+    height: 100%;
+    position: absolute;
+    left: 100px;
+    top: 110px;
+    z-index: 5;
 }
 
-.ol-tooltip-measure{
-    color: #222;
-    font-weight: 700;
-    font-size: 15px;
+.aside{
+    padding: 10px;
+    background: #fff;
+    height: 100%;
+}
+
+.angleBtn{
+    background: #fff;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+    width: 15px;
+    height: 50px;
+    text-align: center;
+    padding: 0px;
+}
+
+.searchInp{
+    width: 140px;
+    height: 20px;
+}
+
+.searchBtn{
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+}
+
+.map_btns{
+    background: none;
+    position: absolute;
+    right: 10px;
+    top: 120px;
+    z-index: 5;
+}
+.map_btns button{
+    padding: 5px 10px;
+    background: #fff;
+    border: 1px solid #222;
+    border-radius: 3px;
+}
+
+.map_btns button.on{
+    background: #5462A6;
+    color: #fff;
 }
