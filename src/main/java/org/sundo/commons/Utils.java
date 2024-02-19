@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ResourceBundle;
 
+
 @Component
 @RequiredArgsConstructor
 public class Utils {
@@ -54,28 +55,27 @@ public class Utils {
             type = StringUtils.hasText(type) ? type : "validations";
 
             ResourceBundle bundle = null;
-            if(type.equals("commons")) {
             if (type.equals("commons")) {
-                bundle = commonsBundle;
-            } else if (type.equals("errors")) {
-                bundle = errorsBundle;
-            } else {
-                bundle = validationsBundle;
+                if (type.equals("commons")) {
+                    bundle = commonsBundle;
+                } else if (type.equals("errors")) {
+                    bundle = errorsBundle;
+                } else {
+                    bundle = validationsBundle;
+                }
+
+                return bundle.getString(code);
             }
-
-            return bundle.getString(code);
-        } catch (Exception e) {
-        }catch (Exception e) {
+        } catch(Exception e){
             e.printStackTrace();
-            return "";
         }
-    }
 
-    public static String getMessage(String code) {
+        return "";
+    }
+    public static String getMessage (String code) {
         return getMessage(code,null);
     }
-        return getMessage(code, null);
-    }
+
 
     /**
      * \n 또는 \r\n -> <br>
@@ -121,7 +121,5 @@ public class Utils {
     public String[] getParams(String name) {
         return request.getParameterValues(name);
     }
-
-
-
 }
+
