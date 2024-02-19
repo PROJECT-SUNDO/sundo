@@ -43,4 +43,6 @@ public class Observatory implements Serializable {
 
     private double latitude; // 위도
     private double longitude; // 경도
+    private String cctvUrlH; // 고화질 주소
+    private String cctvUrlL; // 저화질 주소
 }

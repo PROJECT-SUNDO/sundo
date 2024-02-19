@@ -1,10 +1,14 @@
 package org.sundo.list.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.sundo.commons.ListData;
+import org.sundo.list.service.ListInfoService;
+import org.sundo.wamis.entities.Observatory;
 
 import lombok.RequiredArgsConstructor;
 import org.sundo.list.services.ListSaveService;
@@ -23,6 +27,19 @@ public class ListController {
 	@GetMapping("")
 	public String list(Model model) {
 		return "front/list/list";  
+
+	private final ListInfoService listInfoService;
+
+	@GetMapping
+	public String list(@ModelAttribute ListDataSearch search, Model model) {
+		commonProcess("list", model);
+
+		ListData<Observatory> data = listInfoService.getList(search);
+
+		model.addAttribute("items",data.getItems());
+		model.addAttribute("pagination", data.getPagination());
+
+		return "front/list/list";
 	}
 
 	/**
@@ -54,6 +71,9 @@ public class ListController {
 
 
 		return "front/list/write";
+	@GetMapping("/add")
+	public String add(Model model) {
+		return null;
 	}
 
 	/**
@@ -116,11 +136,19 @@ public class ListController {
 		List<String> addCss = new ArrayList<>();
 		List<String> addCommonScript = new ArrayList<>();
 		List<String> addScript = new ArrayList<>();
+		List<String> addCommonCss = new ArrayList<>();
+		List<String> addCss = new ArrayList<>();
 
+		if(mode.equals("list")) {
+			pageTitle = "목록";
+			addScript.add("list/style");
+			addCss.add("list/style");
+		}
 
+		model.addAttribute("addCss", addCss);
+		model.addAttribute("addScript", addScript);
+		model.addAttribute("addCommonCss", addCommonCss);
+		model.addAttribute("addCommonScript", addCommonScript);
+		model.addAttribute("pageTitle", pageTitle);
 	}
-
-
-	
-
 }

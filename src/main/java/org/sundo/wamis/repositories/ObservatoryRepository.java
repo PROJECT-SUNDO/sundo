@@ -10,6 +10,8 @@ import org.sundo.wamis.entities.QObservatory;
 import java.util.Optional;
 
 public interface ObservatoryRepository extends JpaRepository<Observatory, ObservatoryId>, QuerydslPredicateExecutor<Observatory> {
+//    @Query("SELECT * FROM Observatory WHERE obscd='10011217'")
+//    List<String> getList();
     Optional<ObservatoryRepository> findByObsnm(String obsnm); //optional형태의 반환
 
     Optional<ObservatoryRepository> findBySbsncd(String sbcd); //
