@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/map")
 public class MapController {
 	
-	@GetMapping()
+	@GetMapping
 	public String map(Model model) {
 		commonProcess("map", model);
 		
@@ -38,7 +38,7 @@ public class MapController {
 			addScript.add("map/draw");
 			addCss.add("map/map");
 		}
-		
+		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("addScript", addScript);
 		model.addAttribute("addCss", addCss);
 	}

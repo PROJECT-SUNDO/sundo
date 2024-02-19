@@ -14,12 +14,8 @@ import org.sundo.wamis.repositories.*;
 
 
 import java.net.URI;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -35,6 +31,7 @@ public class WamisApiService {
     private final FlwObservatoryRepository flwObservatoryRepository; // 유량 관측소
 
     private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량 데이터
+    private final PrecipitationRepository precipitationRepository; // 강수량 데이터
 
 
     /**
@@ -170,6 +167,44 @@ public class WamisApiService {
 
             items.forEach(System.out::println);
             waterLevelFlowRepository.saveAllAndFlush(items);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 강수량 데이터
+     * 기간별 출력
+     *
+     * @param timeUnit : 단위별 출력
+     *  - 10M : 10분
+     *  - 1H : 1시간
+     *  - 1D : 1일
+     * @param obscd : 관측소 코드
+     */
+    public void updatePrecipitation(String timeUnit, String obscd) {
+        timeUnit = StringUtils.hasText(timeUnit) ? timeUnit : "10M";
+        if(timeUnit.equals("1H")) {
+            timeUnit = "1H";
+        } else if (timeUnit.equals("1D")) {
+            timeUnit = "1D";
+        }
+
+        String url = ApiURL.PrecipitationFlow + timeUnit + "/" + obscd + "/" + getPeriod()+ ".json";
+
+        String data = restTemplate.getForObject(URI.create(url), String.class);
+
+
+        try {
+            ApiDataResultList<Precipitation> result = objectMapper.readValue(data,
+                    new TypeReference<ApiDataResultList<Precipitation>>() {
+                    });
+
+            List<Precipitation> items = result.getContent();
+
+            items.forEach(System.out::println);
+            precipitationRepository.saveAllAndFlush(items);
+
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();

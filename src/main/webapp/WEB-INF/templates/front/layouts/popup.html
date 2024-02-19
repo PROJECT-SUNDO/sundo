@@ -40,6 +40,14 @@
     <th:block layout:fragment="addScript"></th:block>
 </head>
 <body>
+<header class="flex align-center head">
+    <div class="title">
+        <h2 th:if="${pageTitle != null}" th:text="${pageTitle}"></h2>
+    </div>
+    <button type="button" class="popup_close">
+        <i class="xi-close"></i>
+    </button>
+</header>
 <main layout:fragment="content"></main>
 <iframe name="ifrmProcess" class="dn"></iframe>
 </body>
