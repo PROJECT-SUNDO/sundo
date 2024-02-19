@@ -60,7 +60,7 @@
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.user" value="project" />
             <property name="javax.persistence.jdbc.password" value="_aA123456" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/project" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://3.39.34.98:5432/project" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
         
         

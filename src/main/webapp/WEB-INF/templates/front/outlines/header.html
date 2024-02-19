@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <header th:fragment="common">
-        <div class="headerWrap">
+    <header th:fragment="common" class="header">
+        <div class="headerWrap flex">
          	<!-- 메인 로고 부분-->
             <div class="logo">
                 <a th:href="@{/}">
@@ -10,10 +10,10 @@
                 </a>
             </div>
             <!-- 버튼 클릭 영역 -->
-            <div>
-            	<a th:text=#{지도}></a>
-            	<a th:text=#{목록}></a>
-            	<a th:text=#{대시보드}></a>
+            <div class="page-link">
+                <button type="button" data-url="/map" th:text="#{지도}"></button>
+                <button type="button" data-url="/list" th:text="#{목록}"></button>
+                <button type="button" data-url="/dashboard" th:text="#{대시보드}"></button>
             </div>
             <!-- 시간남으면 로그인 추가 -->
         </div>

@@ -13,6 +13,7 @@
       '}"></th:block> <th:block th:text="#{한강수자원관리플랫폼}"></th:block>
     </title>
 
+    <!-- XEIcon -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
@@ -36,6 +37,7 @@
     <th:block layout:fragment="addCss"></th:block>
 
     <script th:src="@{/common/js/common.js}"></script>
+    <script th:src="@{/common/js/layer.js}"></script>
     <script
       th:each="jsFile : ${addCommonScript}"
       th:src="@{/common/js/{file}.js(file=${jsFile})}"
@@ -50,7 +52,7 @@
     <th:block layout:fragment="addScript"></th:block>
 
     <!-- open layers -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/css/ol.css" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{/front/css/map/ol.css}" />
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/build/ol.js"></script>
   </head>
   <body>
