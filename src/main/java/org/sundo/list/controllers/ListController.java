@@ -1,13 +1,14 @@
 package org.sundo.list.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.sundo.commons.ListData;
+import org.sundo.list.service.ListInfoService;
+import org.sundo.wamis.entities.Observatory;
 
-import lombok.RequiredArgsConstructor;
-
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,19 @@ import java.util.List;
 @RequestMapping("/list")
 @RequiredArgsConstructor
 public class ListController {
-	
+
+	private final ListInfoService listInfoService;
+
 	@GetMapping
-	public String list(Model model) {
-		return "front/list/list";  
+	public String list(@ModelAttribute ListDataSearch search, Model model) {
+		commonProcess("list", model);
+
+		ListData<Observatory> data = listInfoService.getList(search);
+
+		model.addAttribute("items",data.getItems());
+		model.addAttribute("pagination", data.getPagination());
+
+		return "front/list/list";
 	}
 
 	/**
@@ -44,7 +54,7 @@ public class ListController {
 	/**
 	 * 관측소 등록
 	 */
-	@GetMapping("/add/{seq}")
+	@GetMapping("/add")
 	public String add(Model model) {
 		return null;
 	}
@@ -91,14 +101,21 @@ public class ListController {
 		mode = StringUtils.hasText(mode) ? mode :  "list";
 		String pageTitle = "목록";
 
-		List<String> addCss = new ArrayList<>();
 		List<String> addCommonScript = new ArrayList<>();
 		List<String> addScript = new ArrayList<>();
+		List<String> addCommonCss = new ArrayList<>();
+		List<String> addCss = new ArrayList<>();
 
+		if(mode.equals("list")) {
+			pageTitle = "목록";
+			addScript.add("list/style");
+			addCss.add("list/style");
+		}
 
+		model.addAttribute("addCss", addCss);
+		model.addAttribute("addScript", addScript);
+		model.addAttribute("addCommonCss", addCommonCss);
+		model.addAttribute("addCommonScript", addCommonScript);
+		model.addAttribute("pageTitle", pageTitle);
 	}
-
-
-	
-
 }

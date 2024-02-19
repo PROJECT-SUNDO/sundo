@@ -60,7 +60,6 @@
 				<i class="xi-angle-right-thin"></i>
 			</button>
 		</div>
-
 		<section class="map_area">
 			<div class="map_btns">
 				<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
@@ -78,5 +77,11 @@
 			<div id="map" class="map"></div>
 		</section>
 	</div>
+
+	<script>
+		const { popup } = commonLib;
+        const infoBtn = document.getElementById("popup");
+        infoBtn.onclick = () => popup.open('/map/info', 450, 450);
+	</script>
 </main>
 </html>
