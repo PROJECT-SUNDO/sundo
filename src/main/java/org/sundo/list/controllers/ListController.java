@@ -6,8 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
+import org.sundo.commons.Utils;
 import org.sundo.list.service.ListInfoService;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.services.ObservatoryInfoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ListController {
 
+	private final Utils utils;
 	private final ListInfoService listInfoService;
+	private final ObservatoryInfoService observatoryInfoService;
 
 	@GetMapping
 	public String list(@ModelAttribute ListDataSearch search, Model model) {
@@ -90,7 +94,16 @@ public class ListController {
 	 * - 이상 내역 목록
 	 */
 	@GetMapping("/setting/{seq}")
-	public String setting(@PathVariable("seq") Long seq, Model model) {
+	public String setting(@PathVariable("seq") String seq,
+						  Model model) {
+		commonProcess("setting", model);
+
+		String obscd = utils.getParam("obscd");
+		String type = utils.getParam("type");
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+
+		model.addAttribute("requestObservatory", form);
+
 		return "front/list/setting";
 	}
 
@@ -108,8 +121,11 @@ public class ListController {
 
 		if(mode.equals("list")) {
 			pageTitle = "목록";
-			addScript.add("list/style");
+			addScript.add("list/list");
 			addCss.add("list/style");
+		}else if (mode.equals("setting")){
+			pageTitle = "환경설정";
+			addCss.add("list/setting");
 		}
 
 		model.addAttribute("addCss", addCss);
