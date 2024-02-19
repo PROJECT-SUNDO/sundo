@@ -1,13 +1,13 @@
 var commonLib = commonLib || {};
 
 commonLib.popup = {
-/**
-* 레이어 팝업 열기
-*
-* @param url : 팝업으로 열 주소
-* @param width : 팝업 너비, 기본값 350
-* @param height : 팝업 높이, 기본값 350
-*/
+    /**
+    * 레이어 팝업 열기
+    *
+    * @param url : 팝업으로 열 주소
+    * @param width : 팝업 너비, 기본값 350
+    * @param height : 팝업 높이, 기본값 350
+    */
     open(url, width, height) {
         if(!url) return;
 
@@ -54,23 +54,18 @@ commonLib.popup = {
 
         /* 레이어 배경 클릭 시 close 처리 */
         layerDimEl.addEventListener("click", this.close);
-        },
-        /**
-        * 레이어 팝업 닫기
-        *
-        */
-        close() {
-            const popupEl = document.getElementById("layer_popup");
-            if (popupEl) popupEl.parentElement.removeChild(popupEl); // 하위 노드 삭제
+    },
+    /**
+    * 레이어 팝업 닫기
+    *
+    */
+    close() {
+        const popupEl = document.getElementById("layer_popup");
+        if (popupEl) popupEl.parentElement.removeChild(popupEl); // 하위 노드 삭제
 
-            const layerDimEl = document.getElementById("layer_dim");
-            if(layerDimEl) layerDimEl.parentElement.removeChild(layerDimEl); // 하위 노드 삭제
+        const layerDimEl = document.getElementById("layer_dim");
+        if(layerDimEl) layerDimEl.parentElement.removeChild(layerDimEl); // 하위 노드 삭제
 
-        }
-
-
-
-
-
+    },
 
 }

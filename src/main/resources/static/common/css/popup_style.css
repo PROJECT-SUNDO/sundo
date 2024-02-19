@@ -10,3 +10,18 @@ dd { width: calc(100% - 130px); padding: 0; margin: 0; }
 a { color:#222; text-decoration: none; }
 
 .dn { display: none !important; }
+
+.title{
+    width: 100%;
+    text-align: center;
+}
+
+.popup_close{
+    cursor: pointer;
+    border: none;
+    background: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
