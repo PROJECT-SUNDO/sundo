@@ -3,24 +3,36 @@ package org.sundo.list.controllers;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
 @Data @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class RequestObservatory {
 
-    private Long seq;
+    private String mode = "write";
 
-    private String obsnm;
+    @NotBlank
+    private String obscd; // 관측소 코드
 
-    private String obstype; // 관측유형
+    @NotBlank
+    private String type; // 관측소 타입 - rf(강수량 관측소), wl(수위 관측소), flw(유량 관측소)
 
-    private String sbsncd; // 표준 유역 코드
+
+    private String bbsnnm; // 대권역명
+
+    @NotBlank
+    private String obsnm; // 관측소명
+
+    private String clsyn; // 운영여부
+
+    private String obsknd; // 관측방법
+
+    private String sbsncd; // 표준유역코드
+
+    private String mngorg; // 관할기관
 
     private double latitude; // 위도
-
     private double longitude; // 경도
-
-    private String obsknd; // 관측방식
-
-    private String mngorg; // 운영기관
 }

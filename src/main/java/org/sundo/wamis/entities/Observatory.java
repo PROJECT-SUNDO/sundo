@@ -41,5 +41,6 @@ public class Observatory implements Serializable {
     @Column(length=40)
     private String mngorg; // 관할기관
 
-
+    private double latitude; // 위도
+    private double longitude; // 경도
 }
