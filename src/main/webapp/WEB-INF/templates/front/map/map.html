@@ -3,7 +3,85 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
+	<div class="flex">
+		<section class="asideBtns">
+			<button class="font-18px" type="button" data-target="wl">
+				<br />
+				<span th:text="#{수위}"></span>
+			</button>
+			<button class="font-18px" type="button" data-target="rf">
+				<i class="xi-pouring"></i><br />
+				<span th:text="#{강수량}"></span>
+			</button>
+			<button class="font-18px" type="button" data-target="flw">
+				<br />
+				<span th:text="#{유량}"></span>
+			</button>
+			<button class="font-18px" type="button" data-target="cctv">
+				<i class="xi-videocam"></i><br />
+				<span th:text="#{CCTV}"></span>
+			</button>
+		</section>
 
+		<section class="aside dn">
+			<form class="searchFrm flex">
+				<input type="hidden" id="target">
+				<input type="text" th:placeholder="#{관측소명_입력}">
+				<button type="button">
+					<i class="xi-search"></i>
+				</button>
+			</form>
+			<div>
+				<span class="targetNm"></span>
 
+				<select class="order" name="order">
+					<option class="orderNm" selected></option>
+					<option value="obserNm" th:text="#{관측소명}"></option>
+				</select>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th id="colNm"></th>
+						<th id="colVal"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>나중에 관측소명이랑</td>
+						<td>실시간관측값 넣기(반복문)</td>
+					</tr>
+				</tbody>
+			</table>
+			<th:block></th:block>
+		</section>
+		<div>
+			<button type="button" class="angleBtn">
+				<i class="xi-angle-right-thin"></i>
+			</button>
+		</div>
+		<section class="map_area">
+			<div class="map_btns">
+				<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
+				<button type="button" class="map_btn" data-map="Satellite" th:text="#{위성지도}"></button>
+				<button type="button" id="all">
+					<span th:text="#{전체}"></span>
+				</button>
+				<button type="button" id="distance">
+					<span th:text="#{거리}"></span>
+				</button>
+				<button type="button" id="area">
+					<span th:text="#{면적}"></span>
+				</button>
+			</div>
+			<div id="map" class="map"></div>
+		</section>
+	</div>
+
+	<script>
+		const { popup } = commonLib;
+        const infoBtn = document.getElementById("popup");
+        infoBtn.onclick = () => popup.open('/map/info', 450, 450);
+	</script>
 </main>
 </html>

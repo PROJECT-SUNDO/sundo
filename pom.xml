@@ -113,12 +113,12 @@
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
-			<version>5.0.0</version>
+			<version>4.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
-			<version>5.0.0</version>
+			<version>4.4.0</version>
 		</dependency>
 		
 		<!-- 표준프레임워크 실행환경 -->
@@ -175,8 +175,23 @@
 			<artifactId>hsqldb</artifactId>
 			<version>2.5.2</version>
 		</dependency>
-        
-        <!-- mysql이나 oracle DB 사용시 아래 설정 추가  
+
+		<!-- jackson databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.16.1</version>
+		</dependency>
+		<!-- jackson jsr310 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.16.1</version>
+		</dependency>
+
+
+
+		<!-- mysql이나 oracle DB 사용시 아래 설정 추가
         <dependency>
             <groupId>com.googlecode.log4jdbc</groupId>
             <artifactId>log4jdbc</artifactId>
@@ -190,10 +205,10 @@
         </dependency>
         
         <dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-dbcp2</artifactId>
-		    <version>2.9.0</version>
-		</dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.9.0</version>
+        </dependency>
         
         <dependency>
             <groupId>mysql</groupId>
@@ -330,7 +345,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><configuration><source>8</source><target>8</target></configuration></plugin>
         </plugins>
     </build>
     <reporting>
@@ -380,9 +395,9 @@
                 <configuration>
                     <minmemory>128m</minmemory>
                     <maxmemory>512m</maxmemory>
-                    <encoding>${encoding}</encoding>
-                    <docencoding>${encoding}</docencoding>
-                    <charset>${encoding}</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <charset>UTF-8</charset>
                 </configuration>
             </plugin>
             <!-- Generating Java Source in HTML -->
@@ -390,8 +405,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <configuration>
-                    <inputEncoding>${encoding}</inputEncoding>
-                    <outputEncoding>${encoding}</outputEncoding>
+                    <inputEncoding>UTF-8</inputEncoding>
+                    <outputEncoding>UTF-8</outputEncoding>
                     <linkJavadoc>true</linkJavadoc>
                     <javadocDir>apidocs</javadocDir>
                 </configuration>
