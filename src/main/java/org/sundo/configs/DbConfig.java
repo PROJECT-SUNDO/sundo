@@ -16,48 +16,73 @@ import javax.persistence.Persistence;
 @EnableTransactionManagement
 @EnableJpaRepositories("org.sundo")
 public class DbConfig {
-	
-	@Bean
+
+
+	@Configuration
 	@Profile("dev1")
-	public EntityManagerFactory entityManagerFactory() {
-		return Persistence.createEntityManagerFactory("jpa_dev1");
+	static class DbConfigDev1 {
+		@Bean
+		public EntityManagerFactory entityManagerFactory() {
+			return Persistence.createEntityManagerFactory("jpa_dev1");
+		}
+
+		@Bean
+		@Primary
+		public EntityManager entityManager() {
+			return entityManagerFactory().createEntityManager();
+		}
+
+		@Bean
+		public JpaTransactionManager transactionManager() {
+
+			return new JpaTransactionManager(entityManagerFactory());
+		}
 	}
-	@Bean
+
+	@Configuration
 	@Profile("dev2")
-	public EntityManagerFactory entityManagerFactory2() {
-		return Persistence.createEntityManagerFactory("jpa_dev2"); 
+	static class DbConfigDev2 {
+		@Bean
+		public EntityManagerFactory entityManagerFactory() {
+			return Persistence.createEntityManagerFactory("jpa_dev2");
+		}
+
+		@Bean
+		@Primary
+		public EntityManager entityManager() {
+			return entityManagerFactory().createEntityManager();
+		}
+
+		@Bean
+		public JpaTransactionManager transactionManager() {
+
+			return new JpaTransactionManager(entityManagerFactory());
+		}
 	}
-	@Bean
+
+	@Configuration
 	@Profile("prod")
-	public EntityManagerFactory entityManagerFactory3() {
-		return Persistence.createEntityManagerFactory("jpa_prod");
-	}
-	
-	
-	@Bean
-	@Primary
-	@Profile("dev1")
-	public EntityManager entityManagerDev1() {
-		return entityManagerFactory().createEntityManager();
+
+	static class DbConfigProd {
+		@Bean
+		public EntityManagerFactory entityManagerFactory() {
+			return Persistence.createEntityManagerFactory("jpa_prod");
+		}
+
+		@Bean
+		@Primary
+		public EntityManager entityManager() {
+			return entityManagerFactory().createEntityManager();
+		}
+
+		@Bean
+		public JpaTransactionManager transactionManager() {
+
+			return new JpaTransactionManager(entityManagerFactory());
+		}
 	}
 
-	@Bean
-	@Primary
-	@Profile("dev2")
-	public EntityManager entityManagerDev2() {
-		return entityManagerFactory2().createEntityManager();
-	}
 
-	@Bean
-	@Primary
-	@Profile("prod")
-	public EntityManager entityManagerProd() {
-		return entityManagerFactory3().createEntityManager();
-	}
 
-	@Bean
-	public JpaTransactionManager transactionManager() {
-		
-		return new JpaTransactionManager(entityManagerFactory());
-	}
+
 }
