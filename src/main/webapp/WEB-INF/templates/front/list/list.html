@@ -16,7 +16,7 @@
             <label for="Oname">관측소명</label>
             <input type="text" id="Oname" name="code" placeholder="관측소 명을 입력하세요">
             <label for="Oanaysis">관측변수</label>
-            <select name="type" th:field="*{type}">
+            <select name="type" th:field="*{type}" id="Oanaysis">
                 <option value="ALL">전체</option>
                 <option value="rf">강수량</option>
                 <option value="wl">수위</option>
@@ -46,8 +46,14 @@
             <div class="divTableRow">
                 <div th:text="${status.count}"  class="divTableCell">cell1_1</div>
                 <div th:text="${item.obsnm}" class="divTableCell"></div>
-                <div th:text="${item.type}" class="divTableCell"><input type="hidden" name="obsknd" th:value="*{obstype}" th:id="*{'obsknd' + status.count}"></div>
-                <div th:text="${item.obscd}" class="divTableCell"><span th:text="*{obscd}"></span><input type="hidden" name="obscd" th:value="*{obscd}" th:id="*{'obscd_' + status.count}"></div>
+                <div th:text="${item.type}" class="divTableCell">
+                    <span th:text="${item.type}"></span>
+                    <input type="hidden" name="type" th:value="*{type}" th:id="*{'type_' + status.count}">
+                </div>
+                <div class="divTableCell">
+                    <span th:text="${item.obscd}"></span>
+                    <input type="hidden" name="obscd" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
+                </div>
                 <div class="divTableCell" th:data-obscd-id="*{'obscd_' + status.count}" th:data-obsknd-id="*{'obsknd' + status.count}">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </div>
@@ -58,10 +64,12 @@
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                 </div>
                 <div class="divTableCell">
-                    <i class="xi-cog"></i>
+                    <button type="button" class="settingBtn" th:data-obscd="*{'obscd_' + status.count}" data-url="/list/setting/">
+                        <i class="xi-cog"></i>
+                    </button>
                 </div>
             </div>
-            <th:block th:unless="*{items != null}" th:text="#{데이터가 없습니다.}"></th:block>
+            <th:block th:unless="*{items != null}" th:text="#{데이터_없음}"></th:block>
         </div>
     </div>
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
