@@ -10,3 +10,19 @@ dd { width: calc(100% - 130px); padding: 0; margin: 0; }
 a { color:#222; text-decoration: none; }
 
 .dn { display: none !important; }
+
+.title{
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translate(50%, 0);
+}
+
+.popup_close{
+    border: none;
+    background: none;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
