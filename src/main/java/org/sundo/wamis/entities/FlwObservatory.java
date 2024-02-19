@@ -50,5 +50,6 @@ public class FlwObservatory {
     @Transient
     private boolean active;
 
+    private double outlier; // 이상치
 }
 

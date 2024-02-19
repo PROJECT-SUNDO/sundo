@@ -30,7 +30,7 @@ public class ObservatoryValidator implements Validator {
 
         RequestObservatory form = (RequestObservatory) target;
         String obsnm = form.getObsnm();//관측소 이름
-        String sbsncd = form.getSbsncd();// 표준 유역 코드
+        String obscd = form.getObscd();// 표준 유역 코드
 
         //중복 여부체크
 
@@ -39,8 +39,8 @@ public class ObservatoryValidator implements Validator {
 
         }
 
-        if (observatoryRepository.existsBySbsncd(sbsncd)){
-            errors.rejectValue("sbsncd", "Duplicated");
+        if (observatoryRepository.existsBySbsncd(obscd)){
+            errors.rejectValue("obscd", "Duplicated");
         }
 
     }

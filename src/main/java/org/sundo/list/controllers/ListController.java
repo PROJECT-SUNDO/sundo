@@ -7,10 +7,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
+import org.sundo.commons.Utils;
 import org.sundo.list.service.ListInfoService;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.services.ObservatoryInfoService;
 
-import org.sundo.list.services.ListSaveService;
+import org.sundo.list.service.ListSaveService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -20,10 +22,13 @@ import java.util.List;
 @RequestMapping("/list")
 @RequiredArgsConstructor
 public class ListController {
+
+	private final Utils utils;
 	private final ListInfoService listInfoService;
 	private final ListSaveService listSaveService;
 	private final ObservatoryValidator observatoryValidator;
 
+	private final ObservatoryInfoService observatoryInfoService;
 
 		@GetMapping
 		public String list (@ModelAttribute ListDataSearch search, Model model){
@@ -107,17 +112,26 @@ public class ListController {
 				return "front/list/delete";
 			}
 
-			/**
-			 * 환경설정
-			 * - 사용여부
-			 * - 이상치 기준 설정
-			 * - 조회 기간 검색
-			 * - 이상 내역 목록
-			 */
-			@GetMapping("/setting/{seq}")
-			public String setting (@PathVariable("seq") Long seq, Model model){
-				return "front/list/setting";
-			}
+	/**
+	 * 환경설정
+	 * - 사용여부
+	 * - 이상치 기준 설정
+	 * - 조회 기간 검색
+	 * - 이상 내역 목록
+	 */
+	@GetMapping("/setting/{seq}")
+	public String setting(@PathVariable("seq") String seq,
+						  Model model) {
+		commonProcess("setting", model);
+
+		String obscd = utils.getParam("obscd");
+		String type = utils.getParam("type");
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+
+		model.addAttribute("requestObservatory", form);
+
+		return "front/list/setting";
+	}
 
 			/**
 			 * 공통 작업
@@ -131,11 +145,14 @@ public class ListController {
 				List<String> addCommonCss = new ArrayList<>();
 				List<String> addCss = new ArrayList<>();
 
-				if (mode.equals("list")) {
-					pageTitle = "목록";
-					addScript.add("list/style");
-					addCss.add("list/style");
-				}
+		if(mode.equals("list")) {
+			pageTitle = "목록";
+			addScript.add("list/list");
+			addCss.add("list/style");
+		}else if (mode.equals("setting")){
+			pageTitle = "환경설정";
+			addCss.add("list/setting");
+		}
 
 				model.addAttribute("addCss", addCss);
 				model.addAttribute("addScript", addScript);
