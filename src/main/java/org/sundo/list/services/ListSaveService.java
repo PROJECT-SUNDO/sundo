@@ -8,10 +8,13 @@ import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.ObservatoryId;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 @RequiredArgsConstructor
 public class ListSaveService {
     private final ObservatoryRepository observatoryRepository;
+    private final HttpServletRequest request;
 
     public Observatory save(RequestObservatory form) {
 
@@ -19,11 +22,11 @@ public class ListSaveService {
         mode = StringUtils.hasText(mode) ? mode : "write";
 
         String obscd = form.getObscd();
-        String obstype = form.getObstype();
+        String obsnm = form.getObsnm();
 
         Observatory data = null;
-        if (StringUtils.hasText(obscd) && StringUtils.hasText(obstype) && mode.equals("update")) { // 글 수정
-            ObservatoryId id = new ObservatoryId(obscd, obstype);
+        if (StringUtils.hasText(obscd) && StringUtils.hasText(obsnm) && mode.equals("update")) { // 글 수정
+            ObservatoryId id = new ObservatoryId(obscd, obsnm);
             data = observatoryRepository.findById(id).orElseThrow(ObservatoryDataNotFoundException::new);
         } else { // 글 작성
             /**
@@ -32,9 +35,10 @@ public class ListSaveService {
              */
 
             data = new Observatory();
-            data.setObscd(obscd);
+            data.setObsnm(form.getObsnm());
+            data.setObscd(form.getObscd());
             data.setSbsncd(form.getSbsncd());
-            data.setType(form.getObstype());
+            data.setType(form.getType());
 
         }
 
@@ -43,6 +47,8 @@ public class ListSaveService {
         data.setLongitude(form.getLongitude());
         data.setMngorg(form.getMngorg());
         data.setObsnm(form.getObsnm());
+        data.setSbsncd(form.getSbsncd());
+        data.setType(form.getType());
 
         data = observatoryRepository.saveAndFlush(data);
         return data;
