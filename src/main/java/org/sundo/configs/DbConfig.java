@@ -1,15 +1,16 @@
 package org.sundo.configs;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 @Configuration
 @EnableTransactionManagement
@@ -34,10 +35,26 @@ public class DbConfig {
 	
 	
 	@Bean
-	public EntityManager entityManager() {
+	@Primary
+	@Profile("dev1")
+	public EntityManager entityManagerDev1() {
 		return entityManagerFactory().createEntityManager();
 	}
-	
+
+	@Bean
+	@Primary
+	@Profile("dev2")
+	public EntityManager entityManagerDev2() {
+		return entityManagerFactory2().createEntityManager();
+	}
+
+	@Bean
+	@Primary
+	@Profile("prod")
+	public EntityManager entityManagerProd() {
+		return entityManagerFactory3().createEntityManager();
+	}
+
 	@Bean
 	public JpaTransactionManager transactionManager() {
 		

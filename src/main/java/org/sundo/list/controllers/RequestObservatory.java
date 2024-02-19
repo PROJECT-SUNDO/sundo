@@ -10,7 +10,7 @@ public class RequestObservatory {
 
     private Long seq;
 
-    private String obsnm;
+    private String obsnm; // 관측소명
 
     private String obstype; // 관측유형
 

@@ -1,0 +1,23 @@
+.searchBtn {
+    background-color: #000;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    display: grid;
+    justify-content: center;
+    align-items: start;
+}
+
+.searchBtn i {
+    color: #fff;
+}
+
+.pagination>div {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.alc {
+    align-items: center;
+}
