@@ -19,11 +19,11 @@ public class ListSaveService {
         mode = StringUtils.hasText(mode) ? mode : "write";
 
         String obscd = form.getObscd();
-        String type = form.getObstype();
+        String obstype = form.getObstype();
 
         Observatory data = null;
-        if (StringUtils.hasText(obscd) && StringUtils.hasText(type) && mode.equals("update")) { // 글 수정
-            ObservatoryId id = new ObservatoryId(obscd, type);
+        if (StringUtils.hasText(obscd) && StringUtils.hasText(obstype) && mode.equals("update")) { // 글 수정
+            ObservatoryId id = new ObservatoryId(obscd, obstype);
             data = observatoryRepository.findById(id).orElseThrow(ObservatoryDataNotFoundException::new);
         } else { // 글 작성
             /**
@@ -34,7 +34,7 @@ public class ListSaveService {
             data = new Observatory();
             data.setObscd(obscd);
             data.setSbsncd(form.getSbsncd());
-            data.setType(form.getType());
+            data.setType(form.getObstype());
 
         }
 
