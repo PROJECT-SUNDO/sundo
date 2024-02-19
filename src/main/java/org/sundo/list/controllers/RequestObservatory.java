@@ -3,15 +3,22 @@ package org.sundo.list.controllers;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
 @Data @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class RequestObservatory {
 
-    private Long seq;
+    private String mode = "write";
+
+    @NotBlank
+    private String obscd; // 관측소 코드
 
     private String obsnm; // 관측소명
 
+    @NotBlank
     private String obstype; // 관측유형
 
     private String sbsncd; // 표준 유역 코드
