@@ -2,20 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="form" th:object="${requestObservatory}">
         <div>
-            <label for="obscd">관측소 코드</label>
-            <input type="text" id="obscd" name="obscd" th:field="*{obscd}" placeholder="관측소 코드를 입력하세요.">
-            <div class="error" th:each="err : ${#fields.errors('obscd')}" th:text="${err}"></div>
             <label for="obsnm">관측소명 </label>
             <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
             <div class="error" th:each="err : ${#fields.errors('obsnm')}" th:text="${err}"></div>
         </div>
         <div>
             <label class="obstype">관측 유형</label>
-            <input type="text" id="obstype" name="type" th:field="*{type}" placeholder="관측소유형을 입력하세요">
-            <div class="error" th:each="err : ${#fields.errors('type')}" th:text="${err}"></div>
-            <label class="sbsncd">표준 코드</label>
-            <input type="text" id="sbsncd" name="sbsncd"  th:field="*{sbsncd}"placeholder="표준코드를 입력하세요">
-            <div class="error" th:each="err : ${#fields.errors('sbsncd')}" th:text="${err}"></div>
+            <input type="text" id="obstype" name="obstype" th:field="*{obstype}" placeholder="관측소유형을 입력하세요">
+            <div class="error" th:each="err : ${#fields.errors('obstype')}" th:text="${err}"></div>
+            <label class="obscd">표준 코드</label>
+            <input type="text" id="obscd" name="obscd"  th:field="*{obscd}"placeholder="표준코드를 입력하세요">
+            <div class="error" th:each="err : ${#fields.errors('obscd')}" th:text="${err}"></div>
         </div>
         <div>
             <label class="latitude">위도</label>
