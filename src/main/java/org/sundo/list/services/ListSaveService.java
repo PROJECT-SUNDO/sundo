@@ -19,7 +19,7 @@ public class ListSaveService {
         mode = StringUtils.hasText(mode) ? mode : "write";
 
         String obscd = form.getObscd();
-        String type = form.getObstype();
+        String type = form.getType();
 
         Observatory data = null;
         if (StringUtils.hasText(obscd) && StringUtils.hasText(type) && mode.equals("update")) { // 글 수정

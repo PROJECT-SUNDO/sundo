@@ -118,9 +118,6 @@ a{
     margin-bottom: 10px;
 }
 
-
-=========
-
 /* 테이블 S */
 div.minimalistBlack {
   border: 3px solid #000000;
@@ -172,8 +169,3 @@ div.minimalistBlack {
     display: flex;
     justify-content: center;
 }
-
-.flex {
-    display: flex;
-}
->>>>>>>>> Temporary merge branch 2
