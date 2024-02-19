@@ -42,4 +42,6 @@ public class Observatory implements Serializable {
     private String mngorg; // 관할기관
     private String cctvUrlH; // 고화질 주소
     private String cctvUrlL; // 저화질 주소
+
+    private double outlier; // 이상치
 }
