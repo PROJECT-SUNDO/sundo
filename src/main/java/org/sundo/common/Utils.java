@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-@Component
+@Component("utils2")
 @RequiredArgsConstructor
 public class Utils {
     private final HttpServletRequest request;
