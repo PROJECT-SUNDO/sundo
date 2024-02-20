@@ -44,8 +44,35 @@ public class Observatory implements Serializable {
     @Column(length=40)
     private String mngorg; // 관할기관
 
-    private double latitude; // 위도
-    private double longitude; // 경도
+    // 관측소 상세
+    @Column(length = 10)
+    private String lon; // 경도
+    @Column(length = 10)
+    private String lat; // 위도
+    @Column(length = 80)
+    private String addr;
+    @Column(length = 80)
+    private String etcaddr;
+
+    private String attwl; // 관심 수위
+
+    private String wrnwl; // 주의보 수위
+
+    private String almwl; // 경보 수위
+
+    private String srswl; // 심각 수위
+
+    private String pfh; // 계획홍수위
+
+    private String fstnyn; // 특보지점여부
+
+
+
+
+
+    private double Latitude;
+    private double Longitude;
+
     private String cctvUrlH; // 고화질 주소
     private String cctvUrlL; // 저화질 주소
 
