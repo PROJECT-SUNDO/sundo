@@ -1,4 +1,4 @@
-package org.sundo.list.services;
+package org.sundo.wamis.services;
 
 import org.sundo.commons.Utils;
 import org.springframework.http.HttpStatus;

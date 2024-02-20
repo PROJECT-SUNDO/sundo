@@ -1,4 +1,4 @@
-package org.sundo.list.services;
+package org.sundo.wamis.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,7 @@ import org.sundo.list.controllers.RequestObservatory;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.ObservatoryId;
 import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.services.ObservatoryDataNotFoundException;
 import org.sundo.wamis.services.ObservatoryNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +53,8 @@ public class ObservatorySaveService {
         }
 
         data.setObsknd(form.getObsknd());
-        data.setLatitude(form.getLatitude());
-        data.setLongitude(form.getLongitude());
+        data.setLat(form.getLatitude());
+        data.setLon(form.getLongitude());
         data.setMngorg(form.getMngorg());
         data.setObsnm(form.getObsnm());
         data.setSbsncd(form.getSbsncd());

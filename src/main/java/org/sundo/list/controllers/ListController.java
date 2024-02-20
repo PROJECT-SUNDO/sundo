@@ -1,4 +1,5 @@
 package org.sundo.list.controllers;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.sundo.commons.exceptions.AlertBackException;
 import org.sundo.commons.exceptions.AlertException;
 import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.list.services.ObservatorySaveService;
+import org.sundo.wamis.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.WaterLevelFlow;
@@ -46,13 +48,17 @@ public class ListController {
 		return "front/list/list";
 	}
 
-	/**
-	 * 관측소명 클릭 시 상세페이지 팝업 페이지
-	 */
-	@GetMapping("/detail/{seq}")
-	public String detail (@PathVariable("seq") Long seq, Model model){
-		return "front/list/detail";
-	}
+		/**
+		 * 관측소명 클릭 시 상세페이지 팝업 페이지
+		 */
+		@GetMapping("/detail/{obscd}")
+		public String detail (@PathVariable("obscd") String obscd, Model model){
+
+			Observatory observatory = observatoryInfoService.get(obscd);
+			model.addAttribute("observatory", observatory);
+
+			return "front/list/detail";
+		}
 
 	/**
 	 * 관측 정보 클릭 시 정보 확인 페이지
@@ -81,8 +87,13 @@ public class ListController {
 	/**
 	 * 관측소 수정
 	 */
-	@GetMapping("/update/{seq}")
-	public String update (@PathVariable("seq") Long seq, Model model){
+	@GetMapping("/update/{obscd}/{type}")
+	public String update (@PathVariable("obscd") String obscd, @PathVariable("type") String type, Model model){
+		commonProcess("update", model);
+
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+		model.addAttribute("requestObservatory", form);
+
 		return "front/list/update";
 	}
 
