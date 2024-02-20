@@ -13,7 +13,14 @@ window.addEventListener("DOMContentLoaded", function(){
             const queryString = '?type=' + type.value + "&&obscd=" + obscd.value;
             location.href=url+queryString;
         });
+        /* modal */
+        function openObDetailModal() {
+            alert("실행좀");
+            $('#obDetailModal .modal-content').load("/list/list");
+            $('#obDetailModal').modal();
+        }
     }
+
 
 
 })
