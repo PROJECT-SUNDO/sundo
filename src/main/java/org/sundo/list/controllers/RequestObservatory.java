@@ -38,7 +38,7 @@ public class RequestObservatory {
 
     private String mngorg; // 운영기관
 
-    private double outlier; // 이상치
+    private Double outlier; // 이상치
 
-    private boolean clsyn; // 사용여부
+    private Boolean clsyn; // 사용여부
 }
