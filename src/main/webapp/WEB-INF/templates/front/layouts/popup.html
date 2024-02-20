@@ -10,22 +10,29 @@
         '}"></th:block> <th:block th:text="#{한강수자원관리플랫폼}"></th:block>
     </title>
 
+
     <link rel="stylesheet" type="text/css" th:href="@{/common/css/popup_style.css}"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/common/css/style.css}" />
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCommonCss}"
             th:href="@{/common/css/{file}.css(file=${cssFile})}"/>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/front/css/popup_style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/common/css/popup_style.css}"/>
 
     <link rel="stylesheet" type="text/css" th:href="@{/front/css/style.css}" />
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
             th:href="@{/front/css/{file}.css(file=${cssFile})}"
     />
+    <!-- XEIcon -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
+    />
 
     <th:block layout:fragment="addCss"></th:block>
 
     <script th:src="@{/common/js/common.js}"></script>
+    <script th:src="@{/common/js/popup.js}"></script>
     <script
             th:each="jsFile : ${addCommonScript}"
             th:src="@{/common/js/{file}.js(file=${jsFile})}"
@@ -38,6 +45,15 @@
     ></script>
 
     <th:block layout:fragment="addScript"></th:block>
+
+    <!-- cctv -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.1/video-js.min.css"
+          integrity="sha512-D/n19dhr+LY8HOoGuybX+bJYsZOFKb0r7YpAWBMPg5Hnke6lxdHl6q21d7qiwIsMgdSnBG9pSMQlwTtZ+6ISmw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.1/video.min.js"
+            integrity="sha512-xT61DWoPRoAa4ir+LqER5L4/zzuO5tQOQywZYqU8BaZVqolq78bRobozDxozcCZ6tmo92zetGVQHRp+sQHIi/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 <body>
 <header class="flex align-center head">
