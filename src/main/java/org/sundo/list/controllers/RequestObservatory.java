@@ -18,7 +18,6 @@ public class RequestObservatory {
 
     private String obsnm; // 관측소명
 
-    private String obscd; // 관측소코드
     private String type; // 관측유형
 
     private String sbsncd; // 표준 유역 코드
