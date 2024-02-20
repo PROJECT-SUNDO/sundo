@@ -13,8 +13,6 @@ import org.sundo.list.services.ListSaveService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.services.ObservatoryInfoService;
 
-import org.sundo.list.services.ListSaveService;
-
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class ListController {
 	private final ObservatoryInfoService observatoryInfoService;
 
 		@GetMapping
-		public String list (@ModelAttribute ListDataSearch search, Model model){
+		public String list (@ModelAttribute ObservatorySearch search, Model model){
 			commonProcess("list", model);
 
 			ListData<Observatory> data = listInfoService.getList(search);
@@ -150,8 +148,8 @@ public class ListController {
 		if(mode.equals("list")) {
 			pageTitle = "목록";
 			addScript.add("list/list");
-			addCommonCss.add("common/style");
 			addCss.add("list/style");
+			addCommonCss.add("common/style");
 		}else if (mode.equals("setting")){
 			pageTitle = "환경설정";
 			addCss.add("list/setting");

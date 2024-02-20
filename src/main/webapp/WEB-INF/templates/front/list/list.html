@@ -4,7 +4,7 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
     <h1>관측소 정보</h1>
-    <form th:action="@{/list}" method="get" th:object="${listDataSearch}">
+    <form th:action="@{/list}" method="get" th:object="${observatorySearch}">
         <div class="flex align-center">
             <div class="searchBtn"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
             <div>검색</div>
