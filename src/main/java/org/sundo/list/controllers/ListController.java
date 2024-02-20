@@ -20,6 +20,7 @@ import org.sundo.wamis.entities.WaterLevelFlow;
 import org.sundo.wamis.services.ObservationInfoService;
 import org.sundo.wamis.services.ObservatoryInfoService;
 
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/list")
 @RequiredArgsConstructor
-public class ListController implements ExceptionProcessor {
+public class ListController {
 
 	private final Utils utils;
 	private final ListInfoService listInfoService;
@@ -40,7 +41,7 @@ public class ListController implements ExceptionProcessor {
 		public String list (@ModelAttribute ObservatorySearch search, Model model){
 			commonProcess("list", model);
 
-		ListData<Observatory> data = listInfoService.getList(search);
+			ListData<Observatory> data = observatoryInfoService.getList(search);
 
 		model.addAttribute("items", data.getItems());
 		model.addAttribute("pagination", data.getPagination());
@@ -115,8 +116,8 @@ public class ListController implements ExceptionProcessor {
 	 */
 	@GetMapping("/delete/{seq}")
 	public String delete (@PathVariable("seq") Long seq, Model model){
-				return "front/list/delete";
-			}
+        return "front/list/delete";
+    }
 
 	/**
 	 * 환경설정
