@@ -1,4 +1,3 @@
-<<<<<<<<< Temporary merge branch 1
 window.addEventListener("DOMContentLoaded", function(){
     const pageBtns = document.querySelectorAll(".page-link button")
 

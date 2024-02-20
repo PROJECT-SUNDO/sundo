@@ -42,8 +42,12 @@ public class ListController {
 		/**
 		 * 관측소명 클릭 시 상세페이지 팝업 페이지
 		 */
-		@GetMapping("/detail/{seq}")
-		public String detail (@PathVariable("seq") Long seq, Model model){
+		@GetMapping("/detail/{obscd}")
+		public String detail (@PathVariable("obscd") String obscd, Model model){
+			
+			Observatory observatory = observatoryInfoService.get(obscd);
+			model.addAttribute("observatory", observatory);
+			
 			return "front/list/detail";
 		}
 

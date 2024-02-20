@@ -13,6 +13,7 @@ import org.sundo.commons.Pagination;
 import org.sundo.commons.Utils;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.list.controllers.RequestObservatory;
+import org.sundo.list.services.ObservatoryDataNotFoundException;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.QObservatory;
 import org.sundo.wamis.repositories.ObservatoryRepository;
@@ -28,6 +29,12 @@ public class ObservatoryInfoService {
     private final ObservatoryRepository observatoryRepository;
     private final HttpServletRequest request;
     private final EntityManager em;
+
+    public Observatory get(String obscd) {
+        Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservatoryDataNotFoundException::new);
+
+        return data;
+    }
 
     public RequestObservatory getRequest(String obscd, String type){
         Observatory obs = observatoryRepository.getOne(obscd, type).orElse(null);
