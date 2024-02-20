@@ -8,12 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ResourceBundle;
 
+
 @Component
 @RequiredArgsConstructor
 public class Utils {
     private final HttpServletRequest request;
     private final HttpSession session;
 
+    /**
+     * 메세지를 타입에 따라 가져옴
+     * 가져온 메시지를 출력
+     */
     private static final ResourceBundle commonsBundle;
     private static final ResourceBundle validationsBundle;
     private static final ResourceBundle errorsBundle;
@@ -51,23 +56,26 @@ public class Utils {
 
             ResourceBundle bundle = null;
             if (type.equals("commons")) {
-                bundle = commonsBundle;
-            } else if (type.equals("errors")) {
-                bundle = errorsBundle;
-            } else {
-                bundle = validationsBundle;
+                if (type.equals("commons")) {
+                    bundle = commonsBundle;
+                } else if (type.equals("errors")) {
+                    bundle = errorsBundle;
+                } else {
+                    bundle = validationsBundle;
+                }
+
+                return bundle.getString(code);
             }
-
-            return bundle.getString(code);
-        } catch (Exception e) {
+        } catch(Exception e){
             e.printStackTrace();
-            return "";
         }
+
+        return "";
+    }
+    public static String getMessage (String code) {
+        return getMessage(code,null);
     }
 
-    public static String getMessage(String code) {
-        return getMessage(code, null);
-    }
 
     /**
      * \n 또는 \r\n -> <br>
@@ -113,7 +121,5 @@ public class Utils {
     public String[] getParams(String name) {
         return request.getParameterValues(name);
     }
-
-
-
 }
+
