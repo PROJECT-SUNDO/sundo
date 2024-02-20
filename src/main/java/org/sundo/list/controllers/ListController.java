@@ -1,6 +1,7 @@
 package org.sundo.list.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -8,6 +9,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
+import org.sundo.commons.exceptions.AlertBackException;
+import org.sundo.commons.exceptions.AlertException;
+import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.list.service.ListInfoService;
 import org.sundo.list.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
@@ -23,7 +27,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/list")
 @RequiredArgsConstructor
-public class ListController {
+public class ListController implements ExceptionProcessor {
 
 	private final Utils utils;
 	private final ListInfoService listInfoService;
@@ -126,13 +130,13 @@ public class ListController {
 						  @ModelAttribute ObservationSearch search,
 						  Model model) {
 		commonProcess("setting", model);
-		model.addAttribute("seq", seq);
 		String obscd = utils.getParam("obscd");
 		String type = utils.getParam("type");
 		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
 		search.setObscd(form.getObscd());
 		search.setOutlier(form.getOutlier());
 		search.setType(form.getType());
+		search.setOut(true);
 
 		if(type.equals("rf")){
 			ListData<Precipitation> data = observationInfoService.getRFList(search);
@@ -150,20 +154,25 @@ public class ListController {
 		return "front/list/setting";
 	}
 
-	@PostMapping("/setting/save/{seq}")
-	public String saveSetting(@PathVariable("seq") String seq, @Valid RequestObservatory form, Errors errors, Model model){
+	@PostMapping("/setting/save")
+	public String saveSetting(@Valid RequestObservatory form, Errors errors, Model model){
 		commonProcess("setting", model);
 
 		observatorySettingValidator.validate(form, errors);
-
+		System.out.println("여기1");
 		if(errors.hasErrors()){
-			return "front/list/setting";
+			errors.getAllErrors().forEach(System.out::println);
+			throw new AlertBackException("올바르지 않은 요청입니다.", HttpStatus.BAD_REQUEST);
+
 		}
 
 		observatorySaveService.saveOutlier(form);
+		String script = "alert('저장되었습니다.');"
+				+"parent.location.reload();";
+		model.addAttribute("script", script);
 
+		return "common/_execute_script";
 
-		return "redirect:/list/setting/" + seq;
 	}
 
 	/**

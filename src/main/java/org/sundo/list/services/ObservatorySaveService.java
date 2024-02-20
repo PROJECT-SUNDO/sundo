@@ -76,6 +76,6 @@ public class ObservatorySaveService {
         Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
 
         observatory.setOutlier(outlier);
-        observatoryRepository.flush();
+        observatoryRepository.saveAndFlush(observatory);
     }
 }
