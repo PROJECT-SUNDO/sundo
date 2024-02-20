@@ -1,4 +1,3 @@
-<<<<<<<<< Temporary merge branch 1
 window.addEventListener("DOMContentLoaded", function(){
     const pageBtns = document.querySelectorAll(".page-link button")
 
@@ -13,13 +12,10 @@ window.addEventListener("DOMContentLoaded", function(){
         }
     }
 
-
-
-});
     /* 양식 공통 처리 S*/
     const formActions = document.getElementsByClassName("form_action");
     for(const el of formActions) {
-        el.addEventListener("click"),function() {
+        el.addEventListener("click",function() {
             const dataset = this.dataset;
             const mode = dataset.mode || "update";
             const formName = dataset.formName;
@@ -29,7 +25,7 @@ window.addEventListener("DOMContentLoaded", function(){
             const formEl = document[formName];
             formEl._method.value = mode == 'delete' ? 'DELETE' : 'PATCH';
 
-            cost modeTitle = mode == 'delete' ? '삭제' : '수정';
+            const modeTitle = mode == 'delete' ? '삭제' : '수정';
 
             const chks = formEl.querySelectorAll("input[name='chk']:checked");
 

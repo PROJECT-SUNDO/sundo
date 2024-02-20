@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@DiscriminatorValue("wlf")
 public class WaterLevelFlow extends Observation {
     @Column(length = 10)
     private String wlobscd;

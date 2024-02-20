@@ -17,6 +17,8 @@ import org.sundo.wamis.repositories.*;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -194,7 +196,12 @@ public class WamisApiService {
                     new TypeReference<ApiDataResultList<Precipitation>>() {
                     });
 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
             List<Precipitation> items = result.getContent();
+            items.forEach(item -> {
+                LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
+                item.setYmd(date);
+            });
 
             precipitationRepository.saveAllAndFlush(items);
 
