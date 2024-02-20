@@ -9,6 +9,7 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank
 import javax.persistence.Column;
 
 @Data @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class RequestObservatory {
 
@@ -29,15 +30,15 @@ public class RequestObservatory {
 
     private String add; // 위치(주소)
 
-    private double latitude; // 위도
+    private String latitude; // 위도
 
-    private double longitude; // 경도
+    private String longitude; // 경도
 
     private String obsknd; // 관측방법
 
     private String mngorg; // 운영기관
 
-    private double outlier; // 이상치
+    private Double outlier; // 이상치
 
-    private boolean clsyn; // 사용여부
+    private Boolean clsyn; // 사용여부
 }

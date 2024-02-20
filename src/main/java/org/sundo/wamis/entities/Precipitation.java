@@ -3,10 +3,7 @@ package org.sundo.wamis.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * 강수량 데이터
@@ -14,6 +11,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
+@DiscriminatorValue("rf")
 public class Precipitation extends Observation {
 
 

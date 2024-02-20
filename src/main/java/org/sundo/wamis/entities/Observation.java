@@ -19,9 +19,10 @@ public abstract class Observation {
     private Long seq;
 
     @Column(length = 12)
+    @JsonFormat(pattern="yyyyMMddHHmm")
     private String ymdhm;////년월일시분
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDate ymd;//년월일
 
 }

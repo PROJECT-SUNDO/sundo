@@ -28,19 +28,20 @@
                     <span th:text="*{type}"></span>
                 </div>
             </div>
-            <form th:object="${requestObservatory}">
+            <form th:action="@{/list/setting/save}" method="post" th:object="${requestObservatory}" target="ifrmProcess" autocomplete="off">
                 <div class="observatoryForm mgn-bottom-10px">
-                    <input type="hidden" th:value="*{obscd}">
+                    <input type="hidden" name="obscd" th:value="*{obscd}">
+                    <input type="hidden" name="type" th:value="*{type}">
                     <div>
                         <span th:text="#{사용여부}"></span>
-                        <input type="radio" name="clsyn" id="clsyn" value="운영">
+                        <input type="radio" name="clsyn" id="clsyn" value="true" th:field="*{clsyn}">
                     </div>
                     <div>
                         <span th:text="#{이상치_기준_설정}"></span>
-                        <input type="number" name="outlier">
+                        <input type="number" name="outlier" th:field="*{outlier}">
                     </div>
                 </div>
-                <button type="button" class="saveBtn mgn-bottom-10px" th:text="#{저장}"></button>
+                <button type="submit" class="saveBtn mgn-bottom-10px" th:text="#{저장}"></button>
             </form>
         </div>
         <!-- 관측소 데이터 검색 -->
@@ -49,14 +50,19 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <div>검색</div>
             </div>
-            <form th:object="${requestObservation}" class="flex align-center obsForm">
+            <form th:object="${observationSearch}" class="flex align-center obsForm">
+                <input type="hidden" name="type" th:value="${requestObservatory.type}">
+                <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
+                <input type="hidden" name="outlier" th:value="${requestObservatory.outlier}">
+
+
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
-                    <input name="sdate" type="date">
+                    <input type="date" name="sdate" th:field="*{sdate}">
                     ~
-                    <input name="edate" type="date">
+                    <input type="date" name="edate" th:field="*{edate}">
                 </div>
-                <button type="button" class="searchBtn" th:text="#{검색}"></button>
+                <button type="submit" class="searchBtn" th:text="#{검색}"></button>
             </form>
         </div>
         <div class="divTable minimalistBlack">
@@ -70,10 +76,12 @@
                 </div>
             </div>
             <div class="divTableBody">
-                <div class="divTableRow" th:if="${items != null}" th:each="item, status : ${items}" th:object="${item}">
-                    <div class="divTableCell" th:text="*{status.count}"></div>
+                <div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}" th:object="${item}">
+                    <div class="divTableCell" th:text="${status.count}"></div>
                     <div class="divTableCell" th:text="*{ymdhm}"></div>
-                    <div class="divTableCell" th:text="*{data}"></div>
+                    <div class="divTableCell" th:if="${requestObservatory.type == 'rf'}" th:text="*{rf}"></div>
+                    <div class="divTableCell" th:if="${requestObservatory.type == 'wl'}" th:text="*{wl}"></div>
+                    <div class="divTableCell" th:if="${requestObservatory.type == 'flw'}" th:text="*{flw}"></div>
                     <div class="divTableCell">
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </div>
@@ -82,11 +90,12 @@
                     </div>
                 </div>
 
-                <div th:unless="${items != null}">
+                <div th:unless="${items != null && !items.isEmpty()}">
                     <div th:text="#{데이터_없음}"></div>
                 </div>
             </div>
         </div>
+        <th:block th:replace="~{common/_pagination::pagination}"></th:block>
     </section>
 </main>
 </html>

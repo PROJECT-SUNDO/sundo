@@ -17,7 +17,7 @@
         <div>
             <label class="latitude">위도</label>
             <input type="text" id="latitude" name="latitude" th:field="*{latitude}" placeholder="위도를 입력하세요">
-            <div class="error" th:each="err : ${#fields.errors('sbsncd')}" th:text="${err}"></div>
+            <div class="error" th:each="err : ${#fields.errors('latitude')}" th:text="${err}"></div>
             <label class="longitude">경도</label>
             <input type="text" id="longitude" name="longitude" th:field="*{longitude}" placeholder="경도를 입력하세요">
             <div class="error" th:each="err : ${#fields.errors('longitude')}" th:text="${err}"></div>
