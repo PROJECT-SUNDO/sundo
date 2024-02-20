@@ -1,14 +1,26 @@
 package org.sundo.list.services;
 
-public class ListDeleteService {
-    /* infoservice 하기
-    private final ObservatoryRepository observatoryRepository;
-    private final ObservatoryInfoService observatoryInfoService;
-    public Long delete(Long seq) {
-        Observatory data = observatoryInfoService.get(seq);
-        Long boardDataSeq = data.get
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.repositories.ObservatoryRepository;
 
+import javax.transaction.Transactional;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class ListDeleteService {
+
+    private final ObservatoryRepository observatoryRepository;
+    private final ListInfoService listInfoService;
+    public Long delete(Long seq) {
+        Observatory data = listInfoService.get(seq);
+        observatoryRepository.delete(data);
+        observatoryRepository.flush();
 
     }
-    */
+
+
+
 }
