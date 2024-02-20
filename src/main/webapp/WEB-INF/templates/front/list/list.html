@@ -46,15 +46,18 @@
             <div class="divTableRow">
                 <div th:text="${status.count}"  class="divTableCell">cell1_1</div>
 
-                <div type="button" th:text="${item.obsnm}" class="divTableCell"></div>
+                <div class="divTableCell detail" th:data-obscd="${item.obscd}">
+                    <span th:text="${item.obsnm}"></span>
+                    <input type="hidden" th:name="${'obsnm' + status.count}" th:value="${item.obsnm}" th:id="*{'obsnm' + status.count}">
+                </div>
 
                 <div class="divTableCell">
                     <span th:text="#{${item.type}}"></span>
-                    <input type="hidden" th:name="*{'type_' + status.count}" th:value="${item.type}" th:id="*{'type_' + status.count}">
+                    <input type="hidden" th:name="${'type_' + status.count}" th:value="${item.type}" th:id="*{'type_' + status.count}">
                 </div>
                 <div class="divTableCell">
                     <span th:text="${item.obscd}"></span>
-                    <input type="hidden" th:name="*{'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
+                    <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
                 </div>
                 <div class="divTableCell" th:data-obscd-id="*{'obscd_' + status.count}" th:data-obsknd-id="*{'obsknd' + status.count}">
                     <i class="fa fa-search" aria-hidden="true"></i>
@@ -75,11 +78,19 @@
         </div>
     </div>
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+
+    <script>
+        const { popup } = commonLib;
+        const details = document.querySelectorAll(".detail");
+        details.forEach((button, index) => {
+            button.addEventListener("click", (e) => {
+                const obscd = e.currentTarget.dataset.obscd;
+                const url = `/list/detail/${obscd}`;
+                popup.open(url, 450, 450);
+            });
+        });
+    </script>
 </main>
 
-<!--<script>
-    const { popup } = commonLib;
-    const detail = document.getElementById("detail");
-    detail.onclick = () => popup.open('/list/detail', 450, 450);
-</script>-->
+
 </html>

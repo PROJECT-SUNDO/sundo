@@ -45,13 +45,17 @@ public class ListController {
 		return "front/list/list";
 	}
 
-	/**
-	 * 관측소명 클릭 시 상세페이지 팝업 페이지
-	 */
-	@GetMapping("/detail/{seq}")
-	public String detail (@PathVariable("seq") Long seq, Model model){
-		return "front/list/detail";
-	}
+		/**
+		 * 관측소명 클릭 시 상세페이지 팝업 페이지
+		 */
+		@GetMapping("/detail/{obscd}")
+		public String detail (@PathVariable("obscd") String obscd, Model model){
+			
+			Observatory observatory = observatoryInfoService.get(obscd);
+			model.addAttribute("observatory", observatory);
+			
+			return "front/list/detail";
+		}
 
 	/**
 	 * 관측 정보 클릭 시 정보 확인 페이지

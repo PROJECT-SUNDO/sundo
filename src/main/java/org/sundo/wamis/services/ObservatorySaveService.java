@@ -53,8 +53,8 @@ public class ObservatorySaveService {
         }
 
         data.setObsknd(form.getObsknd());
-        data.setLatitude(form.getLatitude());
-        data.setLongitude(form.getLongitude());
+        data.setLat(form.getLatitude());
+        data.setLon(form.getLongitude());
         data.setMngorg(form.getMngorg());
         data.setObsnm(form.getObsnm());
         data.setSbsncd(form.getSbsncd());
