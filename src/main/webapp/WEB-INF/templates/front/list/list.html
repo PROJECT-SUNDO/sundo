@@ -46,7 +46,7 @@
             <div class="divTableRow">
                 <div th:text="${status.count}"  class="divTableCell">cell1_1</div>
 
-                <div type="button" th:text="${item.obsnm}" class="divTableCell" data-toggle="modal" data-target="#obDetail" onclick="openObDetailModal()"></div>
+                <div type="button" th:text="${item.obsnm}" class="divTableCell"></div>
 
                 <div class="divTableCell">
                     <span th:text="#{${item.type}}"></span>
@@ -74,7 +74,6 @@
             <th:block th:unless="*{items != null}" th:text="#{데이터_없음}"></th:block>
         </div>
     </div>
-    <th:block th:replace="~{common/_pagination::pagination}"></th:block>
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
 </main>
 
