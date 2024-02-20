@@ -12,7 +12,7 @@ import org.sundo.list.service.ListInfoService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.services.ObservatoryInfoService;
 
-import org.sundo.list.service.ListSaveService;
+import org.sundo.list.services.ListSaveService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
