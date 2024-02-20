@@ -17,7 +17,7 @@ public class ApiWamisController {
         apiService.getObservatories("wl");
         apiService.getObservatories("flw");
         apiService.updateWaterLevelFlow( "10M", "1018683");
-        apiService.updatePrecipitation( "10M", "1018683");
+        apiService.updatePrecipitation( "10M", "10184100");
 
     }
 
