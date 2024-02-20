@@ -8,11 +8,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
-import org.sundo.list.service.ListInfoService;
 import org.sundo.list.services.ListSaveService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.services.ObservatoryInfoService;
-
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -24,7 +22,6 @@ import java.util.List;
 public class ListController {
 
 	private final Utils utils;
-	private final ListInfoService listInfoService;
 	private final ListSaveService listSaveService;
 	private final ObservatoryValidator observatoryValidator;
 
@@ -34,7 +31,7 @@ public class ListController {
 		public String list (@ModelAttribute ObservatorySearch search, Model model){
 			commonProcess("list", model);
 
-			ListData<Observatory> data = listInfoService.getList(search);
+			ListData<Observatory> data = observatoryInfoService.getList(search);
 
 			model.addAttribute("items", data.getItems());
 			model.addAttribute("pagination", data.getPagination());
