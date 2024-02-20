@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * 강수량 데이터
+ */
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
