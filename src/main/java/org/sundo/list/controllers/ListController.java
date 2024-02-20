@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
-import org.sundo.commons.exceptions.AlertException;
-import org.sundo.commons.exceptions.ExceptionProcessor;
-import org.sundo.list.service.ListInfoService;
-import org.sundo.list.services.ObservatorySaveService;
+import org.sundo.wamis.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.WaterLevelFlow;
@@ -31,7 +28,6 @@ import java.util.List;
 public class ListController {
 
 	private final Utils utils;
-	private final ListInfoService listInfoService;
 	private final ObservatorySaveService observatorySaveService;
 	private final ObservatoryValidator observatoryValidator;
 	private final ObservationInfoService observationInfoService;
@@ -88,8 +84,13 @@ public class ListController {
 	/**
 	 * 관측소 수정
 	 */
-	@GetMapping("/update/{seq}")
-	public String update (@PathVariable("seq") Long seq, Model model){
+	@GetMapping("/update/{obscd}/{type}")
+	public String update (@PathVariable("obscd") String obscd, @PathVariable("type") String type, Model model){
+		commonProcess("update", model);
+
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+		model.addAttribute("requestObservatory", form);
+
 		return "front/list/update";
 	}
 
