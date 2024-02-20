@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.list.service.ListInfoService;
+import org.sundo.list.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.entities.Precipitation;
+import org.sundo.wamis.entities.WaterLevelFlow;
+import org.sundo.wamis.services.ObservationInfoService;
 import org.sundo.wamis.services.ObservatoryInfoService;
-
-import org.sundo.list.service.ListSaveService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class ListController {
 	private final ObservatoryValidator observatoryValidator;
 	private final ObservationInfoService observationInfoService;
 	private final ObservatoryInfoService observatoryInfoService;
-
+	private final ObservatorySettingValidator observatorySettingValidator;
 		@GetMapping
 		public String list (@ModelAttribute ObservatorySearch search, Model model){
 			commonProcess("list", model);
@@ -121,9 +123,10 @@ public class ListController {
 	 */
 	@GetMapping("/setting/{seq}")
 	public String setting(@PathVariable("seq") String seq,
+						  @ModelAttribute ObservationSearch search,
 						  Model model) {
 		commonProcess("setting", model);
-
+		model.addAttribute("seq", seq);
 		String obscd = utils.getParam("obscd");
 		String type = utils.getParam("type");
 		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
@@ -147,8 +150,8 @@ public class ListController {
 		return "front/list/setting";
 	}
 
-	@PostMapping("/setting/save")
-	public String saveSetting(@Valid RequestObservatory form, Errors errors, Model model){
+	@PostMapping("/setting/save/{seq}")
+	public String saveSetting(@PathVariable("seq") String seq, @Valid RequestObservatory form, Errors errors, Model model){
 		commonProcess("setting", model);
 
 		observatorySettingValidator.validate(form, errors);
@@ -159,12 +162,8 @@ public class ListController {
 
 		observatorySaveService.saveOutlier(form);
 
-		String script = "alert('저장되었습니다.');"
-				+ "history.back();";
 
-		model.addAttribute("script", script);
-
-		return "common/_execute_script";
+		return "redirect:/list/setting/" + seq;
 	}
 
 	/**

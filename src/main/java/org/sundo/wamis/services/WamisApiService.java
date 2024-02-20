@@ -122,7 +122,7 @@ public class WamisApiService {
             timeUnit = "1D";
         }
 
-        String url = ApiURL.PrecipitationFlow + timeUnit + "/" + obscd + "/" + getPeriod()+ ".json";
+        String url = ApiURL.PRECIPITATION + timeUnit + "/" + obscd + "/" + getPeriod()+ ".json";
 
         String data = restTemplate.getForObject(URI.create(url), String.class);
 

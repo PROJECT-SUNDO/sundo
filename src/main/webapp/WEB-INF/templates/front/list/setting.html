@@ -28,7 +28,7 @@
                     <span th:text="*{type}"></span>
                 </div>
             </div>
-            <form th:action="@{/list/setting/save}" method="post" th:object="${requestObservatory}">
+            <form th:action="@{/list/setting/save/{seq}(seq=${seq})}" method="post" th:object="${requestObservatory}">
                 <div class="observatoryForm mgn-bottom-10px">
                     <input type="hidden" name="obscd" th:value="*{obscd}">
                     <input type="hidden" name="type" th:value="*{type}">
