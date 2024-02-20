@@ -184,6 +184,7 @@ window.addEventListener("DOMContentLoaded", function(){
     const satelliteOverview = overViewArray[1];
 
     satelliteLayer.setVisible(false);
+    satelliteOverview.setVisible(false);
 
     const mapBtns = document.querySelectorAll(".map_btns .map_btn");
 
