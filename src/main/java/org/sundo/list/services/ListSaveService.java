@@ -26,8 +26,10 @@ public class ListSaveService {
         String obstype = form.getType();
 
         Observatory data = null;
-        if (StringUtils.hasText(obscd) && StringUtils.hasText(obstype) && mode.equals("update")) { // 글 수정
-            ObservatoryId id = new ObservatoryId(obscd, obstype);
+
+        if (StringUtils.hasText(obscd) && StringUtils.hasText(type) && mode.equals("update")) { // 글 수정
+            ObservatoryId id = new ObservatoryId(obscd, type);
+
             data = observatoryRepository.findById(id).orElseThrow(ObservatoryDataNotFoundException::new);
         } else { // 글 작성
             /**
