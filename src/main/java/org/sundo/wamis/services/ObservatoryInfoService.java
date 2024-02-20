@@ -31,6 +31,7 @@ public class ObservatoryInfoService {
                 .obsnm(obsnm)
                 .clsyn(clsyn)
                 .type(type)
+                .outlier(obs.getOutlier())
                 .build();
 
         return form;

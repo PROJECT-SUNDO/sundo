@@ -84,6 +84,10 @@
     padding: 0 10px;
 }
 
+.obsForm input{
+    padding: 0 5px;
+}
+
 .searchBtn{
     background: var(--main-color);
     color: #fff;
