@@ -77,6 +77,16 @@
 						<span th:text="#{면적}"></span>
 					</button>
 				</div>
+				<button type="button" id="distance">
+					<span th:text="#{거리}"></span>
+                </button>
+                <button type="button" id="save_map">
+                    <i class="xi-save"></i>
+                    <span th:text="#{저장}"></span>
+				</button>
+				<button type="button" id="area">
+					<span th:text="#{면적}"></span>
+				</button>
 			</div>
 			<div id="map" class="map"></div>
 		</section>
@@ -85,7 +95,7 @@
 	<script>
 		const { popup } = commonLib;
         const infoBtn = document.getElementById("popup");
-        <!--infoBtn.onclick = () => popup.open('/map/info', 450, 450);-->
+        infoBtn.onclick = () => popup.open('/map/info', 450, 450);
 	</script>
 </main>
 </html>
