@@ -5,18 +5,18 @@
 <main layout:fragment="content" >
     <h1>관측소 정보</h1>
     <form th:action="@{/list}" method="get" th:object="${listDataSearch}">
-        <div class="flex alc">
+        <div class="flex align-center">
             <div class="searchBtn"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
             <div>검색</div>
         </div>
         <hr>
-        <div class="flex alc">
-            <label for="Ocode">관측소 코드 </label>
-            <input type="text" id="Ocode" name="code" placeholder="xxxxxxx">
-            <label for="Oname">관측소명</label>
-            <input type="text" id="Oname" name="code" placeholder="관측소 명을 입력하세요">
-            <label for="Oanaysis">관측변수</label>
-            <select name="type" th:field="*{type}" id="Oanaysis">
+        <div class="flex align-center">
+            <label for="obscd">관측소 코드 </label>
+            <input type="number" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx">
+            <label for="obsnm">관측소명</label>
+            <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
+            <label for="type">관측변수</label>
+            <select name="type" th:field="*{type}" id="type">
                 <option value="ALL">전체</option>
                 <option value="rf">강수량</option>
                 <option value="wl">수위</option>
