@@ -23,7 +23,7 @@ public class ListSaveService {
 
         String obscd = form.getObscd();
 
-        String obstype = form.getType();
+        String type = form.getType();
 
         Observatory data = null;
 
