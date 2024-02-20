@@ -51,6 +51,15 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+button{
+    background: inherit ;
+    border:none;
+    box-shadow:none;
+    border-radius:0;
+    padding:0;
+    overflow:visible;
+    cursor:pointer
+}
 a{
     text-decoration: none;
 }
@@ -137,10 +146,6 @@ h2{
     margin-bottom: 10px;
 }
 
-
-
-
-
 /* 테이블 S */
 div.minimalistBlack {
   border: 3px solid #000000;
@@ -193,10 +198,7 @@ div.minimalistBlack {
     justify-content: center;
 }
 
-.flex {
-    display: flex;
-}
-
 .just-btw{
     justify-content: space-between;
 }
+

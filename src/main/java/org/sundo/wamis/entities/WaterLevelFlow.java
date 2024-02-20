@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 /**
- * 수위 + 유량
+ * 수위 + 유량 데이터
  */
 @Data
 @Entity

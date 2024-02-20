@@ -5,7 +5,7 @@
     border-radius: 50%;
     display: grid;
     justify-content: center;
-    align-items: start;
+    align-items: center;
 }
 
 .searchBtn i {
@@ -13,11 +13,9 @@
 }
 
 .pagination>div {
-    width: 300px;
+    width: 500px;
     display: flex;
     justify-content: space-between;
 }
 
-.alc {
-    align-items: center;
-}
+

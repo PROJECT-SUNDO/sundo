@@ -1,3 +1,4 @@
+<<<<<<<<< Temporary merge branch 1
 window.addEventListener("DOMContentLoaded", function(){
     const pageBtns = document.querySelectorAll(".page-link button")
 
@@ -12,6 +13,9 @@ window.addEventListener("DOMContentLoaded", function(){
         }
     }
 
+
+
+});
     /* 양식 공통 처리 S*/
     const formActions = document.getElementsByClassName("form_action");
     for(const el of formActions) {

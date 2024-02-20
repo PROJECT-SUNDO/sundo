@@ -28,9 +28,6 @@ public class WamisApiService {
     private final ObjectMapper objectMapper;
 
     private final ObservatoryRepository observatoryRepository; // 모든 관측소
-    private final RfObservatoryRepository rfObservatoryRepository; // 강수량 관측소
-    private final WlObservatoryRepository wlObservatoryRepository; // 수위 관측소
-    private final FlwObservatoryRepository flwObservatoryRepository; // 유량 관측소
 
     private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량 데이터
     private final PrecipitationRepository precipitationRepository; // 강수량 데이터
@@ -68,74 +65,7 @@ public class WamisApiService {
     }
 
 
-    /**
-     * 수위 관측소 목록
-     *
-     */
-    public List<WlObservatory> getWlObservatories() {
-        String url = ApiURL.WL_OBSERVATORY_LIST;
 
-        String data = restTemplate.getForObject(URI.create(url), String.class);
-        try {
-            ApiResultList<WlObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<WlObservatory>>() {
-            });
-            List<WlObservatory> items = result.getList();
-
-            wlObservatoryRepository.saveAllAndFlush(items);
-
-            return items;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * 유량 관측소 목록
-     *
-     */
-    public List<FlwObservatory> getFlwObservatories() {
-        String url = ApiURL.FLW_OBSERVATORY_LIST;
-
-
-        String data = restTemplate.getForObject(URI.create(url), String.class);
-        try {
-            ApiResultList<FlwObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<FlwObservatory>>() {
-            });
-            List<FlwObservatory> items = result.getList();
-
-            flwObservatoryRepository.saveAllAndFlush(items);
-
-            return items;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    /**
-     * 강수량 관측소 목록
-     *
-     */
-    public List<RfObservatory> getRfObservatories() {
-        String url = ApiURL.RF_OBSERVATORY_LIST;
-
-        String data = restTemplate.getForObject(URI.create(url), String.class);
-        try {
-            ApiResultList<RfObservatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<RfObservatory>>() {
-            });
-            List<RfObservatory> items = result.getList();
-            items.forEach(System.out::println);
-
-            rfObservatoryRepository.saveAllAndFlush(items);
-
-            return items;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
      * 수위 + 유량 데이터
@@ -225,11 +155,17 @@ public class WamisApiService {
         Calendar calendar = new GregorianCalendar();
         SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMddHHmm");
         String EdateTime = SDF.format(calendar.getTime()); // 현재
+        calendar.add(Calendar.MINUTE, -4); // 딜레이 4분으로 설정
+        EdateTime = SDF.format(calendar.getTime());
+        EdateTime = EdateTime.substring(0, 11) + "0";
         calendar.add(Calendar.DATE, -1);
+
         String SdateTime = SDF.format(calendar.getTime()); // 하루 전
+        calendar.add(Calendar.MINUTE, -4);
+        SdateTime = SDF.format(calendar.getTime());
+        SdateTime = SdateTime.substring(0, 11) + "0";
 
         return SdateTime + "/" + EdateTime;
-
     }
 
 

@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Pagination;
 import org.sundo.commons.Utils;
-import org.sundo.list.controllers.ListDataSearch;
+import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.QObservatory;
 import org.sundo.wamis.repositories.ObservatoryRepository;
@@ -33,7 +33,7 @@ public class ListInfoService {
      * @param search
      * @return
      */
-    public ListData<Observatory> getList(ListDataSearch search) {
+    public ListData<Observatory> getList(ObservatorySearch search) {
 
         int page = Utils.onlyPositiveNumber(search.getPage(), 1);
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 10);
@@ -43,13 +43,31 @@ public class ListInfoService {
         BooleanBuilder andBuilder = new BooleanBuilder();
 
         /* 검색 조건 S */
-        int obscd = search.getObscd();
+        String obscd = search.getObscd();
         String obsnm = search.getObsnm();
         String type = search.getType();
 
-        if (StringUtils.hasText(type)) {
-            type = obsnm.trim();
+        if (StringUtils.hasText(obscd)) {
 
+            obscd = obscd.trim();
+
+            andBuilder.and(observatory.obscd.contains(obscd));
+
+        }
+
+        if (StringUtils.hasText(obsnm)) {
+
+            obsnm = obsnm.trim();
+
+            andBuilder.and(observatory.obsnm.contains(obsnm));
+
+        }
+
+        if (StringUtils.hasText(type)) {
+
+            if (!type.equals("All")) {
+                andBuilder.and(observatory.type.eq(type));
+            }
         }
 
         /* 검색 조건 E */
@@ -59,7 +77,8 @@ public class ListInfoService {
         Pageable pageable = PageRequest.of(page - 1, limit);
 
         // 단일 테이블 불러올때
-         Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
+        Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
+        System.out.println("아아아아"+ data);
 
         Pagination pagination = new Pagination(page, (int) data.getTotalElements(), 10, limit, request);
 

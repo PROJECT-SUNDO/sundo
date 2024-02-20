@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import java.io.Serializable;
 
+/**
+ *강수량, 수위, 유량 관측소
+ */
 @Data
 @Entity @Builder
 @IdClass(ObservatoryId.class)

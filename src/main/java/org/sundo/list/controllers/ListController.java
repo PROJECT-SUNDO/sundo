@@ -9,13 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.list.service.ListInfoService;
-import org.sundo.list.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
-import org.sundo.wamis.entities.Precipitation;
-import org.sundo.wamis.entities.WaterLevelFlow;
-import org.sundo.wamis.services.ObservationInfoService;
 import org.sundo.wamis.services.ObservatoryInfoService;
 
+import org.sundo.list.service.ListSaveService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -32,12 +29,10 @@ public class ListController {
 	private final ObservatoryValidator observatoryValidator;
 	private final ObservationInfoService observationInfoService;
 	private final ObservatoryInfoService observatoryInfoService;
-	private final ObservatorySettingValidator observatorySettingValidator;
 
-
-	@GetMapping
-	public String list (@ModelAttribute ListDataSearch search, Model model){
-		commonProcess("list", model);
+		@GetMapping
+		public String list (@ModelAttribute ObservatorySearch search, Model model){
+			commonProcess("list", model);
 
 		ListData<Observatory> data = listInfoService.getList(search);
 
@@ -126,7 +121,6 @@ public class ListController {
 	 */
 	@GetMapping("/setting/{seq}")
 	public String setting(@PathVariable("seq") String seq,
-						  @ModelAttribute ObservationSearch search,
 						  Model model) {
 		commonProcess("setting", model);
 
@@ -149,6 +143,7 @@ public class ListController {
 
 
 		model.addAttribute("requestObservatory", form);
+
 		return "front/list/setting";
 	}
 
@@ -188,6 +183,7 @@ public class ListController {
 			pageTitle = "목록";
 			addScript.add("list/list");
 			addCss.add("list/style");
+			addCommonCss.add("common/style");
 		}else if (mode.equals("setting")){
 			pageTitle = "환경설정";
 			addCss.add("list/setting");

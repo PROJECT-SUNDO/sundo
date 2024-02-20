@@ -5,6 +5,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * 강수량 데이터
+ */
 @Data
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
