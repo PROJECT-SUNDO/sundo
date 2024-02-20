@@ -9,6 +9,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
 
+import org.sundo.wamis.dto.RfObservatoryDto;
+import org.sundo.wamis.dto.Wl_FlwObservatoryDto;
 import org.sundo.wamis.entities.*;
 import org.sundo.wamis.repositories.*;
 
@@ -18,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,20 +41,82 @@ public class WamisApiService {
      */
     public List<Observatory> getObservatories(String type) {
         String url = ApiURL.RF_OBSERVATORY_LIST;
+        String detailUrl = ApiURL.RF_OBSERVATORY_DETAIL;
         if (type.equals("wl")) {
             url = ApiURL.WL_OBSERVATORY_LIST;
+            detailUrl = ApiURL.WL_FLW_OBSERVATORY_DETAIL;
         } else if (type.equals("flw")) {
             url = ApiURL.FLW_OBSERVATORY_LIST;
+            detailUrl = ApiURL.WL_FLW_OBSERVATORY_DETAIL;
         }
 
         String data = restTemplate.getForObject(URI.create(url), String.class);
+        String detailData = restTemplate.getForObject(URI.create(detailUrl), String.class);
         try {
             ApiResultList<Observatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<Observatory>>() {});
 
             List<Observatory> items = result.getList();
             items.forEach(item -> item.setType(type));
-            items.forEach(System.out::println);
 
+            // 상세 데이터
+            if(type.equals("rf")){
+                ApiDataResultList<RfObservatoryDto> detailResult = objectMapper.readValue(detailData, new TypeReference<ApiDataResultList<RfObservatoryDto>>() {
+                });
+                List<RfObservatoryDto> details = detailResult.getContent();
+                details.forEach(detail -> detail.setType(type));
+
+                // obscd가 같을 때
+                List<RfObservatoryDto> matchingDetails = details.stream()
+                        .filter(detail -> items.stream()
+                                .anyMatch(item -> item.getObscd().equals(detail.getRfobscd())))
+                        .collect(Collectors.toList());
+
+                for (Observatory item : items) {
+                    matchingDetails.stream()
+                            .filter(detail -> item.getObscd().equals(detail.getRfobscd()))
+                            .findFirst()
+                            .ifPresent(detail -> {
+                                item.setLon(detail.getLon());
+                                item.setLat(detail.getLat());
+                                item.setAddr(detail.getAddr());
+                                item.setEtcaddr(detail.getEtcaddr());
+                            });
+                }
+
+                // 상세 데이터
+            } else if(type.equals("wl") || type.equals("flw")){
+                ApiDataResultList<Wl_FlwObservatoryDto> detailResult = objectMapper.readValue(detailData, new TypeReference<ApiDataResultList<Wl_FlwObservatoryDto>>() {
+                });
+                List<Wl_FlwObservatoryDto> details = detailResult.getContent();
+                details.forEach(detail -> detail.setType(type));
+
+                // obscd가 같을 때
+                List<Wl_FlwObservatoryDto> matchingDetails = details.stream()
+                        .filter(detail -> items.stream()
+                                .anyMatch(item -> item.getObscd().equals(detail.getWlobscd())))
+                        .collect(Collectors.toList());
+
+                for (Observatory item : items) {
+                    matchingDetails.stream()
+                            .filter(detail -> item.getObscd().equals(detail.getWlobscd()))
+                            .findFirst()
+                            .ifPresent(detail -> {
+                                item.setLon(detail.getLon());
+                                item.setLat(detail.getLat());
+                                item.setAddr(detail.getAddr());
+                                item.setEtcaddr(detail.getEtcaddr());
+
+                                if(type.equals("wl")) {
+                                    item.setAttwl(detail.getAttwl()); // 관심
+                                    item.setWrnwl(detail.getWrnwl()); // 주의보
+                                    item.setAlmwl(detail.getAlmwl()); // 경보
+                                    item.setSrswl(detail.getSrswl()); // 심각
+                                    item.setPfh(detail.getPfh()); // 계획홍수위
+                                    item.setFstnyn(detail.getFstnyn()); // 특보지점여부
+                                }
+                            });
+                }
+            }
             observatoryRepository.saveAllAndFlush(items);
 
             return items;
@@ -95,7 +160,6 @@ public class WamisApiService {
 
             List<WaterLevelFlow> items = result.getContent();
 
-            items.forEach(System.out::println);
             waterLevelFlowRepository.saveAllAndFlush(items);
 
         } catch (JsonProcessingException e) {
@@ -120,7 +184,7 @@ public class WamisApiService {
             timeUnit = "1D";
         }
 
-        String url = ApiURL.PrecipitationFlow + timeUnit + "/" + obscd + "/" + getPeriod()+ ".json";
+        String url = ApiURL.PRECIPITATION + timeUnit + "/" + obscd + "/" + getPeriod()+ ".json";
 
         String data = restTemplate.getForObject(URI.create(url), String.class);
 
@@ -132,7 +196,6 @@ public class WamisApiService {
 
             List<Precipitation> items = result.getContent();
 
-            items.forEach(System.out::println);
             precipitationRepository.saveAllAndFlush(items);
 
 
