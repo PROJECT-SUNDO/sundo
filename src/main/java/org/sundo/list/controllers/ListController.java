@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.list.service.ListInfoService;
-import org.sundo.list.services.ListSaveService;
-import org.sundo.wamis.entities.Observation;
+import org.sundo.list.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.WaterLevelFlow;
@@ -29,11 +28,12 @@ public class ListController {
 
 	private final Utils utils;
 	private final ListInfoService listInfoService;
-	private final ListSaveService listSaveService;
+	private final ObservatorySaveService observatorySaveService;
 	private final ObservatoryValidator observatoryValidator;
 	private final ObservationInfoService observationInfoService;
 	private final ObservatoryInfoService observatoryInfoService;
 	private final ObservatorySettingValidator observatorySettingValidator;
+
 
 	@GetMapping
 	public String list (@ModelAttribute ListDataSearch search, Model model){
@@ -103,7 +103,7 @@ public class ListController {
 			return "front/list/" + form.getMode();
 		}
 
-		listSaveService.save(form);
+		observatorySaveService.save(form);
 
 		return "redirect:/list";
 	}
@@ -162,8 +162,14 @@ public class ListController {
 			return "front/list/setting";
 		}
 
+		observatorySaveService.saveOutlier(form);
 
-		return "";
+		String script = "alert('저장되었습니다.');"
+				+ "history.back();";
+
+		model.addAttribute("script", script);
+
+		return "common/_execute_script";
 	}
 
 	/**

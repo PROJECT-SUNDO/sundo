@@ -1,8 +1,12 @@
 package org.sundo.list.controllers;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
+@RequiredArgsConstructor
 public class ObservatorySettingValidator implements Validator {
 
     @Override

@@ -7,15 +7,21 @@ import org.sundo.list.controllers.RequestObservatory;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.ObservatoryId;
 import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.services.ObservatoryNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Service
 @RequiredArgsConstructor
-public class ListSaveService {
+public class ObservatorySaveService {
     private final ObservatoryRepository observatoryRepository;
     private final HttpServletRequest request;
 
+    /**
+     * 리스트 목록에서 저장
+     * @param form
+     * @return
+     */
     public Observatory save(RequestObservatory form) {
 
         String mode = form.getMode();
@@ -53,11 +59,19 @@ public class ListSaveService {
         data = observatoryRepository.saveAndFlush(data);
         return data;
     }
-    /* List화가 꼭 필요한가???
 
-    public void saveList(List<Integer> chks) {
-
-        }
-
+    /**
+     * 이상치 저장
+     * @param form
      */
+    public void saveOutlier(RequestObservatory form) {
+        String obscd = form.getObscd();
+        String type = form.getType();
+        double outlier = form.getOutlier();
+
+        Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
+
+        observatory.setOutlier(outlier);
+        observatoryRepository.flush();
+    }
 }
