@@ -8,10 +8,6 @@ import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.ObservatoryId;
 import org.sundo.wamis.entities.QObservatory;
 
-import java.util.List;
-import java.util.Optional;
-import org.sundo.wamis.entities.QObservatory;
-
 import java.util.Optional;
 
 public interface ObservatoryRepository extends JpaRepository<Observatory, ObservatoryId>, QuerydslPredicateExecutor<Observatory> {
@@ -26,15 +22,15 @@ public interface ObservatoryRepository extends JpaRepository<Observatory, Observ
         return findOne(builder);
     }
 
-    Optional<ObservatoryRepository> findByObsnm(String obsnm); //optional형태의 반환
+    Optional<Observatory> findByObsnm(String obsnm); //optional형태의 반환
 
-    Optional<ObservatoryRepository> findBySbsncd(String sbcd); //
+    Optional<Observatory> findByObscd(String obscn); //
 
     default boolean existsByObsnm(String obsnm) {
         return exists(QObservatory.observatory.obsnm.eq(obsnm));
     }
 
-    default boolean existsBySbsncd(String sbsncd) {
-        return exists(QObservatory.observatory.sbsncd.eq(sbsncd));
+    default boolean existsByObscd(String obscn) {
+        return exists(QObservatory.observatory.sbsncd.eq(obscn));
     }
 }
