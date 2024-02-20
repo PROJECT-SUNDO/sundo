@@ -39,7 +39,7 @@ public class ObservatoryValidator implements Validator {
 
         }
 
-        if (observatoryRepository.existsBySbsncd(obscd)){
+        if (observatoryRepository.existsByObscd(obscd)){
             errors.rejectValue("obscd", "Duplicated");
         }
 

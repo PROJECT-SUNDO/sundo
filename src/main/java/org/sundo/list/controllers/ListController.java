@@ -150,6 +150,7 @@ public class ListController {
 		if(mode.equals("list")) {
 			pageTitle = "목록";
 			addScript.add("list/list");
+			addCommonCss.add("common/style");
 			addCss.add("list/style");
 		}else if (mode.equals("setting")){
 			pageTitle = "환경설정";
