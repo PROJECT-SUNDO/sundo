@@ -26,19 +26,19 @@
 
 			<section class="flex align-center aside-area">
 				<div class="aside dn">
-					<form class="searchFrm flex">
-						<input type="hidden" id="target">
-						<input type="text" class="searchInp" th:placeholder="#{관측소명_입력}">
-						<button type="button" class="searchBtn">
+					<form class="searchFrm flex align-center mgn-bottom-10px" target="ifrmProcess" autocomplete="off" th:object="${observatorySearch}">
+						<input type="hidden" id="type" name="type">
+						<input type="text" class="searchInp" th:placeholder="#{관측소명_입력}" name="obsnm">
+						<button type="submit" class="searchBtn">
 							<i class="xi-search"></i>
 						</button>
 					</form>
-					<div>
+					<div class="just-btw flex mgn-bottom-10px">
 						<span class="targetNm"></span>
 
 						<select class="order" name="order">
 							<option class="orderNm" selected></option>
-							<option value="obserNm" th:text="#{관측소명}"></option>
+							<option value="obsnm" th:text="#{관측소명}"></option>
 						</select>
 					</div>
 					<div class="divTable">
@@ -46,12 +46,15 @@
 							<div class="divTableHead" id="colNm"></div>
 							<div class="divTableHead" id="colVal"></div>
 						</div>
-						<div class="divTableRow">
-							<div class="divTableCell">나중에 관측소명이랑</div>
-							<div class="divTableCell">실시간관측값 넣기(반복문)</div>
+						<div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
+							<div class="divTableCell" th:text="*{obcnm}"></div>
+							<div class="divTableCell" th:text="*{data}"></div>
+						</div>
+						<div class="divTableRow" th:unless="${items != null && !items.isEmpty()}">
+							<div class="divTableCell" th:text="#{데이터_없음}"></div>
 						</div>
 					</div>
-					<th:block></th:block>
+					<th:block th:replace="~{common/_pagination::pagination}"></th:block>
 				</div>
 				<div>
 					<button type="button" class="angleBtn">

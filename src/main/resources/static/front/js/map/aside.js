@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", function(){
     for(const tabBtn of tabBtns){
         tabBtn.addEventListener("click", function(){
             const targetVal = this.dataset.target;
-            const targetEl = document.querySelector("#target");
+            const targetEl = document.querySelector("#type");
             const targetNm = document.querySelector(".targetNm");
             const orderNm = document.querySelector(".orderNm");
             const colNm = document.querySelector("#colNm");
@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", function(){
     /* 꺽쇠 버튼 클릭 - 관측소 목록 토글 S */
     angleBtn.addEventListener("click", function(){
         if(aside.classList.contains("dn")){
-            const targetEl = document.querySelector("#target");
+            const targetEl = document.querySelector("#type");
             if(!targetEl.value){
                 tabBtns[0].click();
             }else{
