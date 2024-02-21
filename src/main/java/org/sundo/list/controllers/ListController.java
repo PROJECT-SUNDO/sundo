@@ -11,13 +11,11 @@ import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
 import org.sundo.commons.exceptions.ExceptionProcessor;
-import org.sundo.wamis.entities.Observation;
-import org.sundo.wamis.repositories.ObservatoryRepository;
-import org.sundo.wamis.services.*;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.WaterLevelFlow;
-
+import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.services.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -62,14 +60,35 @@ public class ListController implements ExceptionProcessor {
 		}
 
 	/**
-	 * 관측 정보 클릭 시 정보 확인 페이지
+	 * 관측 정보
 	 * - 선택 관측소 정보
 	 * - 검색 영역
 	 *   조회 기간, 단위(10분/1시간/일/월/년)
 	 * - 목록 (검색 전 10분 단위 출력)
 	 */
 	@GetMapping("/info/{seq}")
-	public String info (@PathVariable("seq") Long seq, Model model){
+	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationDataSearch search,
+						Model model){
+		commonProcess("info", model);
+		String obscd = utils.getParam("obscd");
+		String type = utils.getParam("type");
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+		search.setObscd(form.getObscd());
+		search.setType(form.getType());
+
+/*		if(type.equals("rf")){
+			ListData<Precipitation> data = observationInfoService.getRFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}else{
+			ListData<WaterLevelFlow> data = observationInfoService.getWLFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}*/
+
+
+		model.addAttribute("requestObservatory", form);
+
 		return "front/list/info";
 	}
 
