@@ -60,16 +60,22 @@
                     <span th:text="${item.obscd}"></span>
                     <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
                 </div>
-                <div class="divTableCell" th:data-obscd-id="*{'obscd_' + status.count}" th:data-obsknd-id="*{'obsknd' + status.count}">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+                <div class="divTableCell">
+                    <button type="button" class="infoBtn" th:data-seq="${status.count}" data-url="/list/info/">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
                 </div>
                 <div class="divTableCell">
                     <a th:href="@{/list/update/{obscd}/{type}(obscd=${item.obscd}, type=${item.type})}">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
                 </div>
-                <div class="divTableCell">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                <div class="divTableCell delete" th:data-obscd="${item.obscd}">
+                    <a th:href="@{/list/delete/{obscd}(obscd=${item.obscd})}" onclick="return confirm('정말 관측소를 삭제하시겠습니까?');">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+
+                    <!--<input type="hidden" th:name="${'obsnm' + status.count}" th:value="${item.obsnm}" th:id="*{'obsnm' + status.count}">-->
                 </div>
                 <div class="divTableCell">
                     <button type="button" class="settingBtn" th:data-seq="${status.count}" data-url="/list/setting/">
@@ -89,6 +95,17 @@
             button.addEventListener("click", (e) => {
                 const obscd = e.currentTarget.dataset.obscd;
                 const url = `/list/detail/${obscd}`;
+                popup.open(url, 450, 450);
+            });
+        });
+    </script>
+    <script>
+        const { popup } = commonLib;
+        const delete = document.querySelectorAll(".delete);
+        details.forEach((button, index) => {
+            button.addEventListener("click", (e) => {
+                const obscd = e.currentTarget.dataset.obscd;
+                const url = `/list/delete/${obscd}`;
                 popup.open(url, 450, 450);
             });
         });
