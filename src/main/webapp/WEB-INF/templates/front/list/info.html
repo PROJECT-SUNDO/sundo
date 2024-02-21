@@ -36,13 +36,21 @@
             <form th:object="${observationDataSearch}" class="flex align-center obsForm">
                 <input type="hidden" name="type" th:value="${requestObservatory.type}">
                 <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
-<!--                <input type="hidden" name="timeUnit" th:value="${requestObservatory.timeUnit}">-->
+<!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
 
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
                     <input type="date" name="sdate" th:field="*{sdate}">
                     ~
                     <input type="date" name="edate" th:field="*{edate}">
+
+                    <select name="timeUnit" th:field="*{timeUnit}">
+                        <option value="tenM" th:text="#{10분}"></option>
+                        <option value="hour" th:text="#{1시간}"></option>
+                        <option value="day" th:text="#{일}"></option>
+                        <option value="month" th:text="#{월}"></option>
+                        <option value="year" th:text="#{년}"></option>
+                    </select>
                 </div>
                 <button type="button" class="searchBtn" th:text="#{검색}"></button>
 
