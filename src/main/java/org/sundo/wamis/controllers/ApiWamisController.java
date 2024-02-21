@@ -11,7 +11,7 @@ import org.sundo.wamis.services.WamisApiService;
 @RequiredArgsConstructor
 public class ApiWamisController {
     private final WamisApiService apiService;
-    @GetMapping("/test")
+    @GetMapping
     public void test() {
         apiService.getObservatories("rf");
         apiService.getObservatories("wl");

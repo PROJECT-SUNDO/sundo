@@ -60,39 +60,6 @@ public class ListController implements ExceptionProcessor {
 		}
 
 	/**
-	 * 관측 정보
-	 * - 선택 관측소 정보
-	 * - 검색 영역
-	 *   조회 기간, 단위(10분/1시간/일/월/년)
-	 * - 목록 (검색 전 10분 단위 출력)
-	 */
-	@GetMapping("/info/{seq}")
-	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationDataSearch search,
-						Model model){
-		commonProcess("info", model);
-		String obscd = utils.getParam("obscd");
-		String type = utils.getParam("type");
-		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
-		search.setObscd(form.getObscd());
-		search.setType(form.getType());
-
-/*		if(type.equals("rf")){
-			ListData<Precipitation> data = observationInfoService.getRFList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		}else{
-			ListData<WaterLevelFlow> data = observationInfoService.getWLFList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		}*/
-
-
-		model.addAttribute("requestObservatory", form);
-
-		return "front/list/info";
-	}
-
-	/**
 	 * 관측소 등록
 	 */
 	@GetMapping("/add")
@@ -146,6 +113,41 @@ public class ListController implements ExceptionProcessor {
 	public String delete (@PathVariable("seq") Long seq, Model model){
         return "front/list/delete";
     }
+
+
+
+	/**
+	 * 관측 정보
+	 * - 선택 관측소 정보
+	 * - 검색 영역
+	 *   조회 기간, 단위(10분/1시간/일/월/년)
+	 * - 목록 (검색 전 10분 단위 출력)
+	 */
+	@GetMapping("/info/{seq}")
+	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationDataSearch search,
+						Model model){
+		commonProcess("info", model);
+		String obscd = utils.getParam("obscd");
+		String type = utils.getParam("type");
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+		search.setObscd(form.getObscd());
+		search.setType(form.getType());
+
+/*		if(type.equals("rf")){
+			ListData<Precipitation> data = observationInfoService.getRFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}else{
+			ListData<WaterLevelFlow> data = observationInfoService.getWLFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}*/
+
+
+		model.addAttribute("requestObservatory", form);
+
+		return "front/list/info";
+	}
 
 	/**
 	 * 환경설정
