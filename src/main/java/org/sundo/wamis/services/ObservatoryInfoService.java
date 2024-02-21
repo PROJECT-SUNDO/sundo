@@ -14,8 +14,12 @@ import org.sundo.commons.Utils;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.list.controllers.RequestObservatory;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.QObservatory;
+import org.sundo.wamis.entities.WaterLevelFlow;
 import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.repositories.PrecipitationRepository;
+import org.sundo.wamis.repositories.WaterLevelFlowRepository;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +32,8 @@ public class ObservatoryInfoService {
     private final ObservatoryRepository observatoryRepository;
     private final HttpServletRequest request;
     private final EntityManager em;
+    private final PrecipitationRepository precipitationRepository;
+    private final WaterLevelFlowRepository waterLevelFlowRepository;
 
     public Observatory get(String obscd) {
         Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
@@ -109,15 +115,47 @@ public class ObservatoryInfoService {
 
         // 단일 테이블 불러올때
         Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
-        System.out.println("아아아아"+ data);
 
         Pagination pagination = new Pagination(page, (int) data.getTotalElements(), 10, limit, request);
 
         /* 페이징 처리 E */
 
         List<Observatory> items = data.getContent();
+        items.forEach(this::addInfo);
 
         return new ListData<>(items, pagination);
     }
+
+
+    private void addInfo(Observatory observatory){
+        String type = observatory.getType();
+        String obscd = observatory.getObscd();
+
+        if("rf".equals(type)){
+            List<Precipitation> precipitations = precipitationRepository.findByRfobscdOrderByYmdDesc(obscd).orElse(null);
+
+            if(precipitations != null && !precipitations.isEmpty()){
+                observatory.setData(precipitations.get(0).getRf());
+            }
+
+        }else if ("wl".equals(type) || "flw".equals(type)){
+            List<WaterLevelFlow> waterLevelFlows = waterLevelFlowRepository.findByWlobscdOrderByYmdDesc(obscd).orElse(null);
+            if(waterLevelFlows != null && !waterLevelFlows.isEmpty()){
+                double data = 0;
+                if("wl".equals(type)){
+                    data = waterLevelFlows.get(0).getWl();
+                }else{
+                    data = waterLevelFlows.get(0).getFw();
+                }
+
+                observatory.setData(data);
+
+            }
+        }
+
+    }
+
+
+
 
 }

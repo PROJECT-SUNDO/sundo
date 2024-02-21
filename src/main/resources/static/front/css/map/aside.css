@@ -1,0 +1,28 @@
+.targetNm{
+    font-weight: 700;
+    font-size: 15px;
+    padding: 0 10px;
+
+}
+
+.order{
+    border: 2px solid var(--main-color);
+    border-radius: 3px;
+    padding: 3px 5px;
+}
+.searchInp{
+    padding: 0 10px;
+    border: 2px solid var(--main-color);
+    width: 200px;
+    height: 25px;
+    margin: 0 10px;
+}
+
+.searchBtn{
+    text-align: center;
+    background: var(--main-color);
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    border: 2px solid var(--main-color);
+}
