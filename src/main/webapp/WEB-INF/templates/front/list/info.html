@@ -1,1 +1,35 @@
-<h1>정보 확인</h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+<main layout:fragment="content">
+    <section class="content">
+        <div class="flex just-btw title align-center">
+            <button type="button" id="listBtn">
+                <i class="xi-list"></i>
+                <span th:text="#{목록}"></span>
+            </button>
+        </div>
+        <!-- 관측소 정보 -->
+        <div th:object="${requestObservatory}">
+
+            <div class="observatory flex mgn-bottom-10px">
+                <div>
+                    <span th:text="#{관측소명}"></span>
+                    :
+                    <span th:text="*{obsnm}"></span>
+                </div>
+                <span>|</span>
+                <div>
+                    <span th:text="#{관측유형}"></span>
+                    :
+                    <span th:text="*{type}"></span>
+                </div>
+            </div>
+    [[${requestObservatory}]]
+
+        <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+    </section>
+
+</main>
+</html>

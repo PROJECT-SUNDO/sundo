@@ -1,4 +1,4 @@
-package org.sundo.list.services;
+package org.sundo.wamis.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -7,7 +7,6 @@ import org.sundo.list.controllers.RequestObservatory;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.ObservatoryId;
 import org.sundo.wamis.repositories.ObservatoryRepository;
-import org.sundo.wamis.services.ObservatoryNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,7 +35,7 @@ public class ObservatorySaveService {
         if (StringUtils.hasText(obscd) && StringUtils.hasText(type) && mode.equals("update")) { // 글 수정
             ObservatoryId id = new ObservatoryId(obscd, type);
 
-            data = observatoryRepository.findById(id).orElseThrow(ObservatoryDataNotFoundException::new);
+            data = observatoryRepository.findById(id).orElseThrow(ObservationNotFoundException::new);
         } else { // 글 작성
             /**
              * 관측소 코드 및 관측소 타입을 복합키로 PK로 지정하였고, 기본키 이므로 최초 추가시에만
@@ -52,8 +51,8 @@ public class ObservatorySaveService {
         }
 
         data.setObsknd(form.getObsknd());
-        data.setLatitude(form.getLatitude());
-        data.setLongitude(form.getLongitude());
+        data.setLat(form.getLatitude());
+        data.setLon(form.getLongitude());
         data.setMngorg(form.getMngorg());
         data.setObsnm(form.getObsnm());
         data.setSbsncd(form.getSbsncd());

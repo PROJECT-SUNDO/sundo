@@ -7,9 +7,12 @@
             <div class="error" th:each="err : ${#fields.errors('obsnm')}" th:text="${err}"></div>
         </div>
         <div>
-            <label class="type">관측 유형</label>
-            <input type="text" id="type" name="type" th:field="*{type}" placeholder="관측소유형을 입력하세요">
-            <div class="error" th:each="err : ${#fields.errors('type')}" th:text="${err}"></div>
+            <label for="type">관측변수</label>
+            <select name="type" th:field="*{type}" id="type">
+                <option value="rf">강수량</option>
+                <option value="wl">수위</option>
+                <option value="flw">유량</option>
+            </select>
             <label class="obscd">표준 코드</label>
             <input type="text" id="obscd" name="obscd"  th:field="*{obscd}"placeholder="표준코드를 입력하세요">
             <div class="error" th:each="err : ${#fields.errors('obscd')}" th:text="${err}"></div>
