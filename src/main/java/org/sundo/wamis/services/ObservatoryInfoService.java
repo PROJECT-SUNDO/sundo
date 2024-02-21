@@ -109,7 +109,6 @@ public class ObservatoryInfoService {
 
         // 단일 테이블 불러올때
         Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
-        System.out.println("아아아아"+ data);
 
         Pagination pagination = new Pagination(page, (int) data.getTotalElements(), 10, limit, request);
 
