@@ -6,59 +6,41 @@
 	<div class="flex content">
 		<div class="side flex">
 			<section class="asideBtns">
-				<button class="font-15px" type="button" data-target="wl">
-					<br />
-					<span th:text="#{수위}"></span>
-				</button>
-				<button class="font-15px" type="button" data-target="rf">
-					<i class="xi-pouring"></i><br />
-					<span th:text="#{강수량}"></span>
-				</button>
-				<button class="font-15px" type="button" data-target="flw">
-					<br />
-					<span th:text="#{유량}"></span>
-				</button>
-				<button class="font-15px" type="button" data-target="cctv">
-					<i class="xi-videocam"></i><br />
-					<span th:text="#{CCTV}"></span>
-				</button>
+				[[${items}]]
+				<a th:href="@{/map/search/wl}" target="frmSide">
+					<button class="font-15px" type="button">
+						<br />
+						<span th:text="#{수위}"></span>
+					</button>
+				</a>
+				<a th:href="@{/map/search/rf}" target="frmSide">
+					<button class="font-15px" type="button">
+						<i class="xi-pouring"></i><br />
+						<span th:text="#{강수량}"></span>
+					</button>
+				</a>
+				<a th:href="@{/map/search/flw}" target="frmSide">
+					<button class="font-15px" type="button">
+						<br />
+						<span th:text="#{유량}"></span>
+					</button>
+				</a>
+				<a th:href="@{/map/search/cctv}" target="frmSide">
+					<button class="font-15px" type="button" data-target="cctv">
+						<i class="xi-videocam"></i><br />
+						<span th:text="#{CCTV}"></span>
+					</button>
+				</a>
 			</section>
 
 			<section class="flex align-center aside-area">
 				<div class="aside dn">
-					<form class="searchFrm flex align-center mgn-bottom-10px" target="ifrmProcess" autocomplete="off" th:object="${observatorySearch}">
-						<input type="hidden" id="type" name="type">
-						<input type="text" class="searchInp" th:placeholder="#{관측소명_입력}" name="obsnm">
-						<button type="submit" class="searchBtn">
-							<i class="xi-search"></i>
-						</button>
-					</form>
-					<div class="just-btw flex mgn-bottom-10px">
-						<span class="targetNm"></span>
-
-						<select class="order" name="order">
-							<option class="orderNm" selected></option>
-							<option value="obsnm" th:text="#{관측소명}"></option>
-						</select>
-					</div>
-					<div class="divTable">
-						<div class="divTableRow">
-							<div class="divTableHead" id="colNm"></div>
-							<div class="divTableHead" id="colVal"></div>
-						</div>
-						<div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
-							<div class="divTableCell" th:text="*{obsnm}"></div>
-							<div class="divTableCell" th:text="*{data}"></div>
-						</div>
-						<div class="divTableRow" th:unless="${items != null && !items.isEmpty()}">
-							<div class="divTableCell" th:text="#{데이터_없음}"></div>
-						</div>
-					</div>
-					<th:block th:replace="~{common/_pagination::pagination}"></th:block>
+					<iframe name="frmSide" class="aside_content"></iframe>
 				</div>
 				<div>
 					<button type="button" class="angleBtn">
 						<i class="xi-angle-right-thin"></i>
+
 					</button>
 				</div>
 			</section>
@@ -94,7 +76,7 @@
 	<script>
 		const { popup } = commonLib;
         const infoBtn = document.getElementById("popup");
-        infoBtn.onclick = () => popup.open('/map/info', 450, 450);
+        <!--infoBtn.onclick = () => popup.open('/map/info', 450, 450);-->
 	</script>
 </main>
 </html>
