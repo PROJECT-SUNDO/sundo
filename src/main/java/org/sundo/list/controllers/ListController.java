@@ -34,7 +34,7 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
-
+	private final ObservatoryDataDelete observatoryDataDelete;
 	@GetMapping
 	public String list (@ModelAttribute ObservatorySearch search, Model model){
 		commonProcess("list", model);
@@ -142,13 +142,12 @@ public class ListController implements ExceptionProcessor {
 	/**
 	 * 관측소 삭제 -> 삭제 여부 팝업
 	 */
-	@GetMapping("/delete/{seq}")
-	public String delete (@PathVariable("obscd") String obscd, Model model){
+	@GetMapping("/delete/{obscd}")
+	public String delete (@PathVariable("obscd") String obscd){
 
-		Observatory observatory = observatoryInfoService.get(obscd);
-		model.addAttribute("observatory", observatory);
+		observatoryDataDelete.delete(obscd);
 
-		return "front/list/delete";
+		return "redirect:/list";
 	}
 	/**
 	 * 환경설정
