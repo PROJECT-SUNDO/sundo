@@ -155,8 +155,6 @@ window.addEventListener("DOMContentLoaded", function(){
             const lineVector = map.getAllLayers().filter(s => s.get('name') ==='area')[0];
             map.removeLayer(lineVector);
             manageMeasureTooltip(map, false);
-
-
             mapLib.draw.finishDrawing();
 
         }else{
@@ -184,6 +182,7 @@ window.addEventListener("DOMContentLoaded", function(){
     const satelliteOverview = overViewArray[1];
 
     satelliteLayer.setVisible(false);
+    satelliteOverview.setVisible(false);
 
     const mapBtns = document.querySelectorAll(".map_btns .map_btn");
 
