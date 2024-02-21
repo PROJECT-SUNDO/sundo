@@ -29,6 +29,12 @@ public class ObservatoryInfoService {
     private final HttpServletRequest request;
     private final EntityManager em;
 
+    public Observatory get(String obscd) {
+        Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
+
+        return data;
+    }
+
     public RequestObservatory getRequest(String obscd, String type){
         Observatory obs = observatoryRepository.getOne(obscd, type).orElse(null);
 

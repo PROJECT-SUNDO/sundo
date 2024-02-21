@@ -2,7 +2,6 @@ package org.sundo.wamis.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import org.sundo.wamis.entities.Observatory;
 
 /**
  * 강수량 관측소 상세 (주소, 위도, 경도 등)
@@ -10,7 +9,7 @@ import org.sundo.wamis.entities.Observatory;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class RfObservatoryDto extends Observatory {
+public class RfObservatoryDto{
 
     private String rfobscd; // 관측소 코드
 
