@@ -8,6 +8,7 @@ import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.ObservatoryId;
 import org.sundo.wamis.entities.QObservatory;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ObservatoryRepository extends JpaRepository<Observatory, ObservatoryId>, QuerydslPredicateExecutor<Observatory> {

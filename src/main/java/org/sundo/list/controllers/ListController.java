@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
+import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.wamis.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
@@ -25,7 +26,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/list")
 @RequiredArgsConstructor
-public class ListController {
+public class ListController implements ExceptionProcessor {
 
 	private final Utils utils;
 	private final ObservatorySaveService observatorySaveService;
@@ -119,11 +120,14 @@ public class ListController {
 	/**
 	 * 관측소 삭제 -> 삭제 여부 팝업
 	 */
-	@GetMapping("/delete/{seq}")
-	public String delete (@PathVariable("seq") Long seq, Model model){
-        return "front/list/delete";
-    }
+	@GetMapping("/delete/{obscd}")
+	public String delete (@PathVariable("obscd") String obscd, Model model){
 
+		Observatory observatory = observatoryInfoService.get(obscd);
+		model.addAttribute("observatory", observatory);
+
+		return "front/list/delete";
+	}
 	/**
 	 * 환경설정
 	 * - 사용여부
