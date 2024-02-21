@@ -71,7 +71,10 @@
                     </a>
                 </div>
                 <div class="divTableCell delete" th:data-obscd="${item.obscd}">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <a th:href="@{/list/delete/{obscd}(obscd=${item.obscd})}" onclick="return confirm('정말 관측소를 삭제하시겠습니까?');">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </a>
+
                     <!--<input type="hidden" th:name="${'obsnm' + status.count}" th:value="${item.obsnm}" th:id="*{'obsnm' + status.count}">-->
                 </div>
                 <div class="divTableCell">

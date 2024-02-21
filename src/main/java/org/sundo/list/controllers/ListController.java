@@ -34,12 +34,12 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
+	private final ObservatoryDataDelete observatoryDataDelete;
+	@GetMapping
+	public String list (@ModelAttribute ObservatorySearch search, Model model){
+		commonProcess("list", model);
 
-		@GetMapping
-		public String list (@ModelAttribute ObservatorySearch search, Model model){
-			commonProcess("list", model);
-
-			ListData<Observatory> data = observatoryInfoService.getList(search);
+		ListData<Observatory> data = observatoryInfoService.getList(search);
 
 		model.addAttribute("items", data.getItems());
 		model.addAttribute("pagination", data.getPagination());
@@ -47,17 +47,50 @@ public class ListController implements ExceptionProcessor {
 		return "front/list/list";
 	}
 
-		/**
-		 * 관측소명 클릭 시 상세페이지 팝업 페이지
-		 */
-		@GetMapping("/detail/{obscd}")
-		public String detail (@PathVariable("obscd") String obscd, Model model){
+	/**
+	 * 관측소명 클릭 시 상세페이지 팝업 페이지
+	 */
+	@GetMapping("/detail/{obscd}")
+	public String detail (@PathVariable("obscd") String obscd, Model model){
 
-			Observatory observatory = observatoryInfoService.get(obscd);
-			model.addAttribute("observatory", observatory);
+		Observatory observatory = observatoryInfoService.get(obscd);
+		model.addAttribute("observatory", observatory);
 
-			return "front/list/detail";
-		}
+		return "front/list/detail";
+	}
+
+	/**
+	 * 관측 정보
+	 * - 선택 관측소 정보
+	 * - 검색 영역
+	 *   조회 기간, 단위(10분/1시간/일/월/년)
+	 * - 목록 (검색 전 10분 단위 출력)
+	 */
+	@GetMapping("/info/{seq}")
+	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationDataSearch search,
+						Model model){
+		commonProcess("info", model);
+		String obscd = utils.getParam("obscd");
+		String type = utils.getParam("type");
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+		search.setObscd(form.getObscd());
+		search.setType(form.getType());
+
+/*		if(type.equals("rf")){
+			ListData<Precipitation> data = observationInfoService.getRFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}else{
+			ListData<WaterLevelFlow> data = observationInfoService.getWLFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}*/
+
+
+		model.addAttribute("requestObservatory", form);
+
+		return "front/list/info";
+	}
 
 	/**
 	 * 관측소 등록
@@ -109,46 +142,13 @@ public class ListController implements ExceptionProcessor {
 	/**
 	 * 관측소 삭제 -> 삭제 여부 팝업
 	 */
-	@GetMapping("/delete/{seq}")
-	public String delete (@PathVariable("seq") Long seq, Model model){
-        return "front/list/delete";
-    }
+	@GetMapping("/delete/{obscd}")
+	public String delete (@PathVariable("obscd") String obscd){
 
+		observatoryDataDelete.delete(obscd);
 
-
-	/**
-	 * 관측 정보
-	 * - 선택 관측소 정보
-	 * - 검색 영역
-	 *   조회 기간, 단위(10분/1시간/일/월/년)
-	 * - 목록 (검색 전 10분 단위 출력)
-	 */
-	@GetMapping("/info/{seq}")
-	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationDataSearch search,
-						Model model){
-		commonProcess("info", model);
-		String obscd = utils.getParam("obscd");
-		String type = utils.getParam("type");
-		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
-		search.setObscd(form.getObscd());
-		search.setType(form.getType());
-
-/*		if(type.equals("rf")){
-			ListData<Precipitation> data = observationInfoService.getRFList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		}else{
-			ListData<WaterLevelFlow> data = observationInfoService.getWLFList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		}*/
-
-
-		model.addAttribute("requestObservatory", form);
-
-		return "front/list/info";
+		return "redirect:/list";
 	}
-
 	/**
 	 * 환경설정
 	 * - 사용여부
@@ -237,8 +237,9 @@ public class ListController implements ExceptionProcessor {
 		return "front/list/observation_edit";
 	}
 
-	@PostMapping("/setting/edit")
-	public String editDataPs(@Valid RequestObservation form,
+	@PostMapping("/setting/edit/{seq}")
+	public String editDataPs(@PathVariable("seq") Long seq,
+							 @Valid RequestObservation form,
 							 Errors errors,
 							 Model model){
 
@@ -247,7 +248,7 @@ public class ListController implements ExceptionProcessor {
 		if(errors.hasErrors()){
 			throw new AlertBackException("올바르지 않은 요청입니다", HttpStatus.BAD_REQUEST);
 		}
-		System.out.println(form + "폼");
+
 		observationSaveService.edit(form);
 
 		String script = "alert('저장되었습니다.');"
@@ -281,6 +282,11 @@ public class ListController implements ExceptionProcessor {
 		}else if (mode.equals("setEdit")){
 			pageTitle = "관측값 수정";
 			addCss.add("list/setting");
+		}else if(mode.equals("list/write")) {
+			pageTitle = "목록";
+			addScript.add("list/list");
+			addCss.add("list/style");
+			addCommonCss.add("common/style");
 		}
 
 		model.addAttribute("addCss", addCss);
