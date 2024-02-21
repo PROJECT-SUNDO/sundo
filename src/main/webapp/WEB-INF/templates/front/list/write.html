@@ -9,7 +9,9 @@
     <form name="frmJoin" method="post" th:action="@{/list/save}" autocomplete="off">
         <input type="hidden" name="mode" value="write">
         <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+
         <th:block th:replace="~{front/list/_form::form}"></th:block>
+
         <div class="submit_btns">
             <button type="submit" th:text="#{등록}"></button>
         </div>
