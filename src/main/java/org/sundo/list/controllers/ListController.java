@@ -1,5 +1,4 @@
 package org.sundo.list.controllers;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
+import org.sundo.commons.exceptions.AlertException;
 import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
