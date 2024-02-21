@@ -37,12 +37,14 @@ a { color:#222; text-decoration: none; }
     padding: 20px 40px;
 }
 .popupBody .obTitle {
-    width: 150px;
+    width: 120px;
     font-weight: 500;
     font-size: 20px;
 }
 .popupBody>div{
     padding: 10px;
+    align-items: center;
+
 }
 
 .popupBody>div>div:nth-child(2) {
@@ -51,4 +53,5 @@ a { color:#222; text-decoration: none; }
     line-height: 40px;
     border: 1px solid #000;
     padding-left: 10px;
+    font-size: 18px;
 }
