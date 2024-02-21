@@ -5,12 +5,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrecipitationId implements Serializable {
+public class ObservatoryId implements Serializable {
     private String obscd;
-    private LocalDateTime ymdh;
+    private String type;
 }

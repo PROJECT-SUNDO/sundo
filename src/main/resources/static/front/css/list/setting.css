@@ -1,0 +1,160 @@
+.content{
+    padding: 10px 20px;
+}
+
+.title button{
+    cursor: pointer;
+    height: 30px;
+    background: #fff;
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+    border-radius: 3px;
+    padding: 0 10px;
+}
+.title button:hover{
+    background: var(--main-color);
+    color: #fff;
+
+}
+
+.observatory{
+    border: 1px solid #222;
+    border-radius: 5px;
+    height: 40px;
+}
+
+.observatory div{
+    padding: 0 15px;
+    line-height: 40px;
+}
+
+.observatory span{
+    line-height: 40px;
+}
+
+.observatoryForm{
+    padding: 15px;
+    border: 1px solid #222;
+    border-radius: 5px;
+}
+
+.observatoryForm div+div{
+    margin-top: 10px;
+}
+
+.saveBtn{
+    background: var(--main-color);
+    color: #fff;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+    padding: 0 15px;
+    height: 30px;
+    float: right;
+}
+
+.observationSearch{
+    clear: both;
+    border: 1px solid #222;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.fa.fa-search{
+    border: 1px solid var(--main-color);
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    background: var(--main-color);
+    color: #fff;
+    text-align: center;
+    line-height: 27px;
+    margin: 0 20px;
+}
+
+.searchTxt{
+    border-bottom: 1px solid #222;
+    padding-bottom: 10px;
+}
+
+.obsForm{
+    padding-top: 10px;
+}
+
+.obsForm span{
+    padding: 0 10px;
+}
+
+.obsForm input{
+    padding: 0 5px;
+}
+
+.searchBtn{
+    background: var(--main-color);
+    color: #fff;
+    padding: 5px 10px;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+}
+
+/* 알약버튼 */
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  border: max(2px, 0.1em) solid gray;
+  border-radius: 1.25em;
+  width: 2.25em;
+  height: 1.25em;
+}
+
+[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  transform: scale(0.8);
+  background-color: gray;
+  transition: left 250ms linear;
+}
+
+[type="checkbox"]:checked {
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+
+[type="checkbox"]:checked::before {
+  background-color: white;
+  left: 1em;
+}
+
+[type="checkbox"]:disabled {
+  border-color: lightgray;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type="checkbox"]:disabled:before {
+  background-color: lightgray;
+}
+
+[type="checkbox"]:disabled + span {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+[type="checkbox"]:focus-visible {
+  outline-offset: max(2px, 0.1em);
+  outline: max(2px, 0.1em) solid var(--main-color);
+}
+
+[type="checkbox"]:enabled:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+}
