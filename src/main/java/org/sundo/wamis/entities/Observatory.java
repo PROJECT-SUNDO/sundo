@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sundo.commons.entities.Base;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Observatory implements Serializable {
+public class Observatory extends Base implements Serializable {
     @Id
     @Column(length=10)
     private String obscd; // 관측소 코드
@@ -63,8 +64,7 @@ public class Observatory implements Serializable {
 
     private String fstnyn; // 특보지점여부
 
-    private double Latitude;
-    private double Longitude;
+
 
     private String cctvUrlH; // 고화질 주소
     private String cctvUrlL; // 저화질 주소

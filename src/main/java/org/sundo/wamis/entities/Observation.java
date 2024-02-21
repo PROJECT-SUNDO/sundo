@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.sundo.commons.entities.Base;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name="OBSERVATION")
 @DiscriminatorColumn(name = "TYPE")
-public abstract class Observation {
+public abstract class Observation extends Base {
 
     @Id
     @GeneratedValue
