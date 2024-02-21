@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+<main layout:fragment="content" >
+    <div class="title">
+        <h2>관측값 수정</h2>
+        <button type="button" id="listBtn">
+            <i class="xi-list"></i>
+            <span th:text="#{목록}"></span>
+        </button>
+    </div>
+    <form th:object="${requestObservation}" th:action="@{/list/setting/edit}" method="post" target="ifrmProcess" autocomplete="off">
+        <input type="hidden" name="seq" th:value="*{seq}">
+        <input type="hidden" name="obscd" th:value="*{obscd}">
+        <div>
+            <div th:text="#{관측소명}"></div>
+            <div th:text="*{obsnm}"></div>
+        </div>
+        <div>
+            <div th:text="#{관측유형}"></div>
+            <div th:text="*{type}"></div>
+        </div>
+        <div>
+            <div th:text="#{관측일시}"></div>
+            <div th:text="*{ymdhm}"></div>
+        </div>
+        <div>
+            <div th:text="#{관측값}"></div>
+            <div>
+                <input type="number" name="rf" th:if="*{type == 'rf'}" th:field="*{rf}">
+                <input type="number" name="wl" th:if="*{type == 'wl'}" th:field="*{wl}">
+                <input type="number" name="flw" th:if="*{type == 'flw'}" th:field="*{flw}">
+            </div>
+        </div>
+        <button type="submit" class="saveBtn">
+            <i class="fa fa-pencil-square-o"></i>
+            <span th:text="#{수정}"></span>
+        </button>
+    </form>
+</main>
+</html>
