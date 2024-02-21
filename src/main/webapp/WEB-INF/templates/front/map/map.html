@@ -47,7 +47,7 @@
 							<div class="divTableHead" id="colVal"></div>
 						</div>
 						<div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
-							<div class="divTableCell" th:text="*{obcnm}"></div>
+							<div class="divTableCell" th:text="*{obsnm}"></div>
 							<div class="divTableCell" th:text="*{data}"></div>
 						</div>
 						<div class="divTableRow" th:unless="${items != null && !items.isEmpty()}">
