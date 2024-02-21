@@ -21,6 +21,23 @@ window.addEventListener("DOMContentLoaded", function(){
         }
     }
 
+    // info 버튼 클릭시 해당 관측소 정보 확인페이지로 이동
+    const infoBtns = document.querySelectorAll(".infoBtn");
+    for(const infoBtn of infoBtns) {
+        infoBtn.addEventListener("click", function(){
+            const seq = infoBtn.dataset.seq;
+            const url = infoBtn.dataset.url + seq;
+            const type = document.getElementById('type_' + seq);
+            const obscd = document.getElementById('obscd_' + seq);
+
+            const queryString = '?type=' + type.value + '&&obscd=' + obscd.value;
+            location.href = url + queryString;
+        });
+
+    }
+
+
+
 
 
 })

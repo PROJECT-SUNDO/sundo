@@ -1,5 +1,4 @@
 package org.sundo.list.controllers;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,9 +15,8 @@ import org.sundo.list.services.ObservatorySaveService;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.WaterLevelFlow;
-import org.sundo.wamis.services.ObservationInfoService;
-import org.sundo.wamis.services.ObservatoryInfoService;
-
+import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.services.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/list")
 @RequiredArgsConstructor
-public class ListController {
+public class ListController implements ExceptionProcessor {
 
 	private final Utils utils;
 	private final ObservatorySaveService observatorySaveService;
@@ -35,6 +33,9 @@ public class ListController {
 	private final ObservationInfoService observationInfoService;
 	private final ObservatoryInfoService observatoryInfoService;
 	private final ObservatorySettingValidator observatorySettingValidator;
+	private final ObservatoryRepository observatoryRepository;
+	private final ObservationSaveService observationSaveService;
+
 		@GetMapping
 		public String list (@ModelAttribute ObservatorySearch search, Model model){
 			commonProcess("list", model);
@@ -60,14 +61,35 @@ public class ListController {
 		}
 
 	/**
-	 * 관측 정보 클릭 시 정보 확인 페이지
+	 * 관측 정보
 	 * - 선택 관측소 정보
 	 * - 검색 영역
 	 *   조회 기간, 단위(10분/1시간/일/월/년)
 	 * - 목록 (검색 전 10분 단위 출력)
 	 */
 	@GetMapping("/info/{seq}")
-	public String info (@PathVariable("seq") Long seq, Model model){
+	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationDataSearch search,
+						Model model){
+		commonProcess("info", model);
+		String obscd = utils.getParam("obscd");
+		String type = utils.getParam("type");
+		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
+		search.setObscd(form.getObscd());
+		search.setType(form.getType());
+
+/*		if(type.equals("rf")){
+			ListData<Precipitation> data = observationInfoService.getRFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}else{
+			ListData<WaterLevelFlow> data = observationInfoService.getWLFList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}*/
+
+
+		model.addAttribute("requestObservatory", form);
+
 		return "front/list/info";
 	}
 
@@ -167,11 +189,8 @@ public class ListController {
 		commonProcess("setting", model);
 
 		observatorySettingValidator.validate(form, errors);
-		System.out.println("여기1");
 		if(errors.hasErrors()){
-			errors.getAllErrors().forEach(System.out::println);
 			throw new AlertBackException("올바르지 않은 요청입니다.", HttpStatus.BAD_REQUEST);
-
 		}
 
 		observatorySaveService.saveOutlier(form);
@@ -181,6 +200,61 @@ public class ListController {
 
 		return "common/_execute_script";
 
+	}
+
+	@GetMapping("/setting/edit/{seq}")
+	public String editData(@PathVariable("seq")Long seq,
+						   @ModelAttribute RequestObservation form,
+						   Model model){
+		commonProcess("setEdit", model);
+		String type = utils.getParam("type");
+		form.setSeq(seq);
+		if("rf".equals(type)){
+
+			Precipitation item = observationInfoService.getPre(seq);
+			String obscd = item.getRfobscd();
+			Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
+
+			form.setRf(item.getRf());
+			form.setObscd(item.getRfobscd());
+			form.setType(type);
+			form.setYmdhm(item.getYmdhm());
+			form.setObsnm(observatory.getObsnm());
+		}else{
+			WaterLevelFlow item = observationInfoService.getWLF(seq);
+			String obscd = item.getWlobscd();
+			Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
+
+			form.setYmdhm(item.getYmdhm());
+			form.setType(type);
+			form.setObscd(item.getWlobscd());
+			form.setFw(item.getFw());
+			form.setWl(item.getWl());
+			form.setObsnm(observatory.getObsnm());
+		}
+
+		return "front/list/observation_edit";
+	}
+
+	@PostMapping("/setting/edit/{seq}")
+	public String editDataPs(@PathVariable("seq") Long seq,
+							 @Valid RequestObservation form,
+							 Errors errors,
+							 Model model){
+
+		commonProcess("setEdit", model);
+
+		if(errors.hasErrors()){
+			throw new AlertBackException("올바르지 않은 요청입니다", HttpStatus.BAD_REQUEST);
+		}
+
+		observationSaveService.edit(form);
+
+		String script = "alert('저장되었습니다.');"
+				+"parent.location.reload();";
+		model.addAttribute("script", script);
+
+		return "common/_execute_script";
 	}
 
 	/**
@@ -203,6 +277,10 @@ public class ListController {
 		}else if (mode.equals("setting")){
 			pageTitle = "환경설정";
 			addCss.add("list/setting");
+			addScript.add("list/setting");
+		}else if (mode.equals("setEdit")){
+			pageTitle = "관측값 수정";
+			addCss.add("list/setting");
 		}
 
 		model.addAttribute("addCss", addCss);
@@ -211,4 +289,5 @@ public class ListController {
 		model.addAttribute("addCommonScript", addCommonScript);
 		model.addAttribute("pageTitle", pageTitle);
 	}
+
 }
