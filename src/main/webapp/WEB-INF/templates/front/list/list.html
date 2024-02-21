@@ -60,8 +60,10 @@
                     <span th:text="${item.obscd}"></span>
                     <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
                 </div>
-                <div class="divTableCell" th:data-obscd-id="*{'obscd_' + status.count}" th:data-obsknd-id="*{'obsknd' + status.count}">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+                <div class="divTableCell">
+                    <button type="button" class="infoBtn" th:data-seq="${status.count}" data-url="/list/info/">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
                 </div>
                 <div class="divTableCell">
                     <a th:href="@{/list/update/{obscd}/{type}(obscd=${item.obscd}, type=${item.type})}">
