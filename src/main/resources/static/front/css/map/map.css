@@ -45,6 +45,10 @@
     background: #fff;
     height: 100%;
 }
+.aside_content{
+    width: 100%;
+    height: 100%;
+}
 
 .angleBtn{
     background: #fff;
@@ -86,29 +90,5 @@
     color: #fff;
 }
 
-.searchInp{
-    padding: 0 10px;
-    border: 2px solid var(--main-color);
-    width: 200px;
-    height: 25px;
-    margin: 0 10px;
-}
 
-.searchBtn{
-    text-align: center;
-    background: var(--main-color);
-    color: #fff;
-    width: 25px;
-    height: 25px;
-    border: 2px solid var(--main-color);
-}
 
-.targetNm{
-    font-weight: 700;
-}
-
-.order{
-    border: 2px solid var(--main-color);
-    border-radius: 3px;
-    padding: 3px 5px;
-}
