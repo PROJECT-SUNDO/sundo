@@ -24,7 +24,10 @@ a { color:#222; text-decoration: none; }
     right: 10px;
     top: 10px;
 }
+.head{
+    height: 50px;
 
+}
 .popupHeader{
     text-align: center;
     padding-top: 40px;

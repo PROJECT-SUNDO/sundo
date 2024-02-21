@@ -23,12 +23,12 @@
     <link rel="stylesheet" type="text/css" th:each="cssFile : ${addCss}"
             th:href="@{/front/css/{file}.css(file=${cssFile})}"
     />
-    <!-- XEIcon -->
+    <!-- icon -->
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
     />
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <th:block layout:fragment="addCss"></th:block>
 
     <script th:src="@{/common/js/common.js}"></script>

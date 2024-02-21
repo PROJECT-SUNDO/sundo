@@ -34,12 +34,12 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
+	private final ObservatoryDataDelete observatoryDataDelete;
+	@GetMapping
+	public String list (@ModelAttribute ObservatorySearch search, Model model){
+		commonProcess("list", model);
 
-		@GetMapping
-		public String list (@ModelAttribute ObservatorySearch search, Model model){
-			commonProcess("list", model);
-
-			ListData<Observatory> data = observatoryInfoService.getList(search);
+		ListData<Observatory> data = observatoryInfoService.getList(search);
 
 		model.addAttribute("items", data.getItems());
 		model.addAttribute("pagination", data.getPagination());
@@ -47,17 +47,17 @@ public class ListController implements ExceptionProcessor {
 		return "front/list/list";
 	}
 
-		/**
-		 * 관측소명 클릭 시 상세페이지 팝업 페이지
-		 */
-		@GetMapping("/detail/{obscd}")
-		public String detail (@PathVariable("obscd") String obscd, Model model){
+	/**
+	 * 관측소명 클릭 시 상세페이지 팝업 페이지
+	 */
+	@GetMapping("/detail/{obscd}")
+	public String detail (@PathVariable("obscd") String obscd, Model model){
 
-			Observatory observatory = observatoryInfoService.get(obscd);
-			model.addAttribute("observatory", observatory);
+		Observatory observatory = observatoryInfoService.get(obscd);
+		model.addAttribute("observatory", observatory);
 
-			return "front/list/detail";
-		}
+		return "front/list/detail";
+	}
 
 	/**
 	 * 관측 정보
@@ -142,11 +142,13 @@ public class ListController implements ExceptionProcessor {
 	/**
 	 * 관측소 삭제 -> 삭제 여부 팝업
 	 */
-	@GetMapping("/delete/{seq}")
-	public String delete (@PathVariable("seq") Long seq, Model model){
-        return "front/list/delete";
-    }
+	@GetMapping("/delete/{obscd}")
+	public String delete (@PathVariable("obscd") String obscd){
 
+		observatoryDataDelete.delete(obscd);
+
+		return "redirect:/list";
+	}
 	/**
 	 * 환경설정
 	 * - 사용여부
@@ -280,6 +282,11 @@ public class ListController implements ExceptionProcessor {
 		}else if (mode.equals("setEdit")){
 			pageTitle = "관측값 수정";
 			addCss.add("list/setting");
+		}else if(mode.equals("list/write")) {
+			pageTitle = "목록";
+			addScript.add("list/list");
+			addCss.add("list/style");
+			addCommonCss.add("common/style");
 		}
 
 		model.addAttribute("addCss", addCss);
