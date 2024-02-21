@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="pagination" th:if="${pagination != null}" th:object="${pagination}">
     <div class="pagination">
-        <div class="flex">
+        <div class="flex align-center">
             <th:block>
                 <a th:href="*{#strings.concat(baseURL, 'page=1')}" class="page"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
                 <a th:href="*{#strings.concat(baseURL, 'page=', prevRangePage)}" class="page"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
