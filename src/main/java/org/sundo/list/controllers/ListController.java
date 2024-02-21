@@ -237,9 +237,8 @@ public class ListController implements ExceptionProcessor {
 		return "front/list/observation_edit";
 	}
 
-	@PostMapping("/setting/edit/{seq}")
-	public String editDataPs(@PathVariable("seq") Long seq,
-							 @Valid RequestObservation form,
+	@PostMapping("/setting/edit")
+	public String editDataPs(@Valid RequestObservation form,
 							 Errors errors,
 							 Model model){
 
@@ -248,7 +247,7 @@ public class ListController implements ExceptionProcessor {
 		if(errors.hasErrors()){
 			throw new AlertBackException("올바르지 않은 요청입니다", HttpStatus.BAD_REQUEST);
 		}
-
+		System.out.println(form + "폼");
 		observationSaveService.edit(form);
 
 		String script = "alert('저장되었습니다.');"
