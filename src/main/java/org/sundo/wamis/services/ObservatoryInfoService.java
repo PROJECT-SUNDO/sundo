@@ -115,7 +115,6 @@ public class ObservatoryInfoService {
 
         // 단일 테이블 불러올때
         Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
-        System.out.println("아아아아"+ data);
 
         Pagination pagination = new Pagination(page, (int) data.getTotalElements(), 10, limit, request);
 
@@ -130,16 +129,17 @@ public class ObservatoryInfoService {
 
     private void addInfo(Observatory observatory){
         String type = observatory.getType();
+        String obscd = observatory.getObscd();
 
         if("rf".equals(type)){
-            List<Precipitation> precipitations = precipitationRepository.findByRfobscdOrderByYmdDesc(observatory.getObscd()).orElse(null);
+            List<Precipitation> precipitations = precipitationRepository.findByRfobscdOrderByYmdDesc(obscd).orElse(null);
 
             if(precipitations != null && !precipitations.isEmpty()){
                 observatory.setData(precipitations.get(0).getRf());
             }
 
-        }else{
-            List<WaterLevelFlow> waterLevelFlows = waterLevelFlowRepository.findByWlobscdOrderByYmdDesc(observatory.getObscd()).orElse(null);
+        }else if ("wl".equals(type) || "flw".equals(type)){
+            List<WaterLevelFlow> waterLevelFlows = waterLevelFlowRepository.findByWlobscdOrderByYmdDesc(obscd).orElse(null);
             if(waterLevelFlows != null && !waterLevelFlows.isEmpty()){
                 double data = 0;
                 if("wl".equals(type)){

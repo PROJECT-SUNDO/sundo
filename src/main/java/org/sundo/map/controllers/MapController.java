@@ -26,15 +26,25 @@ public class MapController {
 	
 	@GetMapping
 	public String map(@ModelAttribute RequestObservatory form,
-					  @ModelAttribute ObservatorySearch search,
 					  Model model) {
 		commonProcess("map", model);
 
+		return "front/map/map";
+	}
+
+	@GetMapping("/search/{type}")
+	public String search(@PathVariable("type") String type,
+			@ModelAttribute ObservatorySearch search,
+						  @ModelAttribute RequestObservatory form,
+						  Model model){
+		commonProcess("aside", model);
+		search.setType(type);
 		ListData<Observatory> data = observatoryInfoService.getList(search);
 
 		model.addAttribute("items", data.getItems());
 		model.addAttribute("pagination", data.getPagination());
-		return "front/map/map";
+
+		return "front/map/aside";
 	}
 
 	@GetMapping("/{info}")
@@ -64,6 +74,9 @@ public class MapController {
 			pageTitle = null;
 			addScript.add("map/cctv");
 			addCss.add("map/cctv");
+		}else if(mode.equals("aside")){
+			pageTitle = null;
+			addCss.add("map/aside");
 		}
 		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("addScript", addScript);
