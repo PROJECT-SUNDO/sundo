@@ -34,7 +34,9 @@
                     <input type="hidden" name="type" th:value="*{type}">
                     <div>
                         <span th:text="#{사용여부}"></span>
-                        <input type="radio" name="clsyn" id="clsyn" value="true" th:field="*{clsyn}">
+                        <label>
+                            <input type="checkbox" name="clsyn" id="clsyn" value="true" th:field="*{clsyn}">
+                        </label>
                     </div>
                     <div>
                         <span th:text="#{이상치_기준_설정}"></span>
@@ -77,16 +79,23 @@
             </div>
             <div class="divTableBody">
                 <div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}" th:object="${item}">
+                    <input type="hidden" name="seq" th:id="${'seq_' + status.count}" th:value="*{seq}">
                     <div class="divTableCell" th:text="${status.count}"></div>
                     <div class="divTableCell" th:text="*{ymdhm}"></div>
                     <div class="divTableCell" th:if="${requestObservatory.type == 'rf'}" th:text="*{rf}"></div>
                     <div class="divTableCell" th:if="${requestObservatory.type == 'wl'}" th:text="*{wl}"></div>
                     <div class="divTableCell" th:if="${requestObservatory.type == 'flw'}" th:text="*{flw}"></div>
                     <div class="divTableCell">
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <!-- 수정 버튼 -->
+                        <button type="button" class="editBtn" th:data-seq-id="${'seq_' + status.count}">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </button>
                     </div>
                     <div class="divTableCell">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        <!-- 삭제 버튼 -->
+                        <button type="button" class="deleteBtn" th:data-seq-id="${'seq_' + status.count}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -95,6 +104,9 @@
                 </div>
             </div>
         </div>
+        <form id="editFrm">
+            <input type="hidden" name="type" th:value="${requestObservatory.type}">
+        </form>
         <th:block th:replace="~{common/_pagination::pagination}"></th:block>
     </section>
 </main>

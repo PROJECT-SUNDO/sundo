@@ -1,10 +1,6 @@
 package org.sundo.wamis.services;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.PathBuilder;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,18 +12,16 @@ import org.sundo.commons.ListData;
 import org.sundo.commons.Pagination;
 import org.sundo.list.controllers.ObservationSearch;
 import org.sundo.wamis.entities.*;
-import org.sundo.wamis.repositories.ObservationRepository;
 import org.sundo.wamis.repositories.PrecipitationRepository;
 import org.sundo.wamis.repositories.WaterLevelFlowRepository;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 import static org.springframework.data.domain.Sort.Order.desc;
+
+// 관측값 인포 서비스
 
 @Service
 @RequiredArgsConstructor
@@ -131,5 +125,28 @@ public class ObservationInfoService {
 
         return new ListData<>(data.getContent(), pagination);
     }
+
+    /**
+     * 강수량
+     * @param seq
+     * @return
+     */
+    public Precipitation getPre(Long seq){
+        Precipitation precipitation = precipitationRepository.findById(seq).orElseThrow(ObservationNotFoundException::new);
+
+        return precipitation;
+    }
+
+    /**
+     * 수위/유량 데이터
+     * @param seq
+     * @return
+     */
+    public WaterLevelFlow getWLF(Long seq){
+        WaterLevelFlow waterLevelFlow = waterLevelFlowRepository.findById(seq).orElseThrow(ObservationNotFoundException::new);
+
+        return waterLevelFlow;
+    }
+
 
 }
