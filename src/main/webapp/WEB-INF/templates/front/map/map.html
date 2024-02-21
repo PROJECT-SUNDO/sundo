@@ -6,56 +6,41 @@
 	<div class="flex content">
 		<div class="side flex">
 			<section class="asideBtns">
-				<button class="font-15px" type="button" data-target="wl">
-					<br />
-					<span th:text="#{수위}"></span>
-				</button>
-				<button class="font-15px" type="button" data-target="rf">
-					<i class="xi-pouring"></i><br />
-					<span th:text="#{강수량}"></span>
-				</button>
-				<button class="font-15px" type="button" data-target="flw">
-					<br />
-					<span th:text="#{유량}"></span>
-				</button>
-				<button class="font-15px" type="button" data-target="cctv">
-					<i class="xi-videocam"></i><br />
-					<span th:text="#{CCTV}"></span>
-				</button>
+				[[${items}]]
+				<a th:href="@{/map/search/wl}" target="frmSide">
+					<button class="font-15px" type="button">
+						<br />
+						<span th:text="#{수위}"></span>
+					</button>
+				</a>
+				<a th:href="@{/map/search/rf}" target="frmSide">
+					<button class="font-15px" type="button">
+						<i class="xi-pouring"></i><br />
+						<span th:text="#{강수량}"></span>
+					</button>
+				</a>
+				<a th:href="@{/map/search/flw}" target="frmSide">
+					<button class="font-15px" type="button">
+						<br />
+						<span th:text="#{유량}"></span>
+					</button>
+				</a>
+				<a th:href="@{/map/search/cctv}" target="frmSide">
+					<button class="font-15px" type="button" data-target="cctv">
+						<i class="xi-videocam"></i><br />
+						<span th:text="#{CCTV}"></span>
+					</button>
+				</a>
 			</section>
 
 			<section class="flex align-center aside-area">
 				<div class="aside dn">
-					<form class="searchFrm flex">
-						<input type="hidden" id="target">
-						<input type="text" class="searchInp" th:placeholder="#{관측소명_입력}">
-						<button type="button" class="searchBtn">
-							<i class="xi-search"></i>
-						</button>
-					</form>
-					<div>
-						<span class="targetNm"></span>
-
-						<select class="order" name="order">
-							<option class="orderNm" selected></option>
-							<option value="obserNm" th:text="#{관측소명}"></option>
-						</select>
-					</div>
-					<div class="divTable">
-						<div class="divTableRow">
-							<div class="divTableHead" id="colNm"></div>
-							<div class="divTableHead" id="colVal"></div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell">나중에 관측소명이랑</div>
-							<div class="divTableCell">실시간관측값 넣기(반복문)</div>
-						</div>
-					</div>
-					<th:block></th:block>
+					<iframe name="frmSide" class="aside_content"></iframe>
 				</div>
 				<div>
 					<button type="button" class="angleBtn">
 						<i class="xi-angle-right-thin"></i>
+
 					</button>
 				</div>
 			</section>
@@ -77,6 +62,12 @@
 						<span th:text="#{면적}"></span>
 					</button>
 				</div>
+
+                <button type="button" id="save_map">
+                    <i class="xi-save"></i>
+                    <span th:text="#{저장}"></span>
+				</button>
+
 			</div>
 			<div id="map" class="map"></div>
 		</section>
