@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/popup}">
+<main layout:fragment="content">
+    <form class="searchFrm flex align-center mgn-bottom-10px" th:object="${observatorySearch}">
+        <input type="text" class="searchInp" th:placeholder="#{관측소명_입력}" name="obsnm">
+        <button type="submit" class="searchBtn">
+            <i class="xi-search"></i>
+        </button>
+    </form>
+    <div class="just-btw flex mgn-bottom-10px align-center">
+        <div class="targetNm">
+            <span th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}"></span>
+            <span th:if="${observatorySearch.type == 'wl'}" th:text="#{수위}"></span>
+            <span th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}"></span>
+            <span th:if="${observatorySearch.type == 'cctv'}" th:text="#{CCTV}"></span>
+            <span th:unless="${observatorySearch.type == 'cctv'}" th:text="#{관측소}"></span>
+        </div>
+        <select class="order" name="order">
+            <option value="type" th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}" selected></option>
+            <option value="type" th:if="${observatorySearch.type == 'wl'}" th:text="#{수위}" selected></option>
+            <option value="type" th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}" selected></option>
+            <option value="type" th:if="${observatorySearch.type == 'cctv'}" th:text="#{상태}" selected></option>
+            <option value="obsnm" th:text="#{관측소명}"></option>
+        </select>
+    </div>
+    <div class="divTable minimalistBlack mgn-bottom-10px">
+        <div class="divTableHeading">
+            <div class="divTableRow">
+                <div class="divTableHead" th:if="${observatorySearch.type == 'cctv'}" th:text="#{지점명}"></div>
+                <div class="divTableHead" th:unless="${observatorySearch.type == 'cctv'}" th:text="#{관측소명}"></div>
+                <div class="divTableHead" th:if="${observatorySearch.type == 'cctv'}" th:text="#{상태}"></div>
+                <div class="divTableHead" th:unless="${observatorySearch.type == 'cctv'}" th:text="#{실시간_관측값}"></div>
+            </div>
+        </div>
+        <div class="divTableBody">
+            <div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
+                <div class="divTableCell" th:text="*{obsnm}"></div>
+                <div class="divTableCell" th:text="*{data}"></div>
+            </div>
+            <div class="divTableRow" th:unless="${items != null && !items.isEmpty()}">
+                <div class="divTableCell" th:text="#{데이터_없음}"></div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+</main>
+</html>

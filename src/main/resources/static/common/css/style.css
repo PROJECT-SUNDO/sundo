@@ -197,6 +197,13 @@ div.minimalistBlack {
     display: flex;
     justify-content: center;
 }
+.pagination a+a {
+    padding: 0 5px;
+    font-size: 15px;
+}
+.pagination i{
+    font-size: 15px;
+}
 
 .just-btw{
     justify-content: space-between;
