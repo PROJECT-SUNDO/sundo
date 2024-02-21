@@ -231,23 +231,23 @@ window.addEventListener("DOMContentLoaded", function(){
             features: [
                 new ol.Feature({
                     geometry: new ol.geom.Point(
-                        ol.proj.fromLonLat([37.572389, 126.9769117])
+                        ol.proj.fromLonLat([37.5564844, 126.9451737])
                     )
                 })
             ],
         }),
         style: new ol.style.Style({
             image: new ol.style.Icon({
-                anchor: [0.5, 1],
-                crossOrigin: 'anonymous',
-                src: 'marker-icon.png'
+                src: 'https://ifh.cc/g/bfFomb.png',
+                //src: 'https://docs.maptiler.com/opnelayers/default-marker/marker-icon.png',
+                //src: 'https://icons8.kr/icon/cIUKs5wRJGDi/%EC%9C%84%EC%B9%98',
+                anchor: [0.5, 1]
             })
         })
     })
 
     map.addLayer(marker)
     /* 마커 E*/
-
 
 });
 
