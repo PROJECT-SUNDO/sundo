@@ -238,10 +238,14 @@ window.addEventListener("DOMContentLoaded", function(){
         }),
         style: new ol.style.Style({
             image: new ol.style.Icon({
-
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: 'marker-icon.png'
             })
         })
     })
+
+    map.addLayer(marker)
     /* 마커 E*/
 
 
