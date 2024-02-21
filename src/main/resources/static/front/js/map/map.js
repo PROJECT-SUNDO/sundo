@@ -155,8 +155,6 @@ window.addEventListener("DOMContentLoaded", function(){
             const lineVector = map.getAllLayers().filter(s => s.get('name') ==='area')[0];
             map.removeLayer(lineVector);
             manageMeasureTooltip(map, false);
-
-
             mapLib.draw.finishDrawing();
 
         }else{
