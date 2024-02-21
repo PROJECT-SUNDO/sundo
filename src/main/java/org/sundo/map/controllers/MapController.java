@@ -44,6 +44,7 @@ public class MapController {
 			addScript.add("map/map");
 			addScript.add("map/aside");
 			addScript.add("map/draw");
+			addScript.add("map/markers");
 			addCss.add("map/map");
 		} else if (mode.equals("info")) {
 			pageTitle = null;

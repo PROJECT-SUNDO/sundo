@@ -78,6 +78,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	map.addControl(new ol.control.ScaleLine());
 
 	/* 지도 표시 E */
+
 	/* geoserver - 한강하천, 한강수계 S */
 
     const river = new ol.layer.Tile({
@@ -224,6 +225,28 @@ window.addEventListener("DOMContentLoaded", function(){
 	});
 
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
+
+
+    /* 마커 S */
+    const marker = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            features: [
+                new ol.Feature({
+                    geometry: new ol.geom.Point(
+                        ol.proj.fromLonLat([37.572389, 126.9769117])
+                    )
+                })
+            ],
+        }),
+        style: new ol.style.Style({
+            image: new ol.style.Icon({
+
+            })
+        })
+    })
+    /* 마커 E*/
+
+
 });
 
 
