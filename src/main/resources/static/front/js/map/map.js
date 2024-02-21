@@ -226,27 +226,43 @@ window.addEventListener("DOMContentLoaded", function(){
 
 
     /* 마커 S */
-    const marker = new ol.layer.Vector({
+    const Airports = new ol.layer.Vector({
         source: new ol.source.Vector({
-            features: [
-                new ol.Feature({
-                    geometry: new ol.geom.Point(
-                        ol.proj.fromLonLat([37.5564844, 126.9451737])
-                    )
-                })
-            ],
+            url: `https://api.maptiler.com/data/b2ed9244-387b-4e6b-9de9-737c65fc343b/features.json?key=IZ6PPsUFPNTSxjd3GcHv`,
+            format: new ol.format.GeoJSON(),
         }),
-        style: new ol.style.Style({
+        style:  new ol.style.Style({
             image: new ol.style.Icon({
                 src: 'https://ifh.cc/g/bfFomb.png',
-                //src: 'https://docs.maptiler.com/opnelayers/default-marker/marker-icon.png',
-                //src: 'https://icons8.kr/icon/cIUKs5wRJGDi/%EC%9C%84%EC%B9%98',
-                anchor: [0.5, 1]
+                size: [2, 2],
+                scale: 0.03
             })
         })
     })
 
-    map.addLayer(marker)
+
+
+    // const marker = new ol.layer.Vector({
+    //     source: new ol.source.Vector({
+    //         features: [
+    //             new ol.Feature({
+    //                 geometry: new ol.geom.Point(
+    //                     ol.proj.fromLonLat([37.5564844, 126.9451737])
+    //                 )
+    //             })
+    //         ],
+    //     }),
+    //     style: new ol.style.Style({
+    //         image: new ol.style.Icon({
+    //             src: 'https://ifh.cc/g/bfFomb.png',
+    //             //src: 'https://docs.maptiler.com/opnelayers/default-marker/marker-icon.png',
+    //             //src: 'https://icons8.kr/icon/cIUKs5wRJGDi/%EC%9C%84%EC%B9%98',
+    //             anchor: [0.5, 1]
+    //         })
+    //     })
+    // })
+
+    map.addLayer(Airports)
     /* 마커 E*/
 
 });
