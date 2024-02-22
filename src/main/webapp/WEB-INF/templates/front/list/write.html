@@ -4,8 +4,8 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
     <h1>관측소 정보 등록</h1>
-    <div class="save list">
-        <a th:href="@{/list}" th:text="#{목록으로}"></a>
+    <div class="submitBtn">
+        <a th:href="@{/list}"  class="btn" >목록</a>
     </div>
     <hr>
     <div class="flex align-center">
@@ -15,10 +15,10 @@
 
             <th:block th:replace="~{front/list/_form::form}"></th:block>
 
-            <div class="submit_btns">
-                <button type="submit" th:text="#{등록}"></button>
+            <div class="submitBtn">
+                <button type="submit" class="btn">등록</button>
             </div>
         </form>
-
+    </div>
 </main>
 </html>
