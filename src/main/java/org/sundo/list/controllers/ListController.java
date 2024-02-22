@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
-import org.sundo.commons.exceptions.AlertException;
 import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
+import org.sundo.wamis.entities.Statistic;
 import org.sundo.wamis.entities.WaterLevelFlow;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 import org.sundo.wamis.services.*;
@@ -31,6 +31,7 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatoryValidator observatoryValidator;
 	private final ObservationInfoService observationInfoService;
 	private final ObservatoryInfoService observatoryInfoService;
+	private final StatisticInfoService statisticInfoService;
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
@@ -67,7 +68,7 @@ public class ListController implements ExceptionProcessor {
 	 * - 목록 (검색 전 10분 단위 출력)
 	 */
 	@GetMapping("/info/{seq}")
-	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationDataSearch search,
+	public String info (@PathVariable("seq") String seq, @ModelAttribute StatisticSearch search,
 						Model model){
 		commonProcess("info", model);
 		String obscd = utils.getParam("obscd");
@@ -76,16 +77,17 @@ public class ListController implements ExceptionProcessor {
 		search.setObscd(form.getObscd());
 		search.setType(form.getType());
 
-/*		if(type.equals("rf")){
-			ListData<Precipitation> data = observationInfoService.getRFList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		}else{
-			ListData<WaterLevelFlow> data = observationInfoService.getWLFList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		}*/
+		//search.setTimeUnit();
 
+		if(type.equals("rf")) {
+			ListData<Statistic> data = statisticInfoService.getStatisticList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		} else {
+			ListData<Statistic> data = statisticInfoService.getStatisticList(search);
+			model.addAttribute("items", data.getItems());
+			model.addAttribute("pagination", data.getPagination());
+		}
 
 		model.addAttribute("requestObservatory", form);
 
@@ -282,6 +284,9 @@ public class ListController implements ExceptionProcessor {
 		}else if (mode.equals("setEdit")){
 			pageTitle = "관측값 수정";
 			addCss.add("list/setting");
+		}else if(mode.equals("info")) {
+			addCss.add("list/setting");
+			addScript.add("list/setting");
 		}
 
 		model.addAttribute("addCss", addCss);
