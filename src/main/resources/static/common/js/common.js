@@ -46,3 +46,37 @@ commonLib.ajaxLoad = function(method, url, params, responseType) {
         };
     });
 };
+
+/*
+* 숫자만 입력가능하도록
+*/
+function formatNumber(num){
+    let newNum = "";
+    const pattern = /[\d*\.]/g;
+    let cnt = 0;
+    while(cnt < 100){
+        cnt++;
+        const result = pattern.exec(num);
+        if(!result) break;
+        newNum += result[0];
+    }
+
+    return newNum.replace(/\.{2,}/g, '.');
+};
+
+
+window.addEventListener("DOMContentLoaded", function(){
+
+    /* form submit 될때 숫자 아닌거는 다 없어지게 */
+    const onlyNums = document.querySelectorAll(".onlyNum");
+
+    for(const onlyNum of onlyNums){
+        // data-form 은 target form의 id로
+        const form = document.getElementById(onlyNum.dataset.form);
+        form.addEventListener("submit", function(e){
+            e.preventDefault();
+            onlyNum.value = formatNumber(onlyNum.value);
+            this.submit();
+        })
+    }
+})

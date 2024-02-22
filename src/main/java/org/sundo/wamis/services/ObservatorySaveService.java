@@ -71,10 +71,12 @@ public class ObservatorySaveService {
         String obscd = form.getObscd();
         String type = form.getType();
         double outlier = form.getOutlier();
+        boolean useOutlier = form.getUseOutlier();
 
         Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
 
         observatory.setOutlier(outlier);
+        observatory.setUseOutlier(useOutlier);
         observatoryRepository.saveAndFlush(observatory);
     }
 }
