@@ -46,8 +46,6 @@ public class MapController {
 		ListData<Observatory> data = observatoryInfoService.getList(search);
 		List<Observatory> items = data.getItems();
 
-
-
 		model.addAttribute("items", items);
 		model.addAttribute("pagination", data.getPagination());
 		try {
