@@ -78,6 +78,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	map.addControl(new ol.control.ScaleLine());
 
 	/* 지도 표시 E */
+
 	/* geoserver - 한강하천, 한강수계 S */
 
     const river = new ol.layer.Tile({
@@ -223,30 +224,25 @@ window.addEventListener("DOMContentLoaded", function(){
 
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
 
-    /* 마커 S */
-    const Airports = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            url: `https://api.maptiler.com/data/b2ed9244-387b-4e6b-9de9-737c65fc343b/features.json?key=IZ6PPsUFPNTSxjd3GcHv`,
-            format: new ol.format.GeoJSON(),
-        }),
-        style:  new ol.style.Style({
-            image: new ol.style.Icon({
-                src: 'https://ifh.cc/g/bfFomb.png',
-                size: [2, 2],
-                scale: 0.03
-            })
-        })
-    })
 
-    map.addLayer(Airports)
-    /* 마커 E*/
+    // /* 마커 S */
+    // const items = commonLib.mapLib ={
+    //
+    // }
+    //
+    // observatory(userId, callback) {
+    //     const { ajaxLoad } = commonLib;
+    //
+    //     ajaxLoad("GET", `/api/map/observatory`)
+    //         .then(res => {
+    //             if (typeof callback == 'function') {
+    //                 callback();
+    //             }
+    //         })
+    //         .catch(err => console.error(err));
+    // }
+    //
+    // addMarker(items);
+    // /* 마커 E*/
+
 });
-
-
-
-
-
-
-
-
-
