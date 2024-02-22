@@ -11,6 +11,16 @@ public class RequestObservationData {
     @NotBlank
     private String ymdhm; ////년월일시분
 
+    /**
+     * 시간 단위
+     * 10M
+     * 1H
+     * 1D
+     * 1M
+     * 1Y
+     */
+    private String timeUnit; // 시간 단위
+
     private double rf; // 강수량
 
     private double wl; // 수위
