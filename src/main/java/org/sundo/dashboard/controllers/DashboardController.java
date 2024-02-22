@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
+import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.dashboard.service.DashboardInfoService;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.wamis.entities.Observatory;
@@ -23,17 +24,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/dashboard")
 @RequiredArgsConstructor
-public class DashboardController {
+public class DashboardController implements ExceptionProcessor {
 
     private final DashboardInfoService dashboardInfoService;
     private final ObservationInfoService observationInfoService;
 
     @GetMapping
-    public String dashboard(@PathVariable("seq")Long seq, @ModelAttribute ObservatorySearch search, Model model){
+    public String dashboard(@ModelAttribute ObservatorySearch search, Model model){
 
 
         ListData<Observatory> data = dashboardInfoService.getRFList(search);
-        Precipitation item = observationInfoService.getPre(seq);
 
 
         List<String> addScript = new ArrayList<>();
@@ -49,7 +49,6 @@ public class DashboardController {
         model.addAttribute("addCommonCss", addCommonCss);
 
         model.addAttribute("items", data.getItems());
-        model.addAttribute("precipitation", item.getRf());
         model.addAttribute("pagination", data.getPagination());
 
         return "front/dashboard/dashboard";
