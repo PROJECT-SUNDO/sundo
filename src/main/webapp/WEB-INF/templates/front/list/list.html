@@ -83,7 +83,7 @@
                     </button>
                 </div>
             </div>
-            <th:block th:unless="*{items != null}" th:text="#{데이터_없음}"></th:block>
+            <th:block th:unless="*{items != null && !items.isEmpty()}" th:text="#{데이터_없음}"></th:block>
         </div>
     </div>
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
@@ -99,18 +99,5 @@
             });
         });
     </script>
-    <script>
-        const { popup } = commonLib;
-        const delete = document.querySelectorAll(".delete);
-        details.forEach((button, index) => {
-            button.addEventListener("click", (e) => {
-                const obscd = e.currentTarget.dataset.obscd;
-                const url = `/list/delete/${obscd}`;
-                popup.open(url, 450, 450);
-            });
-        });
-    </script>
 </main>
-
-
 </html>
