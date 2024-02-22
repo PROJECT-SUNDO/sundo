@@ -8,15 +8,25 @@
         </div>
         <div>
             <label for="type">관측변수</label>
-            <select name="type" th:field="*{type}" id="type">
+            <select th:if="*{mode != 'update'}" name="type" th:field="*{type}" id="type">
                 <option value="rf">강수량</option>
                 <option value="wl">수위</option>
                 <option value="flw">유량</option>
             </select>
+            <th:block th:if="*{mode =='update'}">
+                <th:block th:if="*{type =='rf'}">강수량</th:block>
+                <th:block th:if="*{type =='wl'}">수위</th:block>
+                <th:block th:if="*{type =='flw'}">유량</th:block>
+            </th:block>
+
             <label class="obscd">표준 코드</label>
-            <input type="text" id="obscd" name="obscd"  th:field="*{obscd}" placeholder="xxxxxxxx 예)10014010">
-            <div class="error" th:each="err : ${#fields.errors('obscd')}" th:text="${err}"></div>
+            <th:block th:if="*{mode != 'update'}">
+                <input type="text" id="obscd" name="obscd"  th:field="*{obscd}" placeholder="xxxxxxxx 예)10014010">
+                <div class="error" th:each="err : ${#fields.errors('obscd')}" th:text="${err}"></div>
+            </th:block>
+            <th:block th:if="*{mode == 'update'}" th:text="*{obscd}"></th:block>
         </div>
+
         <div>
             <label class="latitude">위도</label>
             <input type="text" id="latitude" name="latitude" th:field="*{latitude}" placeholder="000-00-00 예)128-33-04">
