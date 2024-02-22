@@ -45,5 +45,16 @@
         </div>
     </div>
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+    <textarea th:text="${json}" class="dn" id="jsonData"></textarea>
+
+    <script>
+        const el = document.getElementById("jsonData");
+        if (el && el.value.trim()) {
+            const items = JSON.parse(el.value.trim());
+
+            parent.postMessage({map: items}, "*");
+        }
+    </script>
+
 </main>
 </html>
