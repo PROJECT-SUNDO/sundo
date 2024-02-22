@@ -5,11 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sundo.commons.ListData;
+import org.sundo.commons.Utils;
 import org.sundo.dashboard.service.DashboardInfoService;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.entities.Precipitation;
+import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.services.ObservationInfoService;
+import org.sundo.wamis.services.ObservatoryNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +26,15 @@ import java.util.List;
 public class DashboardController {
 
     private final DashboardInfoService dashboardInfoService;
+    private final ObservationInfoService observationInfoService;
 
     @GetMapping
-    public String dashboard(@ModelAttribute ObservatorySearch search, Model model){
+    public String dashboard(@PathVariable("seq")Long seq, @ModelAttribute ObservatorySearch search, Model model){
+
 
         ListData<Observatory> data = dashboardInfoService.getRFList(search);
+        Precipitation item = observationInfoService.getPre(seq);
+
 
         List<String> addScript = new ArrayList<>();
         List<String> addCommonCss = new ArrayList<>();
@@ -37,6 +47,9 @@ public class DashboardController {
         model.addAttribute("addScript", addScript);
         model.addAttribute("addCss", addCss);
         model.addAttribute("addCommonCss", addCommonCss);
+
+        model.addAttribute("items", data.getItems());
+        model.addAttribute("precipitation", item.getRf());
         model.addAttribute("pagination", data.getPagination());
 
         return "front/dashboard/dashboard";

@@ -81,7 +81,7 @@
                     </button>
                 </div>
             </div>
-            <th:block th:unless="*{items != null}" th:text="#{데이터_없음}"></th:block>
+            <th:block th:unless="*{items != null && !items.isEmpty()}" th:text="#{데이터_없음}"></th:block>
         </div>
     </div>
     <th:block th:replace="~{common/_pagination::pagination}"></th:block>
