@@ -57,6 +57,7 @@ public class ObservatoryInfoService {
                 .obsnm(obsnm)
                 .clsyn(clsyn)
                 .type(type)
+                .useOutlier(obs.isUseOutlier())
                 .outlier(obs.getOutlier())
                 .build();
 
