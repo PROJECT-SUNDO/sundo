@@ -59,11 +59,13 @@
                     </div>
 
                     <div class="divTableCell">
-                        <span th:text="${item.rf}"></span>
+                        <span th:text="${item.obscd}"></span>
                         <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
                     </div>
+
                     <div class="divTableCell">
-<!--                        <span th:text="${precipitation.rf}"></span>-->
+                        <span th:text="${item.data}"></span>
+                        <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
                     </div>
                 </div>
                 <th:block th:unless="*{items != null && !items.isEmpty()}" th:text="#{데이터_없음}"></th:block>
