@@ -4,7 +4,7 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
     <h1>관측소 정보</h1>
-    <form th:action="@{/list}" method="get" th:object="${observatorySearch}">
+    <form id="searchFrm" th:action="@{/list}" method="get" th:object="${observatorySearch}">
         <div class="flex align-center">
             <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
             <div>검색</div>
@@ -12,7 +12,7 @@
         <hr>
         <div class="flex align-center">
             <label for="obscd">관측소 코드 </label>
-            <input type="number" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx">
+            <input type="text" id="obscd" class="onlyNum" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
             <label for="obsnm">관측소명</label>
             <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
             <label for="type">관측변수</label>

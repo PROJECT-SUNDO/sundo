@@ -30,6 +30,21 @@ window.addEventListener("DOMContentLoaded", function(){
         });
     }
 
+    // 이상치 사용안하면
+    const useOutlier = document.getElementById("useOutlier");
+    const outlier = document.getElementById("outlier");
+    if(!useOutlier.checked){
+        outlier.setAttribute("readonly", true);
+    }
+
+
+    useOutlier.addEventListener("click", function(){
+        if(!useOutlier.checked){
+            outlier.setAttribute("readonly", true);
+        }else{
+            outlier.removeAttribute("readonly");
+        }
+    })
 
 
 })
