@@ -35,6 +35,7 @@ function addMarker(items){ //경도 위도 이름값(마커들을 구분하기�
     }
 }
 
+
 // const Airports = new ol.layer.Vector({
 //     source: new ol.source.Vector({
 //         url: `https://api.maptiler.com/data/b2ed9244-387b-4e6b-9de9-737c65fc343b/features.json?key=IZ6PPsUFPNTSxjd3GcHv`,
