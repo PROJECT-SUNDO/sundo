@@ -76,6 +76,7 @@ public class MapController {
 		}else if(mode.equals("aside")){
 			pageTitle = null;
 			addCss.add("map/aside");
+			addScript.add("map/ifm");
 		}
 		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("addScript", addScript);
