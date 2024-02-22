@@ -21,7 +21,7 @@ public class ObservationDataSearch {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate edate; // 끝 날짜
 
-    private String timeUnit; // 조회 단위(10분/1시간/일/월/년)
+    private String timeUnit; // 시간 단위
 
 
 
