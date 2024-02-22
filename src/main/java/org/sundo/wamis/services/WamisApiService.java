@@ -82,6 +82,7 @@ public class WamisApiService {
                                 item.setLat(detail.getLat());
                                 item.setAddr(detail.getAddr());
                                 item.setEtcaddr(detail.getEtcaddr());
+                                item.setOutlier(3.5);
                             });
                 }
 
@@ -166,6 +167,8 @@ public class WamisApiService {
                 LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
                 item.setYmd(date);
             });
+
+
 
             waterLevelFlowRepository.saveAllAndFlush(items);
 
