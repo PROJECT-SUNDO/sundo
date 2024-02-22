@@ -116,6 +116,8 @@ public class WamisApiService {
                                     item.setSrswl(detail.getSrswl()); // 심각
                                     item.setPfh(detail.getPfh()); // 계획홍수위
                                     item.setFstnyn(detail.getFstnyn()); // 특보지점여부
+                                }else{
+                                    item.setOutlier(648.31);
                                 }
                             });
                 }
