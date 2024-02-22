@@ -222,6 +222,24 @@ window.addEventListener("DOMContentLoaded", function(){
 	});
 
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
+
+    /* 마커 S */
+    const Airports = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: `https://api.maptiler.com/data/b2ed9244-387b-4e6b-9de9-737c65fc343b/features.json?key=IZ6PPsUFPNTSxjd3GcHv`,
+            format: new ol.format.GeoJSON(),
+        }),
+        style:  new ol.style.Style({
+            image: new ol.style.Icon({
+                src: 'https://ifh.cc/g/bfFomb.png',
+                size: [2, 2],
+                scale: 0.03
+            })
+        })
+    })
+
+    map.addLayer(Airports)
+    /* 마커 E*/
 });
 
 
