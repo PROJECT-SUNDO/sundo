@@ -161,6 +161,11 @@ public class WamisApiService {
                     });
 
             List<WaterLevelFlow> items = result.getContent();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+            items.forEach(item -> {
+                LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
+                item.setYmd(date);
+            });
 
             waterLevelFlowRepository.saveAllAndFlush(items);
 

@@ -24,14 +24,8 @@ window.addEventListener("DOMContentLoaded", function(){
     /* 꺽쇠 버튼 클릭 - 관측소 목록 토글 S */
     angleBtn.addEventListener("click", function(){
         if(aside.classList.contains("dn")){
-            const targetEl = document.querySelector("#type");
-            if(!targetEl.value){
-                tabBtns[0].click();
-            }else{
-                aside.classList.remove("dn");
-                angleEl.className="xi-angle-left-thin"
-            }
-
+            aside.classList.remove("dn");
+            angleEl.className="xi-angle-left-thin"
         }else{
             aside.classList.add("dn");
             angleEl.className="xi-angle-right-thin";
