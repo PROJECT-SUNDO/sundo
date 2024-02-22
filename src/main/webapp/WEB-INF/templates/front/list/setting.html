@@ -81,9 +81,18 @@
                     <input type="hidden" name="seq" th:id="${'seq_' + status.count}" th:value="*{seq}">
                     <div class="divTableCell" th:text="${status.count}"></div>
                     <div class="divTableCell" th:text="*{ymdhm}"></div>
-                    <div class="divTableCell" th:if="${requestObservatory.type == 'rf'}" th:text="*{rf}"></div>
-                    <div class="divTableCell" th:if="${requestObservatory.type == 'wl'}" th:text="*{wl}"></div>
-                    <div class="divTableCell" th:if="${requestObservatory.type == 'flw'}" th:text="*{flw}"></div>
+                    <div class="divTableCell" th:if="${requestObservatory.type == 'rf'}">
+                        <span th:text="*{rf}"></span>
+                        <span class="rf unit"></span>
+                    </div>
+                    <div class="divTableCell" th:if="${requestObservatory.type == 'wl'}" >
+                        <span th:text="*{wl}"></span>
+                        <span class="wl unit"></span>
+                    </div>
+                    <div class="divTableCell" th:if="${requestObservatory.type == 'flw'}">
+                        <span th:text="*{fw}"></span>
+                        <span class="fw unit"></span>
+                    </div>
                     <div class="divTableCell">
                         <!-- 수정 버튼 -->
                         <button type="button" class="editBtn" th:data-seq-id="${'seq_' + status.count}">
