@@ -97,7 +97,7 @@ public class ListController implements ExceptionProcessor {
 	 */
 	@GetMapping("/add")
 	public String add (@ModelAttribute RequestObservatory form, Model model) {
-		commonProcess("write", model);
+		commonProcess("list", model);
 
 
 		return "front/list/write";
@@ -109,7 +109,7 @@ public class ListController implements ExceptionProcessor {
 	 */
 	@GetMapping("/update/{obscd}/{type}")
 	public String update (@PathVariable("obscd") String obscd, @PathVariable("type") String type, Model model){
-		commonProcess("update", model);
+		commonProcess("list", model);
 
 		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
 		model.addAttribute("requestObservatory", form);
@@ -282,11 +282,6 @@ public class ListController implements ExceptionProcessor {
 		}else if (mode.equals("setEdit")){
 			pageTitle = "관측값 수정";
 			addCss.add("list/setting");
-		}else if(mode.equals("list/write")) {
-			pageTitle = "목록";
-			addScript.add("list/list");
-			addCss.add("list/style");
-			addCommonCss.add("common/style");
 		}
 
 		model.addAttribute("addCss", addCss);

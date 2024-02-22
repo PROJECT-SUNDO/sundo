@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.sundo.wamis.services.StatisticService;
 import org.sundo.wamis.services.WamisApiService;
 
 @RestController
@@ -11,6 +12,7 @@ import org.sundo.wamis.services.WamisApiService;
 @RequiredArgsConstructor
 public class ApiWamisController {
     private final WamisApiService apiService;
+    private final StatisticService statisticService;
     @GetMapping
     public void test() {
         apiService.getObservatories("rf");
@@ -19,6 +21,11 @@ public class ApiWamisController {
         apiService.updateWaterLevelFlow( "10M", "1018683");
         apiService.updatePrecipitation( "10M", "10184100");
 
+    }
+
+    @GetMapping("/stat")
+    public void test2() {
+        statisticService.update();
     }
 
 
