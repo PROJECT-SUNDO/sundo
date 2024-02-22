@@ -53,6 +53,7 @@ public class ObservatoryInfoService {
         }
 
         RequestObservatory form = RequestObservatory.builder()
+                .mode("update")
                 .obscd(obscd)
                 .obsnm(obsnm)
                 .clsyn(clsyn)
