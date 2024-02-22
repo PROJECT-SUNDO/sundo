@@ -2,6 +2,7 @@ package org.sundo.list.controllers;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import java.util.List;
 
 @Data
@@ -22,5 +23,9 @@ public class ObservatorySearch {
     private String type; // 관측 변수
 
     private List<Long> seq; // 게시글 번호
+
+    private String lon; // 경도
+
+    private String lat; // 위도
 
 }

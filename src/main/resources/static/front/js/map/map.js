@@ -58,26 +58,28 @@ window.addEventListener("DOMContentLoaded", function(){
     });
     /* 오버뷰 맵 E */
 
-	const map = new ol.Map({
-		target : 'map',
-		layers : [
+    const map = new ol.Map({
+        target : 'map',
+        layers : [
             new ol.layer.Tile({
                 source: mapBaseSource,
             }),
             new ol.layer.Tile({
-               source:mapSatelliteSource,
+                source:mapSatelliteSource,
             }),
-		],
-		view: new ol.View({
-		    projection: mapProjection,
-			center: center.getCoordinates(),
-			zoom: 8.5
-		}),
-		controls: ol.control.defaults().extend([overViewMap]),
-	});
-	map.addControl(new ol.control.ScaleLine());
+        ],
+        view: new ol.View({
+            projection: mapProjection,
+            center: center.getCoordinates(),
+            zoom: 8.5
+        }),
+        controls: ol.control.defaults().extend([overViewMap]),
+    });
+    mapLib.map = map;
+    map.addControl(new ol.control.ScaleLine());
 
 	/* 지도 표시 E */
+
 	/* geoserver - 한강하천, 한강수계 S */
 
     const river = new ol.layer.Tile({
@@ -222,13 +224,18 @@ window.addEventListener("DOMContentLoaded", function(){
 	});
 
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
+
 });
 
 
+/* 마커 추가 s */
+window.addEventListener("message", function(e) {
+    if (!e.data.map) {
+        return;
+    }
 
+    const items = e.data.map;
+    addMarker(items);
+});
 
-
-
-
-
-
+/* 마커 추가 e */
