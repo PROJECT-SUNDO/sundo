@@ -107,7 +107,7 @@ label {
 [type="checkbox"] {
   appearance: none;
   position: relative;
-  border: max(2px, 0.1em) solid gray;
+  border: max(2px, 0.1em) solid #808080;
   border-radius: 1.25em;
   width: 2.25em;
   height: 1.25em;
@@ -135,20 +135,6 @@ label {
   left: 1em;
 }
 
-[type="checkbox"]:disabled {
-  border-color: lightgray;
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-[type="checkbox"]:disabled:before {
-  background-color: lightgray;
-}
-
-[type="checkbox"]:disabled + span {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
 
 [type="checkbox"]:focus-visible {
   outline-offset: max(2px, 0.1em);
@@ -156,5 +142,10 @@ label {
 }
 
 [type="checkbox"]:enabled:hover {
-  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+  box-shadow: 0 0 0 max(4px, 0.2em) #d3d3d3;
+}
+
+#outlier:read-only{
+    border: 1px solid #808080;
+    border-radius: 3px;
 }

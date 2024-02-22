@@ -28,19 +28,18 @@
                     <span th:text="*{type}"></span>
                 </div>
             </div>
-            <form th:action="@{/list/setting/save}" method="post" th:object="${requestObservatory}" target="ifrmProcess" autocomplete="off">
+            <form th:action="@{/list/setting/save}" method="post" th:object="${requestObservatory}" target="ifrmProcess" autocomplete="off" id="editForm">
                 <div class="observatoryForm mgn-bottom-10px">
                     <input type="hidden" name="obscd" th:value="*{obscd}">
                     <input type="hidden" name="type" th:value="*{type}">
                     <div>
                         <span th:text="#{사용여부}"></span>
-                        <label>
-                            <input type="checkbox" name="clsyn" id="clsyn" value="true" th:field="*{clsyn}">
-                        </label>
+                        <input type="checkbox" name="useOutlier" id="useOutlier" th:field="*{useOutlier}">
+                        <label for="useOutlier"></label>
                     </div>
                     <div>
                         <span th:text="#{이상치_기준_설정}"></span>
-                        <input type="number" name="outlier" th:field="*{outlier}">
+                        <input type="text" class="onlyNum" name="outlier" th:field="*{outlier}" data-form="editForm">
                     </div>
                 </div>
                 <button type="submit" class="saveBtn mgn-bottom-10px" th:text="#{저장}"></button>
