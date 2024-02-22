@@ -64,7 +64,9 @@
                     </div>
 
                     <div class="divTableCell">
-                        <span th:text="${item.data}"></span><span class="${item.type} unit"></span>
+                        <span th:text="${item.data} + '  '"></span><span class="unit" th:classappend="${item.type == 'rf'? 'rf' : ''}
+                          +${item.type == 'wl'? 'wl': ''}
+                          +${item.type == 'flw'? 'fw': ''}"></span>
                         <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
                     </div>
                 </div>
