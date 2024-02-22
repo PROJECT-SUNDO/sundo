@@ -82,6 +82,7 @@ public class WamisApiService {
                                 item.setLat(detail.getLat());
                                 item.setAddr(detail.getAddr());
                                 item.setEtcaddr(detail.getEtcaddr());
+                                item.setOutlier(3.5);
                             });
                 }
 
@@ -115,6 +116,8 @@ public class WamisApiService {
                                     item.setSrswl(detail.getSrswl()); // 심각
                                     item.setPfh(detail.getPfh()); // 계획홍수위
                                     item.setFstnyn(detail.getFstnyn()); // 특보지점여부
+                                }else{
+                                    item.setOutlier(648.31);
                                 }
                             });
                 }
@@ -166,6 +169,8 @@ public class WamisApiService {
                 LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
                 item.setYmd(date);
             });
+
+
 
             waterLevelFlowRepository.saveAllAndFlush(items);
 
