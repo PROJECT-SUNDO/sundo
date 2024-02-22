@@ -225,53 +225,24 @@ window.addEventListener("DOMContentLoaded", function(){
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
 
 
-    /* 마커 S */
-    const Airports = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            url: `https://api.maptiler.com/data/b2ed9244-387b-4e6b-9de9-737c65fc343b/features.json?key=IZ6PPsUFPNTSxjd3GcHv`,
-            format: new ol.format.GeoJSON(),
-        }),
-        style:  new ol.style.Style({
-            image: new ol.style.Icon({
-                src: 'https://ifh.cc/g/bfFomb.png',
-                size: [2, 2],
-                scale: 0.03
-            })
-        })
-    })
-
-
-
-    // const marker = new ol.layer.Vector({
-    //     source: new ol.source.Vector({
-    //         features: [
-    //             new ol.Feature({
-    //                 geometry: new ol.geom.Point(
-    //                     ol.proj.fromLonLat([37.5564844, 126.9451737])
-    //                 )
-    //             })
-    //         ],
-    //     }),
-    //     style: new ol.style.Style({
-    //         image: new ol.style.Icon({
-    //             src: 'https://ifh.cc/g/bfFomb.png',
-    //             //src: 'https://docs.maptiler.com/opnelayers/default-marker/marker-icon.png',
-    //             //src: 'https://icons8.kr/icon/cIUKs5wRJGDi/%EC%9C%84%EC%B9%98',
-    //             anchor: [0.5, 1]
+    // /* 마커 S */
+    // const items = commonLib.mapLib ={
+    //
+    // }
+    //
+    // observatory(userId, callback) {
+    //     const { ajaxLoad } = commonLib;
+    //
+    //     ajaxLoad("GET", `/api/map/observatory`)
+    //         .then(res => {
+    //             if (typeof callback == 'function') {
+    //                 callback();
+    //             }
     //         })
-    //     })
-    // })
-
-    map.addLayer(Airports)
-    /* 마커 E*/
+    //         .catch(err => console.error(err));
+    // }
+    //
+    // addMarker(items);
+    // /* 마커 E*/
 
 });
-
-
-
-
-
-
-
-
-

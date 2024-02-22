@@ -74,8 +74,8 @@
 			 <property name="hibernate.use_sql_comments" value="true"/>
 			  <!-- JPA 표준에 맞춘 새로운 키 생성 전략 사용 -->
 			 <property name="hibernate.id.new_generator_mappings" value="true"/>
-			  <!-- 애플리케이션 실행 시점에 데이터베이스 테이블 자동 생성 -->
-			  <property name="hibernate.hbm2ddl.auto" value="create"/>
+			  <!-- 애플리케이션 실행 시점에 데이터베이스 테이블 자동 생성 create/ update-->
+			  <property name="hibernate.hbm2ddl.auto" value="update"/>
 			  <!-- 이름 매핑 전략 설정 - 자바의 카멜 표기법을 테이블의 언더스코어 표기법으로 매핑
 				 ex) lastModifiedDate -> last_modified_date -->
 			  <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />
