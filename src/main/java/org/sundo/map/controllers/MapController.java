@@ -44,11 +44,11 @@ public class MapController {
 		commonProcess("aside", model);
 		search.setType(type);
 		if(!StringUtils.hasText(search.getOrder())){
-			search.setOrder("rf");
+			search.setOrder(type);
 		}
 		ListData<Observatory> data = observatoryInfoService.getList(search);
 		List<Observatory> items = data.getItems();
-
+		System.out.println(items);
 		model.addAttribute("items", items);
 		model.addAttribute("pagination", data.getPagination());
 		try {
