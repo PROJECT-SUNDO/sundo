@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
-
-import javax.validation.constraints.Size;
 
 @Data @Builder
 @NoArgsConstructor
@@ -17,14 +14,10 @@ public class RequestObservatory {
 
     private String mode = "write";
 
-    @NotBlank
-    @Size(min=8, max=8)
     private String obscd; // 관측소 코드
 
-    @NotBlank
     private String obsnm; // 관측소명
 
-    @NotBlank
     private String type; // 관측유형
 
     private String obinfo; // 관측 정보
@@ -33,16 +26,12 @@ public class RequestObservatory {
 
     private String add; // 위치(주소)
 
-    @NotBlank
     private String latitude; // 위도
 
-    @NotBlank
     private String longitude; // 경도
 
-    @NotBlank
     private String obsknd; // 관측방법
 
-    @NotBlank
     private String mngorg; // 운영기관
 
     private Boolean useOutlier; //이상치 사용여부
