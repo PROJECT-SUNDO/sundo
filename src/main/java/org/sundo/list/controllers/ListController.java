@@ -239,9 +239,8 @@ public class ListController implements ExceptionProcessor {
 		return "front/list/observation_edit";
 	}
 
-	@PostMapping("/setting/edit/{seq}")
-	public String editDataPs(@PathVariable("seq") Long seq,
-							 @Valid RequestObservation form,
+	@PostMapping("/setting/edit")
+	public String editDataPs(@Valid RequestObservation form,
 							 Errors errors,
 							 Model model){
 
