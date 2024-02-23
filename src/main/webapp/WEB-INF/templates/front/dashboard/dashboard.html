@@ -33,27 +33,21 @@
     </div>
 
     <div>
-        <canvas id="myChart1"></canvas>
-    </div>
-
-    <div>
-        <canvas id="myChart2"></canvas>
-    </div>
-
-    <div>
-        <canvas id="myChart3"></canvas>
-    </div>
-
-    <div>
-        <canvas id="myChart4"></canvas>
-    </div>
         <div class="chart">
-            <div class="myChartOne">
-                <canvas id="myChartOne"></canvas>
+            <div>
+                <!--차트를 그릴 영역으로 canvas태그를 사용한다.-->
+                <canvas id="myChart1"></canvas>
             </div>
 
-            <div class="myChartTwo">
-                <canvas id="myChartTwo"></canvas>
+            <div>
+                <canvas id="myChart2"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart3"></canvas>
+            </div>
+
+            <div>
+                <canvas id="myChart4"></canvas>
             </div>
         </div>
 
@@ -93,10 +87,7 @@
                 </div>
             </div>
             <th:block th:replace="~{common/_pagination::pagination}"></th:block>
-
-
-
         </div>
-
+    </div>
 </main>
 </html>
