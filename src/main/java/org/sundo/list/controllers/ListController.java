@@ -1,4 +1,5 @@
 package org.sundo.list.controllers;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,6 @@ import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
 import org.sundo.commons.exceptions.ExceptionProcessor;
-import org.sundo.wamis.entities.Observation;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.Statistic;
@@ -71,7 +71,7 @@ public class ListController implements ExceptionProcessor {
 	 */
 	@GetMapping("/info/{seq}")
 	public String info (@PathVariable("seq") String seq, @ModelAttribute StatisticSearch search,
-						Model model){
+						Model model) {
 		commonProcess("info", model);
 		String obscd = utils.getParam("obscd");
 		String type = utils.getParam("type");
@@ -79,17 +79,9 @@ public class ListController implements ExceptionProcessor {
 		search.setObscd(form.getObscd());
 		search.setType(form.getType());
 
-		//search.setTimeUnit();
-
-		if(type.equals("rf")) {
-			ListData<Statistic> data = statisticInfoService.getStatisticList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		} else {
-			ListData<Statistic> data = statisticInfoService.getStatisticList(search);
-			model.addAttribute("items", data.getItems());
-			model.addAttribute("pagination", data.getPagination());
-		}
+		ListData<Statistic> data = statisticInfoService.getStatisticList(search);
+		model.addAttribute("items", data.getItems());
+		model.addAttribute("pagination", data.getPagination());
 
 		model.addAttribute("requestObservatory", form);
 
