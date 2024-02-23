@@ -9,7 +9,7 @@ import org.sundo.wamis.repositories.ObservatoryRepository;
 
 @Component
 @RequiredArgsConstructor
-public class ObservatoryValidator implements Validator {
+public class ObservatoryValidator implements Validator, RegisterValidator {
 
     private final ObservatoryRepository observatoryRepository;
 
