@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -97,6 +98,9 @@ public class Statistic implements Serializable {
     private double acc23;
 
     private String data;
+
+    @Transient
+    private String timeUnit = "hour";
 
 
 }

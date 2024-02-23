@@ -39,6 +39,7 @@ public class StatisticInfoService {
         LocalDate edate = search.getEdate();
         String obscd = search.getObscd().trim();
         String type = search.getType();
+        String timeUnit = search.getTimeUnit();
 
         QStatistic statistic = QStatistic.statistic;
         BooleanBuilder andbuilder = new BooleanBuilder();
