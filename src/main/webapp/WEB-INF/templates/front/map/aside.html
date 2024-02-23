@@ -8,23 +8,23 @@
         <button type="submit" class="searchBtn">
             <i class="xi-search"></i>
         </button>
-    </form>
-    <div class="just-btw flex mgn-bottom-10px align-center">
-        <div class="targetNm">
-            <span th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}"></span>
-            <span th:if="${observatorySearch.type == 'wl'}" th:text="#{수위}"></span>
-            <span th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}"></span>
-            <span th:if="${observatorySearch.type == 'cctv'}" th:text="#{CCTV}"></span>
-            <span th:unless="${observatorySearch.type == 'cctv'}" th:text="#{관측소}"></span>
+        <div class="just-btw flex mgn-bottom-10px align-center">
+            <div class="targetNm">
+                <span th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}"></span>
+                <span th:if="${observatorySearch.type == 'wl'}" th:text="#{수위}"></span>
+                <span th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}"></span>
+                <span th:if="${observatorySearch.type == 'cctv'}" th:text="#{CCTV}"></span>
+                <span th:unless="${observatorySearch.type == 'cctv'}" th:text="#{관측소}"></span>
+            </div>
+            <select class="order" name="order" th:field="*{order}">
+                <option value="rf" th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}" selected></option>
+                <option value="wl" th:if="${observatorySearch.type == 'wl'}" th:text="#{수위}" selected></option>
+                <option value="flw" th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}" selected></option>
+                <option value="cctv" th:if="${observatorySearch.type == 'cctv'}" th:text="#{상태}" selected></option>
+                <option value="obsnm" th:text="#{관측소명}"></option>
+            </select>
         </div>
-        <select class="order" name="order">
-            <option value="type" th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}" selected></option>
-            <option value="type" th:if="${observatorySearch.type == 'wl'}" th:text="#{수위}" selected></option>
-            <option value="type" th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}" selected></option>
-            <option value="type" th:if="${observatorySearch.type == 'cctv'}" th:text="#{상태}" selected></option>
-            <option value="obsnm" th:text="#{관측소명}"></option>
-        </select>
-    </div>
+    </form>
     <div class="divTable minimalistBlack mgn-bottom-10px">
         <div class="divTableHeading">
             <div class="divTableRow">
@@ -37,7 +37,12 @@
         <div class="divTableBody">
             <div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
                 <div class="divTableCell" th:text="*{obsnm}"></div>
-                <div class="divTableCell" th:text="*{data}"></div>
+                <div class="divTableCell data" th:classappend="*{ data>= outlier} ? 'on' : ''">
+                    <span th:text="*{data}"></span>
+                    <span class="unit" th:classappend="${observatorySearch.type == 'rf'? 'rf' : ''}
+                          +${observatorySearch.type == 'wl'? 'wl': ''}
+                          +${observatorySearch.type == 'flw'? 'fw': ''}"></span>
+                </div>
             </div>
             <div class="divTableRow" th:unless="${items != null && !items.isEmpty()}">
                 <div class="divTableCell" th:text="#{데이터_없음}"></div>

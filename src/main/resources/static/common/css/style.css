@@ -209,3 +209,7 @@ div.minimalistBlack {
     justify-content: space-between;
 }
 
+.data.on{
+    color: #ff0000;
+}
+

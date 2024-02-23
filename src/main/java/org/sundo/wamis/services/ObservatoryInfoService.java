@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -24,6 +25,8 @@ import org.sundo.wamis.repositories.WaterLevelFlowRepository;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.Order.asc;
 
 @Service
 @Transactional
@@ -112,7 +115,12 @@ public class ObservatoryInfoService {
 
         /* 페이징 처리 S */
 
-        Pageable pageable = PageRequest.of(page - 1, limit);
+        Pageable pageable = null;
+        if(search.getOrder().equals("type")){
+            pageable = PageRequest.of(page - 1, limit, Sort.by(asc("data")));
+        }else{
+            pageable = PageRequest.of(page - 1, limit, Sort.by(asc("obsnm")));
+        }
 
         // 단일 테이블 불러올때
         Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
@@ -122,39 +130,10 @@ public class ObservatoryInfoService {
         /* 페이징 처리 E */
 
         List<Observatory> items = data.getContent();
-        items.forEach(this::addInfo);
 
         return new ListData<>(items, pagination);
     }
 
-
-    private void addInfo(Observatory observatory){
-        String type = observatory.getType();
-        String obscd = observatory.getObscd();
-
-        if("rf".equals(type)){
-            List<Precipitation> precipitations = precipitationRepository.findByRfobscdOrderByYmdDesc(obscd).orElse(null);
-
-            if(precipitations != null && !precipitations.isEmpty()){
-                observatory.setData(precipitations.get(0).getRf());
-            }
-
-        }else if ("wl".equals(type) || "flw".equals(type)){
-            List<WaterLevelFlow> waterLevelFlows = waterLevelFlowRepository.findByWlobscdOrderByYmdDesc(obscd).orElse(null);
-            if(waterLevelFlows != null && !waterLevelFlows.isEmpty()){
-                double data = 0;
-                if("wl".equals(type)){
-                    data = waterLevelFlows.get(0).getWl();
-                }else{
-                    data = waterLevelFlows.get(0).getFw();
-                }
-
-                observatory.setData(data);
-
-            }
-        }
-
-    }
 
 
 

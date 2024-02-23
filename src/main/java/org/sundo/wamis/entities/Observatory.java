@@ -69,7 +69,4 @@ public class Observatory extends Base implements Serializable {
 
     private boolean useOutlier = true; // 이상치 사용여부
     private double outlier; // 이상치
-
-    @Transient
-    private double data; // 최근 10분 데이터
 }

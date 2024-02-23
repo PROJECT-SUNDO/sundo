@@ -43,6 +43,9 @@ public class MapController {
 						 Model model){
 		commonProcess("aside", model);
 		search.setType(type);
+		if(!StringUtils.hasText(search.getOrder())){
+			search.setOrder("rf");
+		}
 		ListData<Observatory> data = observatoryInfoService.getList(search);
 		List<Observatory> items = data.getItems();
 
