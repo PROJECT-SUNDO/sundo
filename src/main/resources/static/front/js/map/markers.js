@@ -10,21 +10,24 @@ function addMarker(items){ //경도 위도 이름값(마커들을 구분하기�
 
         let { lon, lat } = item;
 
+        // 텍스트 형태 변환
         if (!lon || !lat) continue;
         lon = parseFloat(lon.replace("-", ".").replace(/-/g, ""));  // 경도
         lat = parseFloat(lat.replace("-", ".").replace(/-/g, ""));  // 위도
         const name = item.obsnm;  // 관측소 명
 
         // 마커 feature 설정
-        const mapProjection = "EPSG:3857";
-        const dataProjection = "EPSG:5186";
-        const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat]));
+        const mapProjection = "EPSG:3857";  // 지도 좌표계
+        const markerDataProjection = "EPSG:5186";  // 데이터 좌표계
+        let lonLat = ol.proj.fromLonLat([lon, lat]);
+        let transformedLonLat = ol.proj.transform(lonLat, markerDataProjection, mapProjection);
+        const geometry = new ol.geom.Point(transformedLonLat);
+        // const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat]));
+        // const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat])).transform(dataProjection, mapProjection);
         if (!mapLib.geometry) mapLib.geometry = geometry;
         const feature = new ol.Feature({
             geometry, //transform()경도 위도에 포인트 설정
-            projection : {
-                mapProjection
-            },
+
             properties : {
                 name: "markers",
             },
@@ -39,18 +42,19 @@ function addMarker(items){ //경도 위도 이름값(마커들을 구분하기�
         // 마커 스타일 설정
         const  markerStyle = new ol.style.Style({
             image: new ol.style.Icon({ //마커 이미지
-                src: 'https://ifh.cc/g/bfFomb.png',
-                scale: 0.07 //크기 1=100%
+                src: 'https://ifh.cc/g/3O0MmJ.png',
+                opacity: 1, // 투명도 설정 (0: 완전 투명, 1: 완전 불투명)
+                scale: 0.06 //크기 1=100%
             })
         });
 
         // 마커 레이어 생성
-        const markerLayer = new ol.layer.Vector({
+            const markerLayer = new ol.layer.Vector({
             source: markerSource, //마커 feacture들
             style: markerStyle //마커 스타일
         });
 
-        // 지도에 마커가 그려진 레이어 추가
+        // 지도에 마커가 그려진 레이어 추가s
         if (mapLib.map) {
             mapLib.map.addLayer(markerLayer);
         }
