@@ -11,6 +11,7 @@ import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.dashboard.service.DashboardInfoService;
+import org.sundo.dashboard.services.DashboardInfoService;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
