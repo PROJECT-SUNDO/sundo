@@ -24,4 +24,34 @@ a { color:#222; text-decoration: none; }
     right: 10px;
     top: 10px;
 }
+.head{
+    height: 50px;
 
+}
+.popupHeader{
+    text-align: center;
+    padding-top: 40px;
+}
+.popupHeader .popupHTitle {
+    font-size: 24px;
+    font-weight: 700;
+}
+.popupBody {
+    padding: 20px 40px;
+}
+.popupBody .obTitle {
+    width: 150px;
+    font-weight: 500;
+    font-size: 20px;
+}
+.popupBody>div{
+    padding: 10px;
+}
+
+.popupBody>div>div:nth-child(2) {
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #000;
+    padding-left: 10px;
+}
