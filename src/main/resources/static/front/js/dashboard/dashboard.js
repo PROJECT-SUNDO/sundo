@@ -121,8 +121,8 @@ window.addEventListener("DOMContentLoaded", function() {
   });
 
   <!-- 멀티 막대그래프 -->
-  const myChart1_1 = document.getElementById('myChart1_1').getContext('2d');
-  const multiBarChart = new Chart(myChart1_1, {
+  const myChart4 = document.getElementById('myChart4').getContext('2d');
+  const multiBarChart = new Chart(myChart4, {
     type: 'multi_bar',  // bar, pie, line, doughnut,polarArea
     data: {
       labels: ['A', 'B', 'C'],
