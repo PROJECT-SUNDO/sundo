@@ -43,9 +43,12 @@ public class MapController {
 						 Model model){
 		commonProcess("aside", model);
 		search.setType(type);
+		if(!StringUtils.hasText(search.getOrder())){
+			search.setOrder(type);
+		}
 		ListData<Observatory> data = observatoryInfoService.getList(search);
 		List<Observatory> items = data.getItems();
-
+		System.out.println(items);
 		model.addAttribute("items", items);
 		model.addAttribute("pagination", data.getPagination());
 		try {
