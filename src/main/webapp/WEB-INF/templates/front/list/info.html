@@ -1,1 +1,71 @@
-<h1>정보 확인</h1>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+<main layout:fragment="content">
+    <section class="content">
+        <div class="flex just-btw title align-center">
+            <button type="button" id="listBtn">
+                <i class="xi-list"></i>
+                <span th:text="#{목록}"></span>
+            </button>
+        </div>
+        <!-- 관측소 정보 -->
+        <div th:object="${requestObservatory}">
+
+            <div class="observatory flex mgn-bottom-10px">
+                <div>
+                    <span th:text="#{관측소명}"></span>
+                    :
+                    <span th:text="*{obsnm}"></span>
+                </div>
+                <span>|</span>
+                <div>
+                    <span th:text="#{관측유형}"></span>
+                    :
+                    <span th:text="*{type}"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 관측소 데이터 검색 -->
+        <div class="observationSearch mgn-bottom-10px">
+            <div class="flex alc searchTxt">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <div>검색</div>
+            </div>
+            <form th:object="${observationDataSearch}" class="flex align-center obsForm">
+                <input type="hidden" name="type" th:value="${requestObservatory.type}">
+                <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
+<!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
+
+                <div class="grw-1">
+                    <span th:text="#{조회기간}"></span>
+                    <input type="date" name="sdate" th:field="*{sdate}">
+                    ~
+                    <input type="date" name="edate" th:field="*{edate}">
+
+                    <select name="timeUnit" th:field="*{timeUnit}">
+                        <option value="tenM" th:text="#{10분}"></option>
+                        <option value="hour" th:text="#{1시간}"></option>
+                        <option value="day" th:text="#{일}"></option>
+                        <option value="month" th:text="#{월}"></option>
+                        <option value="year" th:text="#{년}"></option>
+                    </select>
+                </div>
+                <button type="button" class="searchBtn" th:text="#{검색}"></button>
+
+
+            </form>
+
+
+        </div>
+
+
+
+    [[${requestObservatory}]]
+
+        <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+    </section>
+
+</main>
+</html>

@@ -7,5 +7,4 @@ window.addEventListener("DOMContentLoaded", function(){
 
     });
 
-
 });

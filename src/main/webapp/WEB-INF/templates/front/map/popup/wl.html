@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/popup}">
+<main layout:fragment="content">
+    <section th:object="${requestObservation}">
+        <h2 class="text-center" th:text="*{obsnm}"></h2>
+        <div class="h-line"></div>
+        <div class="divTable">
+            <div class="divTableRow">
+                <div class="divTableCell" th:text="#{코드}"></div>
+                <div class="divTableCell" th:text="*{obscd}"></div>
+            </div>
+            <div class="divTableRow">
+                <div class="divTableCell" th:text="#{현재수위}"></div>
+                <div class="divTableCell"th:text="*{currentOb}"></div>
+            </div>
+            <div class="divTableRow">
+                <div class="divTableCell" th:text="#{수위변화}"></div>
+                <div class="divTableCell" th:text="*{reqOb}"></div>
+            </div>
+            <div class="divTableRow">
+                <div class="divTableCell" th:text="#{위치}"></div>
+                <div class="divTableCell" th:text="*{loc}"></div>
+            </div>
+        </div>
+    </section>
+</main>
+</html>

@@ -105,15 +105,16 @@ window.addEventListener("DOMContentLoaded", function(){
     });
 
     const distanceBtn = document.querySelector("#distance");
+    const areaBtn = document.querySelector("#area");
     const distanceEl = distanceBtn.querySelector("span");
     distanceBtn.addEventListener("click", function(){
 
         if(distanceBtn.classList.contains("on")){
             distanceBtn.classList.remove("on");
-            distanceEl.innerText = '거리';
+            areaBtn.disabled=false;
         }else{
             distanceBtn.classList.add("on");
-            distanceEl.innerText = '거리 초기화';
+            areaBtn.disabled=true;
         }
 
         let isDraw = distanceBtn.classList.contains("on");
@@ -137,16 +138,16 @@ window.addEventListener("DOMContentLoaded", function(){
 
     /* 거리 측정 E */
     /* 면적 측정 S */
-    const areaBtn = document.querySelector("#area");
+
     const areaEl = areaBtn.querySelector("span");
 
     areaBtn.addEventListener("click", function(){
         if(areaBtn.classList.contains("on")){
             areaBtn.classList.remove("on");
-            areaEl.innerText = '면적';
+            distanceBtn.disabled=false;
         }else{
             areaBtn.classList.add("on");
-            areaEl.innerText = '면적 초기화';
+            distanceBtn.disabled=true;
         }
 
         const isDraw = areaBtn.classList.contains("on");
@@ -154,8 +155,6 @@ window.addEventListener("DOMContentLoaded", function(){
             const lineVector = map.getAllLayers().filter(s => s.get('name') ==='area')[0];
             map.removeLayer(lineVector);
             manageMeasureTooltip(map, false);
-
-
             mapLib.draw.finishDrawing();
 
         }else{
@@ -183,6 +182,7 @@ window.addEventListener("DOMContentLoaded", function(){
     const satelliteOverview = overViewArray[1];
 
     satelliteLayer.setVisible(false);
+    satelliteOverview.setVisible(false);
 
     const mapBtns = document.querySelectorAll(".map_btns .map_btn");
 

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/main}">
+<main layout:fragment="content" >
+    <h1>관측소 정보 등록</h1>
+
+    <a th:href="@{/list}" th:text="#{목록으로}"></a>
+    <form name="frmJoin" method="post" th:action="@{/list/save}" autocomplete="off">
+        <input type="hidden" name="mode" value="write">
+        <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+
+        <th:block th:replace="~{front/list/_form::form}"></th:block>
+
+        <div class="submit_btns">
+            <button type="submit" th:text="#{등록}"></button>
+        </div>
+    </form>
+
+    </main>
+</html>
