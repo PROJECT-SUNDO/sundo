@@ -18,3 +18,4 @@ public class CommonException extends RuntimeException{
         return status;
     }
 }
+
