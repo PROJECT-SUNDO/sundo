@@ -4,7 +4,6 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class ObservationSearch {
@@ -21,5 +20,6 @@ public class ObservationSearch {
 
     private boolean isOut; // true - 이상치만 검색
     private double outlier; // 이상치 기준
+
 
 }

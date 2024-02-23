@@ -33,7 +33,7 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <div>검색</div>
             </div>
-            <form th:object="${observationDataSearch}" class="flex align-center obsForm">
+            <form th:object="${statisticSearch}" class="flex align-center obsForm">
                 <input type="hidden" name="type" th:value="${requestObservatory.type}">
                 <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
 <!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
@@ -53,16 +53,35 @@
                     </select>
                 </div>
                 <button type="button" class="searchBtn" th:text="#{검색}"></button>
-
-
             </form>
+        </div>
+        <div class="divTable minimalistBlack">
+            <div class="divTableHeading">
+                <div class="divTableRow">
+                    <div th:text="#{관측일시}" class="divTableHead">head1</div>
+                    <!--<th:block th:if="*{timeUnit == hour}">-->
+                    <th:block th:each="hour : ${#numbers.sequence(0, 23)}">
+                        <div th:text="${hour}" class="divTableHead"></div>
+                    </th:block>
+                    <!--</th:block>-->
+                </div>
+            </div>
+            <div class="divTableBody" th:if="${items != null && items.isEmpty()}" th:each="item : ${items}" th:object="${items}">
+                <div class="divTableRow">
+                    <!--<th:block th:each=""></th:block>-->
+                    <div th:text="*{type}" class="divTableCell">
+                    </div>
+                    <div th:text="*{avg0}" class="divTableCell">
+                    </div>
+                </div>
+
+            </div>
 
 
         </div>
+        [[${items}]]
 
 
-
-    [[${requestObservatory}]]
 
         <th:block th:replace="~{common/_pagination::pagination}"></th:block>
     </section>
