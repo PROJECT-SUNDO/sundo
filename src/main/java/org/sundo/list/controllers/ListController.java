@@ -10,6 +10,7 @@ import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
 import org.sundo.commons.exceptions.ExceptionProcessor;
+import org.sundo.wamis.entities.Observation;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.Statistic;
@@ -36,6 +37,7 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
 	private final ObservatoryDataDelete observatoryDataDelete;
+	private final ObservationDeleteService observationDeleteService;
 	@GetMapping
 	public String list (@ModelAttribute ObservatorySearch search, Model model){
 		commonProcess("list", model);
@@ -239,9 +241,8 @@ public class ListController implements ExceptionProcessor {
 		return "front/list/observation_edit";
 	}
 
-	@PostMapping("/setting/edit/{seq}")
-	public String editDataPs(@PathVariable("seq") Long seq,
-							 @Valid RequestObservation form,
+	@PostMapping("/setting/edit")
+	public String editDataPs(@Valid RequestObservation form,
 							 Errors errors,
 							 Model model){
 
@@ -259,6 +260,35 @@ public class ListController implements ExceptionProcessor {
 
 		return "common/_execute_script";
 	}
+
+	@GetMapping("/setting/delete/{seq}")
+	public String deleteObs(@PathVariable("seq") Long seq,
+							@ModelAttribute RequestObservation form,
+							Model model){
+		commonProcess("delObs", model);
+		String type = utils.getParam("type");
+		form.setSeq(seq);
+		form.setType(type);
+
+		return "front/list/popup/delete_obs";
+	}
+
+	@PostMapping("/setting/delete")
+	public String deleteObsPs(RequestObservation form, Model model){
+		commonProcess("delObs", model);
+		String type = form.getType();
+		Long seq = form.getSeq();
+
+		observationDeleteService.delete(seq, type);
+
+		String script = "alert('삭제되었습니다.');"+ "parent.location.reload();";
+
+		model.addAttribute("script", script);
+		return "common/_execute_script";
+	}
+
+
+
 
 	/**
 	 * 공통 작업
@@ -284,6 +314,11 @@ public class ListController implements ExceptionProcessor {
 		}else if (mode.equals("setEdit")){
 			pageTitle = "관측값 수정";
 			addCss.add("list/setting");
+
+		}else if (mode.equals("delObs")){
+			pageTitle = null;
+			addCss.add("list/delete_obs");
+			addScript.add("list/delete_obs");
 		}else if(mode.equals("info")) {
 			addCss.add("list/setting");
 			addScript.add("list/setting");
