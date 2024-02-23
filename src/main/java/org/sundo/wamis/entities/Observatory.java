@@ -64,13 +64,17 @@ public class Observatory extends Base implements Serializable {
 
     private String fstnyn; // 특보지점여부
 
-
-
     private String cctvUrlH; // 고화질 주소
     private String cctvUrlL; // 저화질 주소
 
+    private boolean useOutlier = true; // 이상치 사용여부
     private double outlier; // 이상치
 
+
+    private double rf; // 강수량
+    private double wl; // 수위
+    private double fw; // 유량
+
     @Transient
-    private double data; // 최근 10분 데이터
+    private double data;
 }

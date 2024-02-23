@@ -23,6 +23,7 @@ public class ObservatorySearch {
     private String type; // 관측 변수
 
     private List<Long> seq; // 게시글 번호
+    private String order; // 나열 기준
 
     private String lon; // 경도
 
