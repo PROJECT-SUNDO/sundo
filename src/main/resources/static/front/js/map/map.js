@@ -4,6 +4,9 @@ const mapLib = {
 
 window.addEventListener("DOMContentLoaded", function(){
 
+    proj4.defs('EPSG:5186', '+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs');
+    ol.proj.proj4.register(proj4);
+
     /*  지도 표시 S */
 	const mapProjection = "EPSG:3857";
 	const dataProjection = "EPSG:4326";
@@ -225,17 +228,49 @@ window.addEventListener("DOMContentLoaded", function(){
 
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
 
+
+    /* 저장하기 버튼 S */
+
+    // 버튼 DOM 객체를 변수에 저장
+    const saveBtn = document.getElementById("save_map");
+    const savePngBtn = document.getElementById("save_map_png");
+    const savePdfBtn = document.getElementById("save_map_pdf");
+    const btnBox = document.getElementById("save_map_box");
+
+    // 저장 버튼을 눌렀을 때의 동작
+    saveBtn.onclick = function() {
+        btnBox.style.display = "flex"; // 이미지 저장, PDF 저장 버튼을 보여줌
+        saveBtn.disabled = true; // 저장 버튼을 비활성화
+    };
+
+    // 이미지 저장 버튼을 눌렀을 때의 동작
+    savePngBtn.onclick = function() {
+        btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
+        saveBtn.disabled = false; // 저장 버튼을 활성화
+        // 이미지 저장 관련 코드를 작성
+
+    };
+
+    // PDF 저장 버튼을 눌렀을 때의 동작
+    savePdfBtn.onclick = function() {
+        btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
+        saveBtn.disabled = false; // 저장 버튼을 활성화
+        // PDF 저장 관련 코드를 작성
+
+    };
+    /* 저장하기 버튼 E */
+
+    /* 마커 추가 s */
+    window.addEventListener("message", function(e) {
+        if (!e.data.map) {
+            return;
+        }
+
+        const items = e.data.map;
+        addMarker(items);
+    });
+
+    /* 마커 추가 e */
 });
 
 
-/* 마커 추가 s */
-window.addEventListener("message", function(e) {
-    if (!e.data.map) {
-        return;
-    }
-
-    const items = e.data.map;
-    addMarker(items);
-});
-
-/* 마커 추가 e */
