@@ -36,7 +36,7 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
-	private final ObservatoryDataDelete observatoryDataDelete;
+	private final ObservatoryDeleteService observatoryDataDelete;
 	private final ObservationDeleteService observationDeleteService;
 	@GetMapping
 	public String list (@ModelAttribute ObservatorySearch search, Model model){

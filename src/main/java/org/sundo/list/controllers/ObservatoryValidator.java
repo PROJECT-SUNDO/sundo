@@ -31,8 +31,8 @@ public class ObservatoryValidator implements Validator, RegisterValidator {
 
 
         RequestObservatory form = (RequestObservatory) target;
-        String obsnm = form.getObsnm();
-        String obscd = form.getObscd();// 표준 유역 코드
+        String obsnm = form.getObsnm(); //관측소명
+        String obscd = form.getObscd();// 관측소 코드
         String mode = form.getMode();
         mode = StringUtils.hasText(mode) ? mode : "write";
         //중복 여부체크
