@@ -23,7 +23,7 @@
                 <div>
                     <span th:text="#{관측유형}"></span>
                     :
-                    <span th:text="*{type}"></span>
+                    <span th:text="#{*{type}}"></span>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <form th:object="${statisticSearch}" class="flex align-center obsForm">
                 <input type="hidden" name="type" th:value="${requestObservatory.type}">
                 <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
-<!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
+                <!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
 
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
@@ -44,7 +44,7 @@
                     ~
                     <input type="date" name="edate" th:field="*{edate}">
 
-                    <select name="timeUnit" th:field="*{timeUnit}">
+                    <select name="timeUnit" id="timeUnit" th:field="*{timeUnit}">
                         <option value="tenM" th:text="#{10분}"></option>
                         <option value="hour" th:text="#{1시간}"></option>
                         <option value="day" th:text="#{일}"></option>
@@ -52,33 +52,32 @@
                         <option value="year" th:text="#{년}"></option>
                     </select>
                 </div>
-                <button type="button" class="searchBtn" th:text="#{검색}"></button>
+                <button type="submit" class="searchBtn" th:text="#{검색}"></button>
             </form>
         </div>
         <div class="divTable minimalistBlack">
-            <div class="divTableHeading">
-                <div class="divTableRow">
-                    <div th:text="#{관측일시}" class="divTableHead">head1</div>
-                    <!--<th:block th:if="*{timeUnit == hour}">-->
-                    <th:block th:each="hour : ${#numbers.sequence(0, 23)}">
-                        <div th:text="${hour}" class="divTableHead"></div>
-                    </th:block>
-                    <!--</th:block>-->
-                </div>
-            </div>
-            <div class="divTableBody" th:if="${items != null && items.isEmpty()}" th:each="item : ${items}" th:object="${items}">
-                <div class="divTableRow">
-                    <!--<th:block th:each=""></th:block>-->
-                    <div th:text="*{type}" class="divTableCell">
-                    </div>
-                    <div th:text="*{avg0}" class="divTableCell">
+           <!-- <th:block th:if="*{timeUnit=='hour'}">-->
+                <div class="divTableHeading">
+                    <div class="divTableRow">
+                        <div th:text="#{관측일시}" class="divTableHead"></div>
+                        <th:block th:each="hour : ${#numbers.sequence(0, 23)}">
+                            <div th:text="${hour}" class="divTableHead"></div>
+                        </th:block>
                     </div>
                 </div>
-
-            </div>
-
-
+                <div class="divTableBody" th:if="${items != null}" th:each="item : ${items}">
+                    <div class="divTableRow">
+                        <div th:text="${item.date}" class="divTableCell">
+                        </div>
+                        <th:block th:each="index : ${#numbers.sequence(0, 23)}">
+                            <div th:text="${__${'item.avg' + index}__} == 0 ? 0 : ${__${'item.avg' + index}__}" class="divTableCell"></div>
+                        </th:block>
+                    </div>
+                </div>
+         <!--   </th:block>-->
         </div>
+        <!--</th:block>-->
+
         [[${items}]]
 
 
