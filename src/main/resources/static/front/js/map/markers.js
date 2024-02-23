@@ -19,10 +19,10 @@ function addMarker(items){
         // 마커 feature 설정
         const mapProjection = "EPSG:3857";  // 지도 좌표계
         const markerDataProjection = "EPSG:5186";  // 데이터 좌표계
-        let lonLat = ol.proj.fromLonLat([lon, lat]);
-        let transformedLonLat = ol.proj.transform(lonLat, markerDataProjection, mapProjection);
-        const geometry = new ol.geom.Point(transformedLonLat);
-        // const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat]));
+        // let lonLat = ol.proj.fromLonLat([lon, lat]);
+        // let transformedLonLat = ol.proj.transform(lonLat, markerDataProjection, mapProjection);
+        // const geometry = new ol.geom.Point(transformedLonLat);
+        const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat]));
         // const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat])).transform(dataProjection, mapProjection);
         if (!mapLib.geometry) mapLib.geometry = geometry;
         const feature = new ol.Feature({
