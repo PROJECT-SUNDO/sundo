@@ -1,4 +1,4 @@
-function addMarker(items){ //경도 위도 이름값(마커들을 구분하기위해)
+function addMarker(items){
     // 마커 레이어 비우기
     if (mapLib.map) {
         mapLib.map.getLayers().forEach(layer => layer.getSource().refresh());
@@ -58,6 +58,9 @@ function addMarker(items){ //경도 위도 이름값(마커들을 구분하기�
         if (mapLib.map) {
             mapLib.map.addLayer(markerLayer);
         }
+
+        // // 마커 레이어 저장
+        // mapLib.markerLayer = markerLayer;
 
         mapLib.map.getView().setCenter(mapLib.geometry.getCoordinates());
         mapLib.map.getView().setZoom(11);
