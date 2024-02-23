@@ -18,10 +18,13 @@ function addMarker(items){ //경도 위도 이름값(마커들을 구분하기�
         // 마커 feature 설정
         const mapProjection = "EPSG:3857";
         const dataProjection = "EPSG:5186";
-        const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat])).transform(dataProjection, mapProjection);
+        const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat]));
         if (!mapLib.geometry) mapLib.geometry = geometry;
         const feature = new ol.Feature({
             geometry, //transform()경도 위도에 포인트 설정
+            projection : {
+                mapProjection
+            },
             properties : {
                 name: "markers",
             },
