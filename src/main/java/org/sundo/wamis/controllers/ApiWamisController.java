@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.sundo.wamis.services.StatisticService;
 import org.sundo.wamis.services.WamisApiService;
+import org.sundo.wamis.services.WamisCctvApiService;
 
 @RestController
 @RequestMapping("/api/wamis")
@@ -13,6 +14,7 @@ import org.sundo.wamis.services.WamisApiService;
 public class ApiWamisController {
     private final WamisApiService apiService;
     private final StatisticService statisticService;
+    private final WamisCctvApiService cctvApiService;
     @GetMapping
     public void test() {
         apiService.getObservatories("rf");
@@ -20,8 +22,13 @@ public class ApiWamisController {
         apiService.getObservatories("flw");
         apiService.updateWaterLevelFlow( "10M", "1018683");
         apiService.updatePrecipitation( "10M", "10184100");
-
     }
+
+    @GetMapping("/cctv")
+    public void cctv(){
+        cctvApiService.updateCctvUrls();
+    }
+
 
     @GetMapping("/stat")
     public void test2() {
@@ -29,7 +36,7 @@ public class ApiWamisController {
     }
 
     @GetMapping("/test2")
-    public void test2() {
+    public void test4() {
         apiService.updateRf10M();
     }
 

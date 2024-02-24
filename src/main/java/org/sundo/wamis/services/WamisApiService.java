@@ -136,7 +136,7 @@ public class WamisApiService {
                             });
                 }
             }
-            List<Observatory> items2 = items.stream().filter(s -> StringUtils.hasText(s.getAddr()) && (s.getAddr().contains("서울") || s.getAddr().contains("경기도"))).toList();
+            List<Observatory> items2 = items.stream().filter(s -> StringUtils.hasText(s.getAddr()) && (s.getAddr().contains("서울") || s.getAddr().contains("경기도"))).collect(Collectors.toList());
             observatoryRepository.saveAllAndFlush(items2);
 
             return items;
