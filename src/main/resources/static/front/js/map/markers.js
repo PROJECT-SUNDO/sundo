@@ -46,10 +46,13 @@ function addMarker(items){
             features: [feature] //feature의 집합
         });
 
+        // 해당 타입의 마커 이미지 URL 가져오기
+        const markerImageUrl = markerImages[item.type];
+
         // 마커 스타일 설정
         const  markerStyle = new ol.style.Style({
             image: new ol.style.Icon({ //마커 이미지
-                src: 'https://ifh.cc/g/3O0MmJ.png',
+                src: markerImageUrl, // 타입에 맞는 마커 이미지 사용
                 opacity: 1, // 투명도 설정 (0: 완전 투명, 1: 완전 불투명)
                 scale: 0.06 //크기 1=100%
             })
