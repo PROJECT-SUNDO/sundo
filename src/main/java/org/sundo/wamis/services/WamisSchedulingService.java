@@ -1,4 +1,3 @@
-/*
 package org.sundo.wamis.services;
 
 import lombok.RequiredArgsConstructor;
@@ -17,30 +16,20 @@ public class WamisSchedulingService {
 
     private final WamisApiService apiService;
 
-    */
-/**
+
+    /**
      * 강수량, 수위 시간별 데이터 업데이트
      *
-     * 시간별 데이터이므로 1시간 마다 자동 업데이트
-     *//*
-
-
-    @Scheduled(timeUnit = TimeUnit.HOURS, fixedRate = 1L)
-    public void rfWlTask() {
-        */
-/* 강수량 업데이트 S*//*
-
-        logger.info("강수량 업데이트 시작");
-        List<Observatory> items = apiService.getObservatories("rf");
-
-        if (items != null && !items.isEmpty()) {
-            items.forEach(item -> apiService.updatePrecipitation(item.getObscd()));
-        }//비어 있는 경우에 가져온다??? 비어있지 않은 경우에는??
-        logger.info("강수량 데이터 업데이트 종료");
-        */
-/* 강수량 업데이트 E*//*
-
+     * 10분마다 업데이트
+     */
+    @Scheduled(fixedRate = 10L, timeUnit = TimeUnit.MINUTES)
+    public void updateRf() {
+        apiService.updateRf10M();
     }
 
+    @Scheduled(fixedRate = 10L, timeUnit = TimeUnit.MINUTES)
+    public void updateWlFw() {
+        apiService.updateWlFw10M();
+    }
 }
-*/
+
