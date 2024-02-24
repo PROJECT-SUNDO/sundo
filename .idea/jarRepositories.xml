@@ -19,6 +19,11 @@
     <remote-repository>
       <option name="id" value="projectRepository" />
       <option name="name" value="Project Repository" />
+      <option name="url" value="file://C:\Users\yoony\OneDrive\Desktop\study\2popol\eGovFrameDev-4.1.0-Win-64bit\eGovFrameDev-4.1.0-64bit\workspace\sundo/src/main/webapp/WEB-INF/lib" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="projectRepository" />
+      <option name="name" value="Project Repository" />
       <option name="url" value="file://C:\Users\Documents\프로젝트\sundo/src/main/webapp/WEB-INF/lib" />
     </remote-repository>
     <remote-repository>
