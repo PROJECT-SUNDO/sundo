@@ -36,11 +36,11 @@ public class ApiURL {
     public static final String ALL_WATER_LEVEL_FLOW = "http://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/waterlevel/list/10M.json";
 
     // 최근 10분 강수량 데이터 (1건)
-    public static final String RCT_PRECIPITATION = "http://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/rainfall/list/10M/10184100.json";
+    public static final String RCT_PRECIPITATION = "http://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/rainfall/list/10M/%s.json";
 
 
     // 최근 10분 수위 + 유량 데이터 (1건)
-    public static final String RCT_WATER_LEVEL_FLOW = "http://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/waterlevel/list/10M/1018683.json";
+    public static final String RCT_WATER_LEVEL_FLOW = "http://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/waterlevel/list/10M/%s.json";
 
 
 

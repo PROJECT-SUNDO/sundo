@@ -21,9 +21,12 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +64,10 @@ public class WamisApiService {
             ApiResultList<Observatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<Observatory>>() {});
 
             List<Observatory> items = result.getList();
-            items.forEach(item -> item.setType(type));
+            items.forEach(item -> {
+                item.setType(type);
+                changeBbsnnm(item);
+            });
 
             // 상세 데이터
             if(type.equals("rf")){
@@ -134,7 +140,7 @@ public class WamisApiService {
                             });
                 }
             }
-            List<Observatory> items2 = items.stream().filter(s -> StringUtils.hasText(s.getAddr()) && (s.getAddr().contains("서울") || s.getAddr().contains("경기도"))).toList();
+            List<Observatory> items2 = items.stream().filter(s -> StringUtils.hasText(s.getAddr()) && (s.getAddr().contains("서울") || s.getAddr().contains("경기도"))).collect(Collectors.toList());
             observatoryRepository.saveAllAndFlush(items2);
 
             return items;
@@ -318,5 +324,77 @@ public class WamisApiService {
     }
 
 
+    /**
+     * 강수량 10분 실시간 데이터 업데이트
+     *
+     */
+    public void updateRf10M() {
+        List<Observatory> oItems = getObservatories("rf");
 
+        for (Observatory oitem : oItems) {
+            String url = String.format(ApiURL.RCT_PRECIPITATION, oitem.getObscd());
+            String data = restTemplate.getForObject(url, String.class);
+            Pattern pattern = Pattern.compile("\"rf\"\\s*:\\s*([^,]+),");
+            Matcher matcher = pattern.matcher(data);
+            if (matcher.find()) {
+                String rf = matcher.group(1);
+                if (StringUtils.hasText(rf)) {
+                    oitem.setRf(Double.parseDouble(rf));
+                }
+            }
+         }
+
+        observatoryRepository.saveAllAndFlush(oItems);
+    }
+
+    /**
+     * 수위 10분 실시간 데이터 업데이트
+     *
+     */
+    public void updateWlFw10M() {
+        List<Observatory> oItems = getObservatories("wl");
+        List<Observatory> oItems2 = getObservatories("flw");
+
+        oItems.addAll(oItems2);
+
+        for (Observatory oitem : oItems) {
+            String url = String.format(ApiURL.RCT_WATER_LEVEL_FLOW, oitem.getObscd());
+            String data = restTemplate.getForObject(url, String.class);
+            Pattern pattern1 = Pattern.compile("\"wl\"\\s*:\\s*\"?([^,\"]+)\"?,");
+            Matcher matcher1 = pattern1.matcher(data);
+            if (matcher1.find()) {
+                String wl = matcher1.group(1);
+                if (StringUtils.hasText(wl)) {
+                    oitem.setWl(Double.parseDouble(wl));
+                }
+            }
+
+            Pattern pattern2 = Pattern.compile("\"fw\"\\s*:\\s*\"?([^,\"]+)\"?,");
+            Matcher matcher2 = pattern2.matcher(data);
+            if (matcher2.find()) {
+                String fw = matcher1.group(1);
+                if (StringUtils.hasText(fw)) {
+                    oitem.setFw(Double.parseDouble(fw));
+                }
+            }
+        }
+
+        observatoryRepository.saveAllAndFlush(oItems);
+    }
+
+    /**
+     * 권역코드별 상류/하류 구분
+     */
+    private void changeBbsnnm(Observatory observatory){
+        List<String> upstream = Arrays.asList("1001", "1002", "1003", "1004", "1005", "1006", "1007", "1016");
+        List<String> downstream = Arrays.asList("1017", "1018", "1019");
+
+        String middleCode = observatory.getSbsncd().substring(0, 4);
+        if(upstream.contains(middleCode)){
+            observatory.setBbsnnm("상류");
+        }
+        if(downstream.contains(middleCode)){
+            observatory.setBbsnnm("하류");
+        }
+    }
 }

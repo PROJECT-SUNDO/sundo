@@ -28,7 +28,7 @@ import static org.springframework.data.domain.Sort.Order.desc;
 public class ObservationInfoService {
     private final PrecipitationRepository precipitationRepository; // 강수량
     private final WaterLevelFlowRepository waterLevelFlowRepository; //수위 + 유량
-    private final EntityManager em ;
+    private final EntityManager em;
     private final HttpServletRequest request;
 
 
