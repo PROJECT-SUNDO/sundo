@@ -3,6 +3,7 @@ package org.sundo.dashboard.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,28 +25,64 @@ public class DashboardController implements ExceptionProcessor {
     private final DashboardInfoService dashboardInfoService;
     private final ObservationInfoService observationInfoService;
 
-    @GetMapping
-    public String dashboard(@ModelAttribute ObservatorySearch search, Model model){
-
+    @GetMapping("/rf")
+    public String rfDashboard(@ModelAttribute ObservatorySearch search, Model model){
+        search.setType("rf");
 
         ListData<Observatory> data = dashboardInfoService.getRFList(search);
-
-
-        List<String> addScript = new ArrayList<>();
-        List<String> addCommonCss = new ArrayList<>();
-        List<String> addCss = new ArrayList<>();
-
-        addScript.add("dashboard/dashboard");
-        addCss.add("dashboard/style");
-        addCommonCss.add("common/style");
-
-        model.addAttribute("addScript", addScript);
-        model.addAttribute("addCss", addCss);
-        model.addAttribute("addCommonCss", addCommonCss);
 
         model.addAttribute("items", data.getItems());
         model.addAttribute("pagination", data.getPagination());
 
-        return "front/dashboard/dashboard";
+        return "front/dashboard/rf";
+    }
+
+    @GetMapping("/wl")
+    public String wlDashboard(@ModelAttribute ObservatorySearch search, Model model){
+        search.setType("wl");
+
+        ListData<Observatory> data = dashboardInfoService.getRFList(search);
+
+        model.addAttribute("items", data.getItems());
+        model.addAttribute("pagination", data.getPagination());
+
+        return "front/dashboard/wl";
+    }
+
+    @GetMapping("/flw")
+    public String flwDashboard(@ModelAttribute ObservatorySearch search, Model model){
+        search.setType("flw");
+
+        ListData<Observatory> data = dashboardInfoService.getRFList(search);
+
+        model.addAttribute("items", data.getItems());
+        model.addAttribute("pagination", data.getPagination());
+        return "front/dashboard/flw";
+    }
+
+    private void commonProcess(String mode, Model model){
+        mode = StringUtils.hasText(mode) ? mode : "rf";
+        String pageTitle = "강수량 대시보드";
+
+        List<String> addScript = new ArrayList<>();
+        List<String> addCommonScript = new ArrayList<>();
+        List<String> addCommonCss = new ArrayList<>();
+        List<String> addCss = new ArrayList<>();
+
+        if(mode.equals("rf")){
+            pageTitle = "강수량 대시보드";
+        }else if(mode.equals("wl")){
+            pageTitle = "수위 대시보드";
+        }else if(mode.equals("flw")){
+            pageTitle = "유량 대시보드";
+        }
+
+        addScript.add("dashboard/dashboard");
+        addCss.add("dashboard/style");
+        model.addAttribute("pageTitle", pageTitle);
+        model.addAttribute("addScript", addScript);
+        model.addAttribute("addCommonScript", addCommonScript);
+        model.addAttribute("addCss", addCss);
+        model.addAttribute("addCommonCss", addCommonCss);
     }
 }
