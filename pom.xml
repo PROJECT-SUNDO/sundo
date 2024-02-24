@@ -157,6 +157,11 @@
 			<artifactId>querydsl-apt</artifactId>
 			<version>4.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 
 
 		<!-- 표준프레임워크 실행환경 S -->
