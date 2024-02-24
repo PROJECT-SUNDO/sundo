@@ -6,8 +6,12 @@ function addMarker(items){
     }
 
     const markerImages = {
-        'rf': 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소: 빨강
-        'wl': 'https://ifh.cc/g/onQwV8.png',   // 수위관측소: 파랑
+        'rf': {
+            normal: 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소 기본: 빨강
+            outlier: 'https://ifh.cc/g/zv2YT2.png'  // 강수량관측소 이상치 값 넘겼을떄
+        },
+        'wl': 'https://ifh.cc/g/hAc1cV.png',  // 수위관측소: 파랑
+
         'flw': 'https://ifh.cc/g/onQwV8.png'   // 유량 관측소: 노랑
     }
     // 마커 값 설정
@@ -46,8 +50,22 @@ function addMarker(items){
             features: [feature] //feature의 집합
         });
 
-        // 해당 타입의 마커 이미지 URL 가져오기
-        const markerImageUrl = markerImages[item.type];
+        // 해당 타입과 상황에 맞는 마커 이미지 URL 가져오기
+        let  markerImageUrl;
+        if (item.type === 'rf') { // 강수량 관측소인 경우
+            // 이상치 값을 넘는지 확인
+            if (item.data > item.outlier) {
+                // 이상치값을 넘으면 이상치마커
+                markerImageUrl = markerImages['rf'].outlier;
+            } else {
+                // 이상치값을 넘지 않으면 기본마커
+                markerImageUrl = markerImages['rf'].normal;
+            }
+        } else { // 그 외의 경우
+            // 관측소 타입별로 마커사용
+            markerImageUrl = markerImages[item.type];
+
+        }
 
         // 마커 스타일 설정
         const  markerStyle = new ol.style.Style({
