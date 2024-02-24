@@ -13,10 +13,8 @@ import org.sundo.wamis.dto.Wl_FlwObservatoryDto;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
 import org.sundo.wamis.entities.WaterLevelFlow;
-import org.sundo.wamis.entities.WaterLevelFlow10M;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 import org.sundo.wamis.repositories.PrecipitationRepository;
-import org.sundo.wamis.repositories.WaterLevelFlow10MRepository;
 import org.sundo.wamis.repositories.WaterLevelFlowRepository;
 
 import java.net.URI;
@@ -39,7 +37,6 @@ public class WamisApiService {
     private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량 데이터
     private final PrecipitationRepository precipitationRepository; // 강수량 데이터
 
-    private final WaterLevelFlow10MRepository waterLevelFlow10MRepository; // 수위 + 유량 데이터
 
 
     /**
@@ -242,7 +239,7 @@ public class WamisApiService {
         }
     }
 
-    public void updateWaterLevelFlow(String mode, String timeUnit, String obscd) {
+ /*   public void updateWaterLevelFlow(String mode, String timeUnit, String obscd) {
         timeUnit = StringUtils.hasText(timeUnit) ? timeUnit : "10M";
         if(timeUnit.equals("1H")) {
             timeUnit = "1H";
@@ -260,11 +257,7 @@ public class WamisApiService {
                     });
 
             List<WaterLevelFlow10M> items = result.getContent();
-   /*         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
-            items.forEach(item -> {
-                LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
-                item.setYmd(date);
-            });*/
+
             items.forEach(System.out::println);
 
             waterLevelFlow10MRepository.saveAllAndFlush(items);
@@ -272,7 +265,7 @@ public class WamisApiService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * 날짜 조회 임시
