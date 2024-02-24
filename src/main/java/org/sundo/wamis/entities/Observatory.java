@@ -8,10 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.sundo.commons.entities.Base;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -67,10 +64,12 @@ public class Observatory extends Base implements Serializable {
 
     private String fstnyn; // 특보지점여부
 
-
-
     private String cctvUrlH; // 고화질 주소
     private String cctvUrlL; // 저화질 주소
 
+    private boolean useOutlier = true; // 이상치 사용여부
     private double outlier; // 이상치
+
+    @Transient
+    private double data; // 최근 10분 데이터
 }
