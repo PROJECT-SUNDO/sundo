@@ -5,6 +5,12 @@ function addMarker(items){
         mapLib.geometry = null;
     }
 
+    const markerImg = {
+        'rf': 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소
+        'wl': 'https://ifh.cc/g/onQwV8.png',   // 수위관측소
+        'flw': 'https://ifh.cc/g/onQwV8.png'   // 유량 관측소
+    }
+
     // 마커 값 설정
     for(const item of items) {
 
@@ -14,7 +20,8 @@ function addMarker(items){
         if (!lon || !lat) continue;
         lon = parseFloat(lon.replace("-", ".").replace(/-/g, ""));  // 경도
         lat = parseFloat(lat.replace("-", ".").replace(/-/g, ""));  // 위도
-        const name = item.obsnm;  // 관측소 명
+        const name = item.obscd;  // 관측소 코드
+
 
         // 마커 feature 설정
         const mapProjection = "EPSG:3857";  // 지도 좌표계
