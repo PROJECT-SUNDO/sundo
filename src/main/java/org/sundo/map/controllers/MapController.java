@@ -3,6 +3,8 @@ package org.sundo.map.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +24,9 @@ import org.sundo.wamis.services.ObservatoryInfoService;
 @RequestMapping("/map")
 @RequiredArgsConstructor
 public class MapController {
+
 	private final ObservatoryInfoService observatoryInfoService;
+	private final ObjectMapper om;
 	
 	@GetMapping
 	public String map(@ModelAttribute RequestObservatory form,
@@ -34,15 +38,23 @@ public class MapController {
 
 	@GetMapping("/search/{type}")
 	public String search(@PathVariable("type") String type,
-			@ModelAttribute ObservatorySearch search,
-						  @ModelAttribute RequestObservatory form,
-						  Model model){
+						 @ModelAttribute ObservatorySearch search,
+						 @ModelAttribute RequestObservatory form,
+						 Model model){
 		commonProcess("aside", model);
 		search.setType(type);
+		if(!StringUtils.hasText(search.getOrder())){
+			search.setOrder(type);
+		}
 		ListData<Observatory> data = observatoryInfoService.getList(search);
-
-		model.addAttribute("items", data.getItems());
+		List<Observatory> items = data.getItems();
+		System.out.println(items);
+		model.addAttribute("items", items);
 		model.addAttribute("pagination", data.getPagination());
+		try {
+			String json = om.writeValueAsString(items);
+			model.addAttribute("json", json);
+		} catch (JsonProcessingException e) {}
 
 		return "front/map/aside";
 	}
@@ -68,6 +80,7 @@ public class MapController {
 			addScript.add("map/map");
 			addScript.add("map/aside");
 			addScript.add("map/draw");
+			addScript.add("map/markers");
 			addCss.add("map/map");
 		} else if (mode.equals("info")) {
 			pageTitle = null;
