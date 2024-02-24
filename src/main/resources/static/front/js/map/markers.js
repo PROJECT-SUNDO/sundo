@@ -23,8 +23,10 @@ function addMarker(items){
         const mapProjection = "EPSG:3857";
     	const dataProjection = "EPSG:4326";
         // 마커 feature 설정
+
         const geometry = new ol.geom.Point([lon, lat]).transform(dataProjection, mapProjection);
         mapLib.geometry = geometry;
+
         const feature = new ol.Feature({
             geometry, //transform()경도 위도에 포인트 설정
 

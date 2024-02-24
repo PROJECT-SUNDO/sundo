@@ -4,9 +4,6 @@ const mapLib = {
 
 window.addEventListener("DOMContentLoaded", function(){
 
-     proj4.defs("EPSG:5174","+proj=tmerc +lat_0=38 +lon_0=127.002890277778 +k=1 +x_0=200000 +y_0=500000 +ellps=bessel +towgs84=-145.907,505.034,685.756,-1.162,2.347,1.592,6.342 +units=m +no_defs +type=crs");
-    ol.proj.proj4.register(proj4);
-
     /*  지도 표시 S */
 	const mapProjection = "EPSG:3857";
 	const dataProjection = "EPSG:4326";
