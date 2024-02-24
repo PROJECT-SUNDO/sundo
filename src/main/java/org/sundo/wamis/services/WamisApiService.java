@@ -21,6 +21,7 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -63,7 +64,10 @@ public class WamisApiService {
             ApiResultList<Observatory> result = objectMapper.readValue(data, new TypeReference<ApiResultList<Observatory>>() {});
 
             List<Observatory> items = result.getList();
-            items.forEach(item -> item.setType(type));
+            items.forEach(item -> {
+                item.setType(type);
+                changeBbsnnm(item);
+            });
 
             // 상세 데이터
             if(type.equals("rf")){
@@ -376,5 +380,21 @@ public class WamisApiService {
         }
 
         observatoryRepository.saveAllAndFlush(oItems);
+    }
+
+    /**
+     * 권역코드별 상류/하류 구분
+     */
+    private void changeBbsnnm(Observatory observatory){
+        List<String> upstream = Arrays.asList("1001", "1002", "1003", "1004", "1005", "1006", "1007", "1016");
+        List<String> downstream = Arrays.asList("1017", "1018", "1019");
+
+        String middleCode = observatory.getSbsncd().substring(0, 4);
+        if(upstream.contains(middleCode)){
+            observatory.setBbsnnm("상류");
+        }
+        if(downstream.contains(middleCode)){
+            observatory.setBbsnnm("하류");
+        }
     }
 }

@@ -136,6 +136,10 @@ public class ObservatoryInfoService {
                 sort = Sort.by(desc("wl"));
             } else if (order.equals("flw")) {
                 sort = Sort.by(desc("fw"));
+            } else if (order.equals("upstream")) {
+
+            } else if (order.equals("downstream")){
+
             }
         }
 
