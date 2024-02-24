@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
-
 import org.sundo.wamis.dto.RfObservatoryDto;
 import org.sundo.wamis.dto.Wl_FlwObservatoryDto;
-import org.sundo.wamis.entities.*;
-import org.sundo.wamis.repositories.*;
-
+import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.entities.Precipitation;
+import org.sundo.wamis.entities.WaterLevelFlow;
+import org.sundo.wamis.entities.WaterLevelFlow10M;
+import org.sundo.wamis.repositories.ObservatoryRepository;
+import org.sundo.wamis.repositories.PrecipitationRepository;
+import org.sundo.wamis.repositories.WaterLevelFlow10MRepository;
+import org.sundo.wamis.repositories.WaterLevelFlowRepository;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
@@ -34,6 +38,8 @@ public class WamisApiService {
 
     private final WaterLevelFlowRepository waterLevelFlowRepository; // 수위 + 유량 데이터
     private final PrecipitationRepository precipitationRepository; // 강수량 데이터
+
+    private final WaterLevelFlow10MRepository waterLevelFlow10MRepository; // 수위 + 유량 데이터
 
 
     /**
@@ -69,8 +75,12 @@ public class WamisApiService {
 
                 // obscd가 같을 때
                 List<RfObservatoryDto> matchingDetails = details.stream()
-                        .filter(detail -> items.stream()
-                                .anyMatch(item -> item.getObscd().equals(detail.getRfobscd())))
+                        .filter(detail -> {
+                            List<Observatory> items2 = items;
+
+                            return items2.stream()
+                                    .anyMatch(item -> item.getObscd().equals(detail.getRfobscd()));
+                        })
                         .collect(Collectors.toList());
 
                 for (Observatory item : items) {
@@ -83,6 +93,7 @@ public class WamisApiService {
                                 item.setAddr(detail.getAddr());
                                 item.setEtcaddr(detail.getEtcaddr());
                                 item.setOutlier(3.5);
+
                             });
                 }
 
@@ -95,8 +106,12 @@ public class WamisApiService {
 
                 // obscd가 같을 때
                 List<Wl_FlwObservatoryDto> matchingDetails = details.stream()
-                        .filter(detail -> items.stream()
-                                .anyMatch(item -> item.getObscd().equals(detail.getWlobscd())))
+                        .filter(detail -> {
+                            List<Observatory> items2 = items;
+
+                            return items2.stream()
+                                    .anyMatch(item -> item.getObscd().equals(detail.getWlobscd()));
+                        })
                         .collect(Collectors.toList());
 
                 for (Observatory item : items) {
@@ -122,7 +137,8 @@ public class WamisApiService {
                             });
                 }
             }
-            observatoryRepository.saveAllAndFlush(items);
+            List<Observatory> items2 = items.stream().filter(s -> StringUtils.hasText(s.getAddr()) && (s.getAddr().contains("서울") || s.getAddr().contains("경기도"))).toList();
+            observatoryRepository.saveAllAndFlush(items2);
 
             return items;
         } catch (JsonProcessingException e) {
@@ -188,6 +204,11 @@ public class WamisApiService {
      *  - 1D : 1일
      * @param obscd : 관측소 코드
      */
+
+
+
+
+
     public void updatePrecipitation(String timeUnit, String obscd) {
         timeUnit = StringUtils.hasText(timeUnit) ? timeUnit : "10M";
         if(timeUnit.equals("1H")) {
@@ -221,6 +242,38 @@ public class WamisApiService {
         }
     }
 
+    public void updateWaterLevelFlow(String mode, String timeUnit, String obscd) {
+        timeUnit = StringUtils.hasText(timeUnit) ? timeUnit : "10M";
+        if(timeUnit.equals("1H")) {
+            timeUnit = "1H";
+        } else if (timeUnit.equals("1D")) {
+            timeUnit = "1D";
+        }
+
+        String url = ApiURL.WATER_LEVEL_FLOW + timeUnit + "/" + obscd + "/" + getPeriod(timeUnit)+ ".json";
+
+        System.out.println("링 = " + url);
+        String data = restTemplate.getForObject(URI.create(url), String.class);
+        try {
+            ApiDataResultList<WaterLevelFlow10M> result = objectMapper.readValue(data,
+                    new TypeReference<ApiDataResultList<WaterLevelFlow10M>>() {
+                    });
+
+            List<WaterLevelFlow10M> items = result.getContent();
+   /*         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+            items.forEach(item -> {
+                LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
+                item.setYmd(date);
+            });*/
+            items.forEach(System.out::println);
+
+            waterLevelFlow10MRepository.saveAllAndFlush(items);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 날짜 조회 임시
      * 기본값 : 현재 기준 24시간 전까지
@@ -238,6 +291,35 @@ public class WamisApiService {
         calendar.add(Calendar.MINUTE, -4);
         SdateTime = SDF.format(calendar.getTime());
         SdateTime = SdateTime.substring(0, 11) + "0";
+
+        return SdateTime + "/" + EdateTime;
+    }
+
+    /**
+     * 10M - 14일
+     * 1H - 30일
+     * 1D - 30일
+     */
+    public String getPeriod(String timeUnit) {
+        timeUnit = StringUtils.hasText(timeUnit) ? timeUnit : "10M";
+        Calendar calendar = new GregorianCalendar();
+        SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMddHHmm");
+        String EdateTime = SDF.format(calendar.getTime()); // 현재
+        calendar.add(Calendar.MINUTE, -4); // 딜레이 4분으로 설정
+        EdateTime = SDF.format(calendar.getTime());
+        EdateTime = EdateTime.substring(0, 11) + "0";
+        if(timeUnit.equals("10M")) {
+            calendar.add(Calendar.DATE, -14);
+        } else if(timeUnit.equals("1H") || timeUnit.equals("1D")) {
+            calendar.add(Calendar.DATE, -30);
+        }
+
+        String SdateTime = SDF.format(calendar.getTime());
+        calendar.add(Calendar.MINUTE, -4);
+        SdateTime = SDF.format(calendar.getTime());
+        SdateTime = SdateTime.substring(0, 11) + "0";
+
+        System.out.println("날짜 = " + SdateTime + "/" + EdateTime);
 
         return SdateTime + "/" + EdateTime;
     }
