@@ -139,6 +139,13 @@ h2{
     width: 50px;
 }
 
+.wd-110px {
+    width: 110px;
+}
+
+.ht-35px {
+    height: 35px;
+}
 .ht-50px{
     height: 50px;
 }
@@ -207,5 +214,9 @@ div.minimalistBlack {
 
 .just-btw{
     justify-content: space-between;
+}
+
+.data.on{
+    color: #ff0000;
 }
 

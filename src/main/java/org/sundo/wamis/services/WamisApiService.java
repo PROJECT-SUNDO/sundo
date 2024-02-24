@@ -22,6 +22,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -161,6 +163,13 @@ public class WamisApiService {
                     });
 
             List<WaterLevelFlow> items = result.getContent();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+            items.forEach(item -> {
+                LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
+                item.setYmd(date);
+            });
+
+
 
             waterLevelFlowRepository.saveAllAndFlush(items);
 
@@ -233,5 +242,61 @@ public class WamisApiService {
     }
 
 
+    /**
+     * 강수량 10분 실시간 데이터 업데이트
+     *
+     */
+    public void updateRf10M() {
+        List<Observatory> oItems = getObservatories("rf");
 
+        for (Observatory oitem : oItems) {
+            String url = String.format(ApiURL.RCT_PRECIPITATION, oitem.getObscd());
+            String data = restTemplate.getForObject(url, String.class);
+            Pattern pattern = Pattern.compile("\"rf\"\\s*:\\s*([^,]+),");
+            Matcher matcher = pattern.matcher(data);
+            if (matcher.find()) {
+                String rf = matcher.group(1);
+                if (StringUtils.hasText(rf)) {
+                    oitem.setRf(Double.parseDouble(rf));
+                }
+            }
+         }
+
+        observatoryRepository.saveAllAndFlush(oItems);
+    }
+
+    /**
+     * 수위 10분 실시간 데이터 업데이트
+     *
+     */
+    public void updateWlFw10M() {
+        List<Observatory> oItems = getObservatories("wl");
+        List<Observatory> oItems2 = getObservatories("flw");
+
+        oItems.addAll(oItems2);
+
+        for (Observatory oitem : oItems) {
+            String url = String.format(ApiURL.RCT_WATER_LEVEL_FLOW, oitem.getObscd());
+            String data = restTemplate.getForObject(url, String.class);
+            Pattern pattern1 = Pattern.compile("\"wl\"\\s*:\\s*\"?([^,\"]+)\"?,");
+            Matcher matcher1 = pattern1.matcher(data);
+            if (matcher1.find()) {
+                String wl = matcher1.group(1);
+                if (StringUtils.hasText(wl)) {
+                    oitem.setWl(Double.parseDouble(wl));
+                }
+            }
+
+            Pattern pattern2 = Pattern.compile("\"fw\"\\s*:\\s*\"?([^,\"]+)\"?,");
+            Matcher matcher2 = pattern2.matcher(data);
+            if (matcher2.find()) {
+                String fw = matcher1.group(1);
+                if (StringUtils.hasText(fw)) {
+                    oitem.setFw(Double.parseDouble(fw));
+                }
+            }
+        }
+
+        observatoryRepository.saveAllAndFlush(oItems);
+    }
 }
