@@ -28,5 +28,13 @@ public class ApiWamisController {
         statisticService.update();
     }
 
+    @GetMapping("/test2")
+    public void test2() {
+        apiService.updateRf10M();
+    }
 
+    @GetMapping("/test3")
+    public void test3() {
+        apiService.updateWlFw10M();
+    }
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -24,6 +25,9 @@ import org.sundo.wamis.repositories.WaterLevelFlowRepository;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.Order.asc;
+import static org.springframework.data.domain.Sort.Order.desc;
 
 @Service
 @Transactional
@@ -81,6 +85,7 @@ public class ObservatoryInfoService {
      * @return
      */
     public ListData<Observatory> getList(ObservatorySearch search) {
+        System.out.println(search);
 
         int page = Utils.onlyPositiveNumber(search.getPage(), 1);
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 10);
@@ -119,10 +124,26 @@ public class ObservatoryInfoService {
         }
 
         /* 검색 조건 E */
+        /* 정렬 조건 S */
+        String order = search.getOrder();
+        Sort sort = Sort.by(asc("obscd"));
+        if (StringUtils.hasText(order)) {
+            if (order.equals("obsnm")) {
+                sort = Sort.by(asc("obsnm"));
+            } else if (order.equals("rf")) {
+                sort = Sort.by(desc("rf"));
+            } else if (order.equals("wl")) {
+                sort = Sort.by(desc("wl"));
+            } else if (order.equals("flw")) {
+                sort = Sort.by(desc("fw"));
+            }
+        }
 
+        /* 정렬 조건 E */
         /* 페이징 처리 S */
 
-        Pageable pageable = PageRequest.of(page - 1, limit);
+
+        Pageable pageable = PageRequest.of(page - 1, limit, sort);
 
         // 단일 테이블 불러올때
         Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
@@ -133,6 +154,7 @@ public class ObservatoryInfoService {
 
         List<Observatory> items = data.getContent();
         items.forEach(this::addInfo);
+        System.out.println(items);
 
         return new ListData<>(items, pagination);
     }
@@ -140,28 +162,14 @@ public class ObservatoryInfoService {
 
     private void addInfo(Observatory observatory){
         String type = observatory.getType();
-        String obscd = observatory.getObscd();
 
         if("rf".equals(type)){
-            List<Precipitation> precipitations = precipitationRepository.findByRfobscdOrderByYmdDesc(obscd).orElse(null);
+            observatory.setData(observatory.getRf());
 
-            if(precipitations != null && !precipitations.isEmpty()){
-                observatory.setData(precipitations.get(0).getRf());
-            }
-
-        }else if ("wl".equals(type) || "flw".equals(type)){
-            List<WaterLevelFlow> waterLevelFlows = waterLevelFlowRepository.findByWlobscdOrderByYmdDesc(obscd).orElse(null);
-            if(waterLevelFlows != null && !waterLevelFlows.isEmpty()){
-                double data = 0;
-                if("wl".equals(type)){
-                    data = waterLevelFlows.get(0).getWl();
-                }else{
-                    data = waterLevelFlows.get(0).getFw();
-                }
-
-                observatory.setData(data);
-
-            }
+        }else if ("wl".equals(type)){
+            observatory.setData(observatory.getWl());
+        }else if("flw".equals(type)){
+            observatory.setData(observatory.getFw());
         }
 
     }
