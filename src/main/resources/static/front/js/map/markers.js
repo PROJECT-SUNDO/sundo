@@ -22,16 +22,18 @@ function addMarker(items){
         if (!lon || !lat) continue;
 
         const [lon1, lon2, lon3] = lon.split("-");
-        lon = Number(lon1) + Number(lon2)/60 + Number(lon3)/3600;
+        lon = Number(lon1) + Number(lon2)/60 + Number(lon3)/3600;   // 경도
 
         const [lat1, lat2, lat3] = lat.split("-");
-        lat = Number(lat1) + Number(lat2)/60 + Number(lat3)/3600;
-        const name = item.obscd;  // 관측소 코드
+        lat = Number(lat1) + Number(lat2)/60 + Number(lat3)/3600;   // 위도
+
+        const obscd = item.obscd;  // 관측소 코드
 
         const mapProjection = "EPSG:3857";
     	const dataProjection = "EPSG:4326";
-        // 마커 feature 설정
 
+
+        // 마커 feature 설정
         const geometry = new ol.geom.Point([lon, lat]).transform(dataProjection, mapProjection);
         mapLib.geometry = geometry;
 
@@ -41,7 +43,7 @@ function addMarker(items){
             properties : {
                 name: "markers",
             },
-            name: name
+            name: obscd
         });
 
         // 마커 레이어에 들어갈 소스 생성
@@ -87,12 +89,40 @@ function addMarker(items){
             mapLib.map.addLayer(markerLayer);
         }
 
-
-
         // // 마커 레이어 저장
         // mapLib.markerLayer = markerLayer;
 
         mapLib.map.getView().setCenter(mapLib.geometry.getCoordinates());
         mapLib.map.getView().setZoom(11);
+
+
+        // 마커를 클릭하면 실행되는 함수
+        mapLib.map.on('click', function(event) {
+            mapLib.map.forEachFeatureAtPixel(event.pixel, function(feature) {
+                const { popup } = commonLib;
+                const obscd = feature.get('name');   // 클릭된 마커의 name: obscd
+
+                let endpoint;
+                switch(obscd) {
+                    case 'rf':
+                        endpoint = '/map/popup/rf';
+                        break;
+                    case 'wl':
+                        endpoint = '/map/popup/wl';
+                        break;
+                    case 'flw':
+                        endpoint = '/map/popup/flw';
+                        break;
+                    default:
+                        console.error('Unknown marker type:', obscd);
+                        return;
+                }
+
+                const url = `${endpoint}?obscd=${obscd}`;  // 타입에 맞게 url결정
+
+                // 팝업을 띄우는 코드
+                popup.open(url, 450, 450);
+            });
+        });
     }
 }
