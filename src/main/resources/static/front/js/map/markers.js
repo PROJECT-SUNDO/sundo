@@ -12,19 +12,19 @@ function addMarker(items){
 
         // 텍스트 형태 변환
         if (!lon || !lat) continue;
-        lon = parseFloat(lon.replace("-", ".").replace(/-/g, ""));  // 경도
-        lat = parseFloat(lat.replace("-", ".").replace(/-/g, ""));  // 위도
+
+        const [lon1, lon2, lon3] = lon.split("-");
+        lon = Number(lon1) + Number(lon2)/60 + Number(lon3)/3600;
+
+        const [lat1, lat2, lat3] = lat.split("-");
+        lat = Number(lat1) + Number(lat2)/60 + Number(lat3)/3600;
         const name = item.obsnm;  // 관측소 명
 
+        const mapProjection = "EPSG:3857";
+    	const dataProjection = "EPSG:4326";
         // 마커 feature 설정
-        const mapProjection = "EPSG:3857";  // 지도 좌표계
-        const markerDataProjection = "EPSG:5186";  // 데이터 좌표계
-        // let lonLat = ol.proj.fromLonLat([lon, lat]);
-        // let transformedLonLat = ol.proj.transform(lonLat, markerDataProjection, mapProjection);
-        // const geometry = new ol.geom.Point(transformedLonLat);
-        const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat]));
-        // const geometry = new ol.geom.Point(ol.proj.fromLonLat([lon, lat])).transform(dataProjection, mapProjection);
-        if (!mapLib.geometry) mapLib.geometry = geometry;
+        const geometry = new ol.geom.Point([lon, lat]).transform(dataProjection, mapProjection);
+        mapLib.geometry = geometry;
         const feature = new ol.Feature({
             geometry, //transform()경도 위도에 포인트 설정
 
