@@ -27,6 +27,7 @@ public class DashboardController implements ExceptionProcessor {
 
     @GetMapping("/rf")
     public String rfDashboard(@ModelAttribute ObservatorySearch search, Model model){
+        commonProcess("rf", model);
         search.setType("rf");
 
         ListData<Observatory> data = dashboardInfoService.getRFList(search);
@@ -39,6 +40,7 @@ public class DashboardController implements ExceptionProcessor {
 
     @GetMapping("/wl")
     public String wlDashboard(@ModelAttribute ObservatorySearch search, Model model){
+        commonProcess("wl", model);
         search.setType("wl");
 
         ListData<Observatory> data = dashboardInfoService.getRFList(search);
@@ -51,6 +53,8 @@ public class DashboardController implements ExceptionProcessor {
 
     @GetMapping("/flw")
     public String flwDashboard(@ModelAttribute ObservatorySearch search, Model model){
+        commonProcess("flw", model);
+
         search.setType("flw");
 
         ListData<Observatory> data = dashboardInfoService.getRFList(search);
