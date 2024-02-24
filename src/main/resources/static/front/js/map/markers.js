@@ -5,10 +5,10 @@ function addMarker(items){
         mapLib.geometry = null;
     }
 
-    const markerImg = {
-        'rf': 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소
-        'wl': 'https://ifh.cc/g/onQwV8.png',   // 수위관측소
-        'flw': 'https://ifh.cc/g/onQwV8.png'   // 유량 관측소
+    const markerImages = {
+        'rf': 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소: 빨강
+        'wl': 'https://ifh.cc/g/onQwV8.png',   // 수위관측소: 파랑
+        'flw': 'https://ifh.cc/g/onQwV8.png'   // 유량 관측소: 노랑
     }
     // 마커 값 설정
     for(const item of items) {
@@ -52,6 +52,7 @@ function addMarker(items){
         // 마커 스타일 설정
         const  markerStyle = new ol.style.Style({
             image: new ol.style.Icon({ //마커 이미지
+                // src : 'https://ifh.cc/g/3O0MmJ.png',
                 src: markerImageUrl, // 타입에 맞는 마커 이미지 사용
                 opacity: 1, // 투명도 설정 (0: 완전 투명, 1: 완전 불투명)
                 scale: 0.06 //크기 1=100%
