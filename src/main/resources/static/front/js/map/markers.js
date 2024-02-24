@@ -6,12 +6,11 @@ function addMarker(items){
     }
 
     const markerImages = {
+        'wl': 'https://ifh.cc/g/hAc1cV.png',  // 수위관측소: 파랑
         'rf': {
             normal: 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소 기본: 빨강
             outlier: 'https://ifh.cc/g/zv2YT2.png'  // 강수량관측소 이상치 값 넘겼을떄
         },
-        'wl': 'https://ifh.cc/g/hAc1cV.png',  // 수위관측소: 파랑
-
         'flw': 'https://ifh.cc/g/onQwV8.png'   // 유량 관측소: 노랑
     }
     // 마커 값 설정
