@@ -6,6 +6,7 @@ import org.sundo.commons.exceptions.AlertBackException;
 
 public class ObservationNotFoundException extends AlertBackException {
     public ObservationNotFoundException() {
-        super(Utils.getMessage("NotFound.bordData", "errors"), HttpStatus.NOT_FOUND);
+        super(Utils.getMessage("NotFound.Observatory", "errors"), HttpStatus.NOT_FOUND);
+
     }
 }

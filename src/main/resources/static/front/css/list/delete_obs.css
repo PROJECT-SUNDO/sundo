@@ -1,0 +1,21 @@
+.submit_btns{
+    justify-content: center;
+}
+
+.submit_btns button{
+    height: 30px;
+    background: #fff;
+    color: var(--main-color);
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+    padding: 0 10px;
+}
+
+.submit_btns button:last-of-type, .submit_btns button:hover{
+    background: var(--main-color);
+    color: #fff;
+}
+
+.submit_btns button+button{
+    margin-left: 10px;
+}
