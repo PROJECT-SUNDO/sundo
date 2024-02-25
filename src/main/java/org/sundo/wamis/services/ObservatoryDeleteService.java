@@ -10,7 +10,7 @@ import org.sundo.wamis.repositories.ObservatoryRepository;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ObservatoryDataDelete {
+public class ObservatoryDeleteService {
     private final ObservatoryRepository observatoryRepository;
     private final ObservatoryInfoService observatoryInfoService;
     private final Utils utils;
