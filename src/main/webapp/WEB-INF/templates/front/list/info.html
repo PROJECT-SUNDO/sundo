@@ -33,7 +33,7 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <div>검색</div>
             </div>
-            <form th:object="${statisticSearch}" class="flex align-center obsForm">
+            <form th:object="${observationSearch}" name="frmSearch" class="flex align-center obsForm">
                 <input type="hidden" name="type" th:value="${requestObservatory.type}">
                 <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
                 <!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
@@ -45,42 +45,25 @@
                     <input type="date" name="edate" th:field="*{edate}">
 
                     <select name="timeUnit" id="timeUnit" th:field="*{timeUnit}">
-                        <option value="tenM" th:text="#{10분}"></option>
-                        <option value="hour" th:text="#{1시간}"></option>
-                        <option value="day" th:text="#{일}"></option>
-                        <option value="month" th:text="#{월}"></option>
-                        <option value="year" th:text="#{년}"></option>
+                        <option value="10M" th:text="#{10분}"></option>
+                        <option value="1H" th:text="#{1시간}"></option>
+                        <option value="1D" th:text="#{일}"></option>
+                        <option value="MONTH" th:text="#{월}"></option>
+                        <option value="YEAR" th:text="#{년}"></option>
                     </select>
                 </div>
                 <button type="submit" class="searchBtn" th:text="#{검색}"></button>
             </form>
         </div>
+
         <div class="divTable minimalistBlack">
-           <!-- <th:block th:if="*{timeUnit=='hour'}">-->
-                <div class="divTableHeading">
-                    <div class="divTableRow">
-                        <div th:text="#{관측일시}" class="divTableHead"></div>
-                        <th:block th:each="hour : ${#numbers.sequence(0, 23)}">
-                            <div th:text="${hour}" class="divTableHead"></div>
-                        </th:block>
-                    </div>
-                </div>
-                <div class="divTableBody" th:if="${items != null}" th:each="item : ${items}">
-                    <div class="divTableRow">
-                        <div th:text="${item.date}" class="divTableCell">
-                        </div>
-                        <th:block th:each="index : ${#numbers.sequence(0, 23)}">
-                            <div th:text="${__${'item.avg' + index}__} == 0 ? 0 : ${__${'item.avg' + index}__}" class="divTableCell"></div>
-                        </th:block>
-                    </div>
-                </div>
-         <!--   </th:block>-->
+            <table id="statDataTable">
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
-        <!--</th:block>-->
-
-        [[${items}]]
-
-
 
         <th:block th:replace="~{common/_pagination::pagination}"></th:block>
     </section>

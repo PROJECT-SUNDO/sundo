@@ -245,33 +245,6 @@ public class WamisApiService {
         }
     }
 
- /*   public void updateWaterLevelFlow(String mode, String timeUnit, String obscd) {
-        timeUnit = StringUtils.hasText(timeUnit) ? timeUnit : "10M";
-        if(timeUnit.equals("1H")) {
-            timeUnit = "1H";
-        } else if (timeUnit.equals("1D")) {
-            timeUnit = "1D";
-        }
-
-        String url = ApiURL.WATER_LEVEL_FLOW + timeUnit + "/" + obscd + "/" + getPeriod(timeUnit)+ ".json";
-
-        System.out.println("링 = " + url);
-        String data = restTemplate.getForObject(URI.create(url), String.class);
-        try {
-            ApiDataResultList<WaterLevelFlow10M> result = objectMapper.readValue(data,
-                    new TypeReference<ApiDataResultList<WaterLevelFlow10M>>() {
-                    });
-
-            List<WaterLevelFlow10M> items = result.getContent();
-
-            items.forEach(System.out::println);
-
-            waterLevelFlow10MRepository.saveAllAndFlush(items);
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     /**
      * 날짜 조회 임시
@@ -317,8 +290,6 @@ public class WamisApiService {
         calendar.add(Calendar.MINUTE, -4);
         SdateTime = SDF.format(calendar.getTime());
         SdateTime = SdateTime.substring(0, 11) + "0";
-
-        System.out.println("날짜 = " + SdateTime + "/" + EdateTime);
 
         return SdateTime + "/" + EdateTime;
     }

@@ -13,7 +13,6 @@ import org.sundo.commons.exceptions.AlertBackException;
 import org.sundo.commons.exceptions.ExceptionProcessor;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
-import org.sundo.wamis.entities.Statistic;
 import org.sundo.wamis.entities.WaterLevelFlow;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 import org.sundo.wamis.services.*;
@@ -70,7 +69,7 @@ public class ListController implements ExceptionProcessor {
 	 * - 목록 (검색 전 10분 단위 출력)
 	 */
 	@GetMapping("/info/{seq}")
-	public String info (@PathVariable("seq") String seq, @ModelAttribute StatisticSearch search,
+	public String info (@PathVariable("seq") String seq, @ModelAttribute ObservationSearch search,
 						Model model) {
 		commonProcess("info", model);
 		String obscd = utils.getParam("obscd");
@@ -78,10 +77,6 @@ public class ListController implements ExceptionProcessor {
 		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
 		search.setObscd(form.getObscd());
 		search.setType(form.getType());
-
-		ListData<Statistic> data = statisticInfoService.getStatisticList(search);
-		model.addAttribute("items", data.getItems());
-		model.addAttribute("pagination", data.getPagination());
 
 		model.addAttribute("requestObservatory", form);
 
@@ -313,7 +308,7 @@ public class ListController implements ExceptionProcessor {
 			addScript.add("list/delete_obs");
 		}else if(mode.equals("info")) {
 			addCss.add("list/setting");
-			addScript.add("list/setting");
+			addScript.add("list/api");
 		}
 
 		model.addAttribute("addCss", addCss);

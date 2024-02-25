@@ -21,5 +21,7 @@ public class ObservationSearch {
     private boolean isOut; // true - 이상치만 검색
     private double outlier; // 이상치 기준
 
+    private String timeUnit = "10M";
+
 
 }
