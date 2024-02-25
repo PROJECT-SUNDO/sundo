@@ -154,9 +154,9 @@ window.addEventListener("DOMContentLoaded", function() {
             thead.appendChild(headerRow);
 
             // tbody 출력
-            const body_keys = Object.keys(statData).reverse();
+            //const body_keys = Object.keys(statData).reverse();
             tbody.innerHTML = ""; // tbody 초기화
-            for (const key of body_keys) {
+            for (const key in statData) {
                 if (statData.hasOwnProperty(key)) {
                     const rowData = statData[key];
                     const row = document.createElement("tr");
