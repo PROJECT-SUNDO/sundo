@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface ExceptionProcessor {
 
     @ExceptionHandler(Exception.class)
-    default String errorHandler(Exception e, HttpServletResponse response, HttpServletRequest request, Model model) {
+        default String errorHandler(Exception e, HttpServletResponse response, HttpServletRequest request, Model model) {
 
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 500
 
