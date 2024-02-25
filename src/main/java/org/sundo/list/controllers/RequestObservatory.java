@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
-
-import javax.persistence.Column;
 
 @Data @Builder
 @NoArgsConstructor
@@ -17,7 +14,6 @@ public class RequestObservatory {
 
     private String mode = "write";
 
-    @NotBlank
     private String obscd; // 관측소 코드
 
     private String obsnm; // 관측소명
@@ -39,6 +35,7 @@ public class RequestObservatory {
     private String mngorg; // 운영기관
 
     private Boolean useOutlier; //이상치 사용여부
+
     private Double outlier; // 이상치
 
     private Boolean clsyn; // 사용여부
