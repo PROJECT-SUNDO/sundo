@@ -1,5 +1,27 @@
 window.addEventListener("DOMContentLoaded", function() {
 
+    /* 헤더 버튼 처리*/
+    const dashboardBtnArea = document.querySelector(".dashboardBtns");
+    if(dashboardBtnArea.classList.contains("dn")){
+        dashboardBtnArea.classList.remove("dn");
+    }
+
+    const dashboardBtns = dashboardBtnArea.querySelectorAll("button");
+
+    for(const dashboardBtn of dashboardBtns){
+        dashboardBtn.addEventListener("click", function(){
+            const type = this.dataset.type;
+            location.href = '/dashboard/' + type;
+        });
+
+        if(window.location.pathname.includes('/dashboard/' + dashboardBtn.dataset.type)){
+            dashboardBtn.classList.add("on");
+        }
+    }
+
+
+
+
   /*기본 막대그래프*/
   // 차트를 그럴 영역을 dom요소로 가져온다.
   const myChart1 = document.getElementById('myChart1').getContext('2d');
