@@ -63,7 +63,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 let hour, min;
                 if (ymdhm.length > 8) {
                     hour = ymdhm.substring(8, 10);
-                    min = ymdhm.substring(10);
+                    min = ymdhm.substring(8, 12);
                 }
 
                 let key = `${year}.${month}.${day}`;
@@ -126,57 +126,115 @@ window.addEventListener("DOMContentLoaded", function() {
             console.log(statData);
 
             /* statData 출력 */
-            const statDataTable = document.getElementById("statDataTable");
-            const thead = statDataTable.querySelector("thead");
-            const tbody = statDataTable.querySelector("tbody");
+            const statTable = document.querySelector(".divTable");
+            const thead = statTable.querySelector(".divTableHeading");
+            const tbody = statTable.querySelector(".divTableBody");
 
             // thead 출력
-
             thead.innerHTML = "";
-            const headerRow = document.createElement("tr");
-            const fixedHeader = document.createElement("th");
+            const headerRow = document.createElement("div");
+            headerRow.classList.add("divTableRow");
+            const fixedHeader = document.createElement("div");
+            fixedHeader.classList.add("divTableHead");
             // 고정항목
             fixedHeader.textContent = "관측일시";
             headerRow.appendChild(fixedHeader);
 
-            const firstData = statData[Object.keys(statData)[0]];
-            const head_keys = Object.keys(firstData).reverse();
-            for (const key of head_keys) {
-                // 변수명에 타입 포함할 때만
-                if(key.includes(type)) {
-                // ex) wl_00 -> 00 으로 자르기
-                const var_substring = key.substring(3);
-                const th = document.createElement("th");
-                th.textContent = var_substring
-                headerRow.appendChild(th);
+
+            /* 10M */
+            if (unit === '10M') {
+                thead.innerHTML = "";
+                const typeHeader = document.createElement("div");
+                typeHeader.classList.add("divTableHead");
+                if (type === 'rf') {
+                    typeHeader.textContent = "강수량";
+                } else if (type === 'wl') {
+                    typeHeader.textContent = "수위";
+                } else if (type === 'fw') {
+                    typeHeader.textContent = "유량";
                 }
-            }
-            thead.appendChild(headerRow);
+                headerRow.appendChild(typeHeader);
+                thead.appendChild(headerRow);
 
-            // tbody 출력
-            //const body_keys = Object.keys(statData).reverse();
-            tbody.innerHTML = ""; // tbody 초기화
-            for (const key in statData) {
-                if (statData.hasOwnProperty(key)) {
-                    const rowData = statData[key];
-                    const row = document.createElement("tr");
+                // tbody
+                tbody.innerHTML = "";
+                for (const key in statData) {
+                    if (statData.hasOwnProperty(key)) {
+                        const rowData = statData[key];
+                        for (const dateKey in rowData) {
+                            if (rowData.hasOwnProperty(dateKey)) {
+                                if (dateKey.includes(type)) {
+                                    // ex) wl_2350 -> 2350
+                                    const var_substring = dateKey.substring(3, 5) + ':' + dateKey.substring(5);
+                                    const combinedText = `${key} ${var_substring}`;
 
-                    // 날짜 추가
-                    const dateCell = document.createElement("td");
-                    dateCell.textContent = key;
-                    row.appendChild(dateCell);
+                                    const row = document.createElement("div");
+                                    row.classList.add("divTableRow");
+                                    // 날짜 + 시간
+                                    const dateCell = document.createElement("div");
+                                    dateCell.classList.add("divTableCell");
+                                    dateCell.textContent = combinedText;
+                                    row.appendChild(dateCell);
+                                    // 데이터
+                                    const dataCell = document.createElement("div");
+                                    dataCell.classList.add("divTableCell");
+                                    dataCell.textContent = rowData[dateKey];
+                                    console.log('rowData[dateKey]' + rowData[dateKey]);
+                                    row.appendChild(dataCell);
 
-                    // 데이터 필드 순회 및 추가
-                    const row_keys = Object.keys(rowData).reverse();
-                    for (const dataKey of row_keys) {
-                        if (rowData.hasOwnProperty(dataKey)) {
-                            dataCell = document.createElement("td");
-                            dataCell.textContent = rowData[dataKey];
-                            row.appendChild(dataCell);
+                                    tbody.appendChild(row);
+                                }
+                            }
                         }
                     }
+                }
+            }
 
-                    tbody.appendChild(row);
+            else if(unit === '1H') {
+                const firstData = statData[Object.keys(statData)[0]];
+                const head_keys = Object.keys(firstData).reverse();
+                for (const key of head_keys) {
+                    // 변수명에 타입 포함할 때만
+                    if(key.includes(type)) {
+                    // ex) wl_00 -> 00 으로 자르기
+                    const var_substring = key.substring(3);
+                    const th = document.createElement("div");
+                    th.classList.add("divTableHead");
+                    th.textContent = var_substring
+                    headerRow.appendChild(th);
+                    }
+                }
+                thead.appendChild(headerRow);
+
+                // tbody 출력
+                tbody.innerHTML = ""; // tbody 초기화
+                for (const key in statData) {
+                    if (statData.hasOwnProperty(key)) {
+                        const rowData = statData[key];
+                        const row = document.createElement("div");
+                        row.classList.add("divTableRow");
+                        // 날짜 추가
+                        const dateCell = document.createElement("div");
+                        dateCell.classList.add("divTableCell");
+                        dateCell.textContent = key;
+                        row.appendChild(dateCell);
+
+                        // 데이터 필드 순회 및 추가
+                        const row_keys = Object.keys(rowData).reverse();
+                        for (const dataKey of row_keys) {
+                            if (rowData.hasOwnProperty(dataKey)) {
+                                if(dataKey.includes(type)) {
+                                    const dataCell = document.createElement("div");
+                                    dataCell.classList.add("divTableCell");
+                                    dataCell.textContent = rowData[dataKey];
+                                    row.appendChild(dataCell);
+                                }
+                            }
+                        }
+
+                        tbody.appendChild(row);
+                    }
+
                 }
             }
 
