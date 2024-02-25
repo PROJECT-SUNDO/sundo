@@ -308,6 +308,7 @@ public class ListController implements ExceptionProcessor {
 			addScript.add("list/delete_obs");
 		}else if(mode.equals("info")) {
 			addCss.add("list/setting");
+			addScript.add("list/info");
 			addScript.add("list/api");
 		}
 
