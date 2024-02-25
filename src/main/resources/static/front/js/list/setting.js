@@ -2,7 +2,7 @@ var commonLib = commonLib || {};
 
 window.addEventListener("DOMContentLoaded", function(){
     const referrer = document.referrer;
-    if (referrer.indexOf("/setting") == -1) {
+    if (referrer.indexOf("/list") == -1) {
         sessionStorage.setItem("referrer", referrer);
     }
 
