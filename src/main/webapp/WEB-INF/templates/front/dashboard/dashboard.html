@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
-<main layout:fragment="content" >
+<main layout:fragment="content">
     <h1>대시보드</h1>
     <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}">
         <div class="flex align-center">
@@ -89,5 +89,9 @@
             <th:block th:replace="~{common/_pagination::pagination}"></th:block>
         </div>
     </div>
+
+
+
+
 </main>
 </html>
