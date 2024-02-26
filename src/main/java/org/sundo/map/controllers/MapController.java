@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.list.controllers.RequestObservatory;
@@ -59,11 +56,17 @@ public class MapController {
 		return "front/map/aside";
 	}
 
-	@GetMapping("/{info}")
-	public String info(@PathVariable("info")String info, Model model){
+	@GetMapping("/popup/{type}")
+	public String popup(@PathVariable("type") String type,
+						@RequestParam("obscd") String obscd,
+						Model model) {
+
+		Observatory observatory = observatoryInfoService.get(obscd);
+
+		model.addAttribute("observatory", observatory);
 
 		commonProcess("info", model);
-		return "front/map/popup/" + info;
+		return "front/map/popup/" + type;
 	}
 	
 	private void commonProcess(String mode, Model model) {
