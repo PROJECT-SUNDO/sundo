@@ -309,7 +309,7 @@ public class ListController implements ExceptionProcessor {
 		}else if(mode.equals("info")) {
 			addCss.add("list/setting");
 			addScript.add("list/info");
-			addScript.add("list/api");
+			addCommonScript.add("api");
 		}
 
 		model.addAttribute("addCss", addCss);
