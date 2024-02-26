@@ -80,7 +80,7 @@ h2{
 }
 
 .dn {
-	display: none;
+	display: none !important;
 }
 
 .flex{

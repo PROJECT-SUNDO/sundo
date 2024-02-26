@@ -12,6 +12,7 @@ import org.sundo.wamis.dto.RfObservatoryDto;
 import org.sundo.wamis.dto.Wl_FlwObservatoryDto;
 import org.sundo.wamis.entities.Observatory;
 import org.sundo.wamis.entities.Precipitation;
+import org.sundo.wamis.entities.QObservatory;
 import org.sundo.wamis.entities.WaterLevelFlow;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 import org.sundo.wamis.repositories.PrecipitationRepository;
@@ -41,13 +42,19 @@ public class WamisApiService {
     private final PrecipitationRepository precipitationRepository; // 강수량 데이터
 
 
-
     /**
      * 모든 관측소
      * @param type
      * @return
      */
     public List<Observatory> getObservatories(String type) {
+        QObservatory observatory = QObservatory.observatory;
+
+        List<Observatory> observatories = (List<Observatory>)observatoryRepository.findAll(observatory.type.eq(type));
+        if(observatories != null && !observatories.isEmpty()){
+            return observatories;
+        }
+
         String url = ApiURL.RF_OBSERVATORY_LIST;
         String detailUrl = ApiURL.RF_OBSERVATORY_DETAIL;
         if (type.equals("wl")) {
@@ -343,7 +350,7 @@ public class WamisApiService {
             Pattern pattern2 = Pattern.compile("\"fw\"\\s*:\\s*\"?([^,\"]+)\"?,");
             Matcher matcher2 = pattern2.matcher(data);
             if (matcher2.find()) {
-                String fw = matcher1.group(1);
+                String fw = matcher2.group(1);
                 if (StringUtils.hasText(fw)) {
                     oitem.setFw(Double.parseDouble(fw));
                 }
