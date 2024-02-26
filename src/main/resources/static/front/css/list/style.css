@@ -34,7 +34,7 @@
 .observatory_box{
     border: 1px solid #222;
     border-radius: 5px;
-    height: 300px;
+    height: flex;
     padding: 10px 20px;
     margin: 20px 30px;
 }
@@ -82,7 +82,6 @@
 
 .form_box dd {
     width: 270px;
-    height:
     }
 
 .form_box dd input {
