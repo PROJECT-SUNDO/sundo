@@ -266,7 +266,6 @@ window.addEventListener("DOMContentLoaded", function(){
         const items = e.data.map;
         addMarker(items);
     });
-
     /* 마커 추가 e */
 });
 
