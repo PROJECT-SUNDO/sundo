@@ -17,3 +17,7 @@
 .dashboardBtns button.on, .dashboardBtns button:hover{
     border-bottom: 2px solid #fff;
 }
+
+.observatory{
+    cursor: pointer;
+}
