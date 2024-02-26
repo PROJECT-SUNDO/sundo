@@ -1,6 +1,9 @@
+main {
+    padding: 20px 20px 0;
+}
 .chart {
-    width: 40vw;
-    height: 40vh;
+    width: 50vw;
+    height: 50vh;
 }
 
 .dashboardBtns{
@@ -25,12 +28,19 @@
 /* 테이블 스타일 */
 .minimalistBlack {
     border: none;
+    border-top: 1px solid;
     width: 20vw;
     text-align: center;
 }
 .divTable.minimalistBlack .divTableHeading, .divTable.minimalistBlack .divTableHead, .divTable.minimalistBlack .divTableCell {
     border: none;
 }
+.divTable.minimalistBlack .divTableHeading div.divTableHead {
+    text-align: center;
+}
 
 .dashList {
+    border: 1px solid;
+    border-radius: 5%;
+    padding: 10px;
 }

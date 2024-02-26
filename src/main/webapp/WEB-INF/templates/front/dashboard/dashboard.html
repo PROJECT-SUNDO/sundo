@@ -11,11 +11,11 @@
         </div>
         <hr>
         <div class="flex align-center">
+            <label for="obscd">관측소 코드 </label>
             <input type="hidden" name="type" id="type" th:field="*{type}">
             <input type="text" class="onlyNum" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
-            <label for="obscd">관측소 코드 </label>
-            <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
             <label for="obsnm">관측소명</label>
+            <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
             <div class="searchBtn">
                 <button type="submit" class="btn">검색</button>
             </div>

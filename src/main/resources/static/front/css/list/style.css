@@ -1,42 +1,8 @@
-.searchIcon {
-    background-color: #000;
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-}
-
-.searchIcon i {
-    color: #fff;
-}
-
-.searchBtn button{
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
-}
 
 .pagination>div {
     width: 500px;
     display: flex;
     justify-content: space-between;
-}
-
-.submitBtn button{
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
-}
-
-.submitBtn a{
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
 }
 
 h1 {

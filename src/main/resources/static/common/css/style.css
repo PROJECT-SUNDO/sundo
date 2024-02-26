@@ -224,3 +224,32 @@ h2{
     color: #0000ff;
 }
 
+/* 검색 아이콘*/
+
+.searchIcon {
+    background-color: #000;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchIcon i {
+    color: #fff;
+}
+
+.submitBtn button{
+    width: 40px;
+    height: 20px;
+    border: 2px solid;
+    background-color: var(--font-color);
+}
+
+.submitBtn a{
+    width: 40px;
+    height: 20px;
+    border: 2px solid;
+    background-color: var(--font-color);
+}
