@@ -3,27 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/popup}">
 <main layout:fragment="content">
-    <!-- 관측소 상세 정보 -->
+    <!-- 관측소 삭제 정보 -->
     <div class="popupHeader">
         <div class="popupHTitle" th:text="#{관측소 삭제}"></div>
     </div>
     <div class="popupBody" th:object="${observatory}">
-        <div class="flex">
-            <div th:text="#{관측소명}" class="obTitle"></div>
-            <div th:text="*{obsnm}"></div>
-        </div>
-        <div class="flex">
-            <div th:text="#{관측소 코드}" class="obTitle"></div>
-            <div th:text="*{obscd}"></div>
-        </div>
-        <div class="flex">
-            <div th:text="#{위치}" class="obTitle"></div>
-            <div th:text="*{obsnm}"></div>
-        </div>
-        <div class="flex">
-            <div th:text="#{관측소 유형}" class="obTitle"></div>
-            <div th:text="#{*{type}}"></div>
-        </div>
+        <button type="submit" th:text="#{확인}"></button>
+        <button type="submit" th:text="#{취소}"></button>
     </div>
 </main>
 </html>
