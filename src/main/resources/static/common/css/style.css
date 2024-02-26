@@ -208,6 +208,7 @@ h2{
 .divTable.minimalistBlackPopup .divTableRowPopup .divTableCellPopup  {
     border: 1px solid #000000;
     padding: 5px 6px;
+    white-space: nowrap; /* 줄바꿈 없이 텍스트를 한 줄로 계속 표시 */
 }
 
 .box-bgc  {
