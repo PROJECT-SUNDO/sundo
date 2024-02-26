@@ -40,9 +40,11 @@ public class ObservatoryInfoService {
     private final WaterLevelFlowRepository waterLevelFlowRepository;
 
     public Observatory get(String obscd) {
-        Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
+        //Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
+        QObservatory observatory = QObservatory.observatory;
+        List<Observatory> items = (List<Observatory>)observatoryRepository.findAll(observatory.obscd.eq(obscd));
 
-        return data;
+        return items == null || items.isEmpty() ? null : items.get(0);
     }
 
     public RequestObservatory getRequest(String obscd, String type){
