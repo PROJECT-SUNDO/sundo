@@ -31,4 +31,5 @@ window.addEventListener("DOMContentLoaded", function() {
         });
     }
     /* 목록 클릭 처리 E */
+
 });
