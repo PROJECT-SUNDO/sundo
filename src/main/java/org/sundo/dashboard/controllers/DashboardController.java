@@ -6,13 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sundo.commons.ListData;
 import org.sundo.commons.exceptions.ExceptionProcessor;
-import org.sundo.dashboard.service.DashboardInfoService;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.wamis.entities.Observatory;
-import org.sundo.wamis.services.ObservationInfoService;
+import org.sundo.wamis.services.ObservatoryInfoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,47 +22,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DashboardController implements ExceptionProcessor {
 
-    private final DashboardInfoService dashboardInfoService;
-    private final ObservationInfoService observationInfoService;
+    private final ObservatoryInfoService observatoryInfoService;
 
-    @GetMapping("/rf")
-    public String rfDashboard(@ModelAttribute ObservatorySearch search, Model model){
-        commonProcess("rf", model);
-        search.setType("rf");
+    @GetMapping("/{type}")
+    public String dashboard(@PathVariable("type") String type,
+                            @ModelAttribute ObservatorySearch search,
+                            Model model) {
+        commonProcess(type, model);
+        search.setType(type);
+        if(!StringUtils.hasText(search.getOrder())){
+            search.setOrder(type);
+        }
 
-        ListData<Observatory> data = dashboardInfoService.getRFList(search);
+        ListData<Observatory> data = observatoryInfoService.getList(search);
+        List<Observatory> items = data.getItems();
 
-        model.addAttribute("items", data.getItems());
+        model.addAttribute("items", items);
         model.addAttribute("pagination", data.getPagination());
 
-        return "front/dashboard/rf";
+        return "front/dashboard/dashboard";
     }
 
-    @GetMapping("/wl")
-    public String wlDashboard(@ModelAttribute ObservatorySearch search, Model model){
-        commonProcess("wl", model);
-        search.setType("wl");
-
-        ListData<Observatory> data = dashboardInfoService.getRFList(search);
-
-        model.addAttribute("items", data.getItems());
-        model.addAttribute("pagination", data.getPagination());
-
-        return "front/dashboard/wl";
-    }
-
-    @GetMapping("/flw")
-    public String flwDashboard(@ModelAttribute ObservatorySearch search, Model model){
-        commonProcess("flw", model);
-
-        search.setType("flw");
-
-        ListData<Observatory> data = dashboardInfoService.getRFList(search);
-
-        model.addAttribute("items", data.getItems());
-        model.addAttribute("pagination", data.getPagination());
-        return "front/dashboard/flw";
-    }
 
     private void commonProcess(String mode, Model model){
         mode = StringUtils.hasText(mode) ? mode : "rf";

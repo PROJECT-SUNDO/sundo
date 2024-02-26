@@ -9,11 +9,12 @@ import java.time.LocalDate;
  * 관측 정보
  */
 @Data
-public class ObservationDataSearch {
+public class StatisticSearch {
     private int page = 1; // 기본값 1page
     private int limit = 10; // 0 : 설정에 있는 1페이지 게시글 갯수, 1이상 : 지정한 갯수
     private String obscd; // 관측소 코드
     private String type; // 관측 타입
+    private String ymdhm; ////년월일시분
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate sdate; // 시작날짜

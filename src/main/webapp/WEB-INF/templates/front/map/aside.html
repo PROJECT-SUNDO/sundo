@@ -21,9 +21,13 @@
             </div>
             <select class="order" name="order" th:field="*{order}">
                 <option value="rf" th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}" selected></option>
-                <option value="wl" th:if="${observatorySearch.type == 'wl'}" th:text="#{수위}" selected></option>
                 <option value="flw" th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}" selected></option>
                 <option value="cctv" th:if="${observatorySearch.type == 'cctv'}" th:text="#{상태}" selected></option>
+                <th:block th:if="${observatorySearch.type == 'wl'}">
+                    <option value="wl"  th:text="#{수위}" selected></option>
+                    <option value="upstream" th:text="#{상류}"></option>
+                    <option value="downstream" th:text="#{하류}"></option>
+                </th:block>
                 <option value="obsnm" th:text="#{관측소명}"></option>
             </select>
         </div>

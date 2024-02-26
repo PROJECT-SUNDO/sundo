@@ -55,14 +55,24 @@ public class ObservatoryInfoService {
             obsnm = obs.getObsnm();
             clsyn = "운영".equals(obs.getClsyn());
         }
+        double outlier = obs.getOutlier();
+
+        if("wl".equals(type)){
+            try{
+                outlier = Double.parseDouble(obs.getWrnwl().toString());
+            }catch (Exception e){
+                outlier = 0;
+            }
+        }
 
         RequestObservatory form = RequestObservatory.builder()
+                .mode("update")
                 .obscd(obscd)
                 .obsnm(obsnm)
                 .clsyn(clsyn)
                 .type(type)
                 .useOutlier(obs.isUseOutlier())
-                .outlier(obs.getOutlier())
+                .outlier(outlier)
                 .build();
 
         return form;
@@ -90,24 +100,16 @@ public class ObservatoryInfoService {
         String type = search.getType();
 
         if (StringUtils.hasText(obscd)) {
-
             obscd = obscd.trim();
-
             andBuilder.and(observatory.obscd.contains(obscd));
-
         }
 
         if (StringUtils.hasText(obsnm)) {
-
             obsnm = obsnm.trim();
-
             andBuilder.and(observatory.obsnm.contains(obsnm));
-
         }
 
-
         if (StringUtils.hasText(type)) {
-
             if (!type.equals("ALL")) {
                 andBuilder.and(observatory.type.eq(type));
             }
@@ -126,6 +128,10 @@ public class ObservatoryInfoService {
                 sort = Sort.by(desc("wl"));
             } else if (order.equals("flw")) {
                 sort = Sort.by(desc("fw"));
+            } else if (order.equals("upstream")) {
+
+            } else if (order.equals("downstream")){
+
             }
         }
 
@@ -155,6 +161,7 @@ public class ObservatoryInfoService {
 
         if("rf".equals(type)){
             observatory.setData(observatory.getRf());
+
 
         }else if ("wl".equals(type)){
             observatory.setData(observatory.getWl());
