@@ -17,7 +17,7 @@ window.addEventListener("DOMContentLoaded", function(){
     });
 
     const { popup } = commonLib;
-    const editFrm = document.querySelector("#editFrm");
+    const submitFrm = document.querySelector("#submitFrm");
 
     // 데이터 수정 버튼
     const editBtns = document.querySelectorAll(".editBtn");
@@ -25,10 +25,26 @@ window.addEventListener("DOMContentLoaded", function(){
         editBtn.addEventListener("click", function(){
             const seqId = this.dataset.seqId;
             const seq = document.getElementById(seqId).value;
-            editFrm.action = '/list/setting/edit/' + seq;
-            editFrm.submit();
+            submitFrm.action = '/list/setting/edit/' + seq;
+            submitFrm.submit();
         });
     }
+
+    // 데이터 삭제버튼
+
+    const deleteBtn = document.querySelector(".deleteBtn");
+
+    deleteBtn.addEventListener("click", function(){
+        const seqId = this.dataset.seqId;
+        const seq = document.getElementById(seqId).value;
+        const type = document.querySelector("#type").value;
+        const queryString = '?type=' + type;
+        const url = '/list/setting/delete/' + seq + queryString;
+
+        popup.open(url, 450, 200);
+    })
+
+
 
     // 이상치 사용안하면
     const useOutlier = document.getElementById("useOutlier");
