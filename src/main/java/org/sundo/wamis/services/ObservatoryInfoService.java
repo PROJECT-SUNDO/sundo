@@ -85,7 +85,6 @@ public class ObservatoryInfoService {
      * @return
      */
     public ListData<Observatory> getList(ObservatorySearch search) {
-        System.out.println(search);
 
         int page = Utils.onlyPositiveNumber(search.getPage(), 1);
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 10);
@@ -117,8 +116,10 @@ public class ObservatoryInfoService {
 
 
         if (StringUtils.hasText(type)) {
-
-            if (!type.equals("ALL")) {
+            if(type.equals("cctv")){
+                andBuilder.and(observatory.cctvUrlH.isNotEmpty());
+                andBuilder.and(observatory.cctvUrlL.isNotEmpty());
+            }else if (!type.equals("ALL")) {
                 andBuilder.and(observatory.type.eq(type));
             }
         }
@@ -137,9 +138,9 @@ public class ObservatoryInfoService {
             } else if (order.equals("flw")) {
                 sort = Sort.by(desc("fw"));
             } else if (order.equals("upstream")) {
-
+                sort = Sort.by(desc("lon"));
             } else if (order.equals("downstream")){
-
+                sort = Sort.by(asc("lon"));
             }
         }
 
@@ -158,7 +159,6 @@ public class ObservatoryInfoService {
 
         List<Observatory> items = data.getContent();
         items.forEach(this::addInfo);
-        System.out.println(items);
 
         return new ListData<>(items, pagination);
     }
