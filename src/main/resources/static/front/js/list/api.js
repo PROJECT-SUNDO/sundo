@@ -1,3 +1,7 @@
+/*사용자가 입력한 날짜 범위, 관측소 코드(obscd), 자료 유형(type), 시간 단위(unit)에 따라
+기상 현상(강수량 또는 수위) 데이터를 조회하고, 이를 테이블 형태로 화면에 출력*/
+
+/*API의 기본 URL(apiUrl)과 인증을 위한 API 키(apiKey)가 설정 객체인 api에 저장됩니다.*/
 const api = {
     apiUrl: "https://api.hrfco.go.kr",
     apiKey: "FD14A031-75BC-4BB4-B271-E68E7470A8BF",
@@ -13,6 +17,7 @@ window.addEventListener("DOMContentLoaded", function() {
     //console.log('클릭');
         e.preventDefault();
 
+        /*제출된 폼에서 데이터를 추출*/
         const formData = new FormData(frmSearch);
         const obscd = formData.get("obscd");
         const type = formData.get("type");
@@ -20,8 +25,11 @@ window.addEventListener("DOMContentLoaded", function() {
         let edate = formData.get("edate");
         const unit = formData.get("timeUnit");
         console.log('formData '+formData);
+
+        /*API 요청 URL 생성*/
         const { apiUrl, apiKey } = api;
         let url = `${apiUrl}/${apiKey}/`;
+        /*자료 유형(type)에 따라 URL의 경로가 결정*/
         switch(type) {
             case "rf" : url += "rainfall"; break;
             case "wl":
@@ -29,6 +37,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 url += "waterlevel"; break;
         }
         url += "/list";
+        /*시간 단위에 따라 URL이 조정*/
         if (unit !== 'MONTH' && unit !== 'YEAR') {
             url += `/${unit}`;
         }  else {
@@ -54,6 +63,8 @@ window.addEventListener("DOMContentLoaded", function() {
             const { content: items } = result;
             if (!items) return;
 
+            /*생성된 URL을 사용하여 API 요청을 수행합니다.
+            응답으로 받은 데이터에서 관측 값들을 추출하고, 이를 정리하여 statData 객체에 저장*/
             const statData = {};
             for (const item of items) {
                 const { ymdhm } = item;
@@ -125,6 +136,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
             console.log(statData);
 
+            /*처리된 데이터(statData)를 기반으로 HTML 테이블을 동적으로 생성하여 화면에 표시합니다. */
             /* statData 출력 */
             const statDataTable = document.getElementById("statDataTable");
             const thead = statDataTable.querySelector("thead");
@@ -180,7 +192,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-
+        /*요청 처리 중 발생할 수 있는 오류를 캐치하고, 콘솔에 오류 메시지를 출력*/
         } catch (err) {
             console.error(err);
         }
