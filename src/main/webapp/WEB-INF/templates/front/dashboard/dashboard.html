@@ -3,8 +3,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
+
     <h1>대시보드</h1>
-    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}" id="searchFrm">
+    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}" id="searchFrm" name="searchFrm">
+
         <div class="flex align-center">
             <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
             <div>검색</div>
@@ -20,42 +22,44 @@
                 <button type="submit" class="btn">검색</button>
             </div>
         </div>
+        <div class="flex radio">
+            <div>
+                <input type="radio" name="select" id="month" value="MONTH" checked>
+                <label for="month">월단위별</label>
+                <input type="radio" name="select" id="year" value="YEAR">
+                <label for="year">연단위별</label>
+            </div>
+
+            <div>
+                <button><i class="fa fa-download" aria-hidden="true"></i><th:block th:text="저장"></th:block></button>
+            </div>
+        </div>
     </form>
 
-    <div class="flex radio">
-        <div>
-            <input type="radio" name="select" id="month" value="month">
-            <label for="month">월단위별</label>
-            <input type="radio" name="select" id="year" value="year">
-            <label for="year">연단위별</label>
-        </div>
-
-        <div>
-            <button><i class="fa fa-download" aria-hidden="true"></i><th:block th:text="저장"></th:block></button>
-        </div>
-    </div>
 
     <div class=" flex">
-        <div class="chart">
-            <canvas id="myChart"></canvas>
-        </div>
+        <div class="chart"></div>
 
         <div class="dashList">
-            <h2 th:text="#{강수량표}"></h2>
+
+            <h2 th:if="*{type == 'rf'}"  th:text="#{강수량표}"></h2>
+            <h2 th:if="*{type == 'wl'}" th:text="#{수위표}"></h2>
+            <h2 th:if="*{type == 'flw'}"  th:text="#{유량표}"></h2>
+
             <div class="divTable minimalistBlack">
                 <div class="divTableHeading">
                     <div class="divTableRow">
-                        <div th:text="#{연번}" class="divTableHead">head1</div>
-                        <div th:text="#{관측소 명}" class="divTableHead">head2</div>
-                        <div th:text="#{관측소 코드}" class="divTableHead">head4</div>
-                        <div th:if="*{type == 'rf'}" th:text="#{강수량}" class="divTableHead">head4</div>
-                        <div th:if="*{type == 'wl'}" th:text="#{수위}" class="divTableHead">head4</div>
-                        <div th:if="*{type == 'flw'}" th:text="#{유량}" class="divTableHead">head4</div>
+                        <div th:text="#{연번}" class="divTableHead"></div>
+                        <div th:text="#{관측소 명}" class="divTableHead"></div>
+                        <div th:text="#{관측소 코드}" class="divTableHead"></div>
+                        <div th:if="*{type == 'rf'}" th:text="#{강수량}" class="divTableHead"></div>
+                        <div th:if="*{type == 'wl'}" th:text="#{수위}" class="divTableHead"></div>
+                        <div th:if="*{type == 'flw'}" th:text="#{유량}" class="divTableHead"></div>
                     </div>
                 </div>
-                <div class="divTableBody observatory"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
+                <div class="divTableBody"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
 
-                    <div class="divTableRow" th:data-obscd="${item.obscd}">
+                    <div class="divTableRow observatory" th:data-obscd="${item.obscd}">
                         <div th:text="${status.count}"  class="divTableCell">cell1_1</div>
 
                         <div class="divTableCell">
