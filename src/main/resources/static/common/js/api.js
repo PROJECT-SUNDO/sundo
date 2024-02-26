@@ -72,7 +72,7 @@ const api = {
                                let hour, min;
                                if (ymdhm.length > 8) {
                                    hour = ymdhm.substring(8, 10);
-                                   min = ymdhm.substring(10);
+                                   min = ymdhm.substring(8);
                                }
 
                                let key = `${year}.${month}.${day}`;
@@ -151,6 +151,7 @@ const api = {
                                 }
                             }
                            resolve(statData);
+                           console.log(statData);
                     })
                     .catch(err => reject(err));
             });
@@ -161,7 +162,7 @@ const api = {
 
   //https://api.hrfco.go.kr/FD14A031-75BC-4BB4-B271-E68E7470A8BF/list/rainfall/10M/10011100/202402240000/202402242359.json
 
-window.addEventListener("DOMContentLoaded", function() {
+/*window.addEventListener("DOMContentLoaded", function() {
     if (typeof frmSearch === 'undefined' || !frmSearch) return;
 
     frmSearch.addEventListener("submit", async function(e) {
@@ -172,8 +173,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
             const type = frmSearch.type.value;
 
-            /*처리된 데이터(statData)를 기반으로 HTML 테이블을 동적으로 생성하여 화면에 표시합니다. */
-            /* statData 출력 */
+            *//*처리된 데이터(statData)를 기반으로 HTML 테이블을 동적으로 생성하여 화면에 표시합니다. *//*
+            *//* statData 출력 *//*
             const statDataTable = document.getElementById("statDataTable");
             const thead = statDataTable.querySelector("thead");
             const tbody = statDataTable.querySelector("tbody");
@@ -228,9 +229,9 @@ window.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-        /*요청 처리 중 발생할 수 있는 오류를 캐치하고, 콘솔에 오류 메시지를 출력*/
+        *//*요청 처리 중 발생할 수 있는 오류를 캐치하고, 콘솔에 오류 메시지를 출력*//*
         } catch (err) {
             console.error(err);
         }
     });
-});
+});*/
