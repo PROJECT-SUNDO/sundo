@@ -100,24 +100,16 @@ public class ObservatoryInfoService {
         String type = search.getType();
 
         if (StringUtils.hasText(obscd)) {
-
             obscd = obscd.trim();
-
             andBuilder.and(observatory.obscd.contains(obscd));
-
         }
 
         if (StringUtils.hasText(obsnm)) {
-
             obsnm = obsnm.trim();
-
             andBuilder.and(observatory.obsnm.contains(obsnm));
-
         }
 
-
         if (StringUtils.hasText(type)) {
-
             if (!type.equals("ALL")) {
                 andBuilder.and(observatory.type.eq(type));
             }
@@ -169,6 +161,7 @@ public class ObservatoryInfoService {
 
         if("rf".equals(type)){
             observatory.setData(observatory.getRf());
+
 
         }else if ("wl".equals(type)){
             observatory.setData(observatory.getWl());
