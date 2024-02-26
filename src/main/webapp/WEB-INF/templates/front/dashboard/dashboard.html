@@ -4,17 +4,18 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
     <h1>대시보드</h1>
-    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}">
+    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}" id="searchFrm">
         <div class="flex align-center">
             <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
             <div>검색</div>
         </div>
         <hr>
         <div class="flex align-center">
+            <input type="hidden" name="type" id="type" th:field="*{type}">
+            <input type="text" class="onlyNum" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
             <label for="obscd">관측소 코드 </label>
-            <input type="number" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx">
-            <label for="obsnm">관측소명</label>
             <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
+            <label for="obsnm">관측소명</label>
             <div class="searchBtn">
                 <button type="submit" class="btn">검색</button>
             </div>
@@ -23,8 +24,10 @@
 
     <div class="flex radio">
         <div>
-            <input type="radio" name="select" value="month">월단위별
-            <input type="radio" name="select" value="year">연단위별
+            <input type="radio" name="select" id="month" value="month">
+            <label for="month">월단위별</label>
+            <input type="radio" name="select" id="year" value="year">
+            <label for="year">연단위별</label>
         </div>
 
         <div>
@@ -34,27 +37,7 @@
 
     <div class=" flex">
         <div class="chart">
-            <div class=" flex">
-
-                <div class="myChart">
-                    <!--차트를 그릴 영역으로 canvas태그를 사용한다.-->
-                    <canvas id="myChart1"></canvas>
-                </div>
-
-                <div class="myChart">
-                    <canvas id="myChart2"></canvas>
-                </div>
-            </div>
-            <div class=" flex">
-
-            <div class="myChart">
-                <canvas id="myChart3"></canvas>
-            </div>
-
-            <div class="myChart">
-                <canvas id="myChart4"></canvas>
-            </div>
-            </div>
+            <canvas id="myChart"></canvas>
         </div>
 
         <div class="dashList">
@@ -67,7 +50,7 @@
                         <div th:text="#{강수량}" class="divTableHead">head4</div>
                     </div>
                 </div>
-                <div class="divTableBody"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
+                <div class="divTableBody observatory"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
 
                     <div class="divTableRow" th:data-obscd="${item.obscd}">
                         <div th:text="${status.count}"  class="divTableCell">cell1_1</div>
@@ -86,7 +69,7 @@
                             <span th:text="${item.data} + '  '"></span><span class="unit" th:classappend="${item.type == 'rf'? 'rf' : ''}
                           +${item.type == 'wl'? 'wl': ''}
                           +${item.type == 'flw'? 'fw': ''}"></span>
-                            <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
+                            <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" class="obscd">
                         </div>
                     </div>
                     <th:block th:unless="*{items != null && !items.isEmpty()}" th:text="#{데이터_없음}"></th:block>
