@@ -59,11 +59,10 @@ public class MapController {
 	@GetMapping("/popup/{type}")
 	public String popup(@PathVariable("type") String type,
 						@RequestParam("obscd") String obscd,
-						@RequestParam("item") String itemJson,
 						Model model) {
 
-		RequestObservatory requestObservation = observatoryInfoService.getRequest(obscd, type);
-		model.addAttribute("requestObservation", requestObservation);
+		Observatory observatory = observatoryInfoService.get(obscd);
+		model.addAttribute("observatory", observatory);
 
 		commonProcess("info", model);
 		return "front/map/popup/" + type;

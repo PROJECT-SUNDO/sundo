@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/popup}">
 <main layout:fragment="content">
-    <section th:object="${requestObservation}">
+    <section th:object="${observatory}">
         111
         <h2 class="text-center" th:text="*{obsnm}"></h2>
         <div class="h-line"></div>
@@ -14,7 +14,7 @@
             </div>
             <div class="divTableRow">
                 <div class="divTableCell" th:text="#{현재강수량}"></div>
-                <div class="divTableCell" th:text="*{currentOb}"></div>
+                <div class="divTableCell" th:text="*{rf}"></div>
             </div>
             <div class="divTableRow">
                 <div class="divTableCell" th:text="#{누적강수량}"></div>
