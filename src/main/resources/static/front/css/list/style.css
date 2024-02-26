@@ -25,5 +25,21 @@
     justify-content: space-between;
 }
 
+.submitBtn button{
+    width: 40px;
+    height: 20px;
+    border: 2px solid;
+    background-color: var(--font-color);
+}
 
+.submitBtn a{
+    width: 40px;
+    height: 20px;
+    border: 2px solid;
+    background-color: var(--font-color);
+}
 
+h1 {
+    font-size: 25px;
+    font-weight : bold;
+}
