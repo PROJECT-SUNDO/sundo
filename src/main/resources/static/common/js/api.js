@@ -63,7 +63,7 @@ const api = {
 
                            /*생성된 URL을 사용하여 API 요청을 수행합니다.
                            응답으로 받은 데이터에서 관측 값들을 추출하고, 이를 정리하여 statData 객체에 저장*/
-                           const statData = {};
+                           const statData = {}, countData = {};
                            for (const item of items) {
                                const { ymdhm } = item;
                                const year = ymdhm.substring(0, 4);
@@ -80,12 +80,20 @@ const api = {
                                switch (unit) {
                                    case "1D": key = `${year}.${month}`; break;
                                    case "MONTH": key = `${year}`;
+
+                                        break;
                                    case "YEAR": break;
                                }
 
                                if (unit !== 'YEAR') {
                                    statData[key] = statData[key] || {};
                                }
+                               if(unit == 'YEAR'){
+                                    const cKey = `${type}_${year}_${month}`;
+                                    countData[cKey] = countData[cKey] || 0;
+                                    countData[cKey]++;
+                               }
+
                                if (type === 'rf') {
                                    switch (unit) {
                                        case "10M" : statData[key]['rf_' + min] = item.rf; break;
@@ -131,7 +139,17 @@ const api = {
                                }
 
                            } // endfor
+                            /* 수위, 유량은 평균치로 변환 */
+                            if((type === 'wl' || type === 'fw') && (unit === 'MONTH' || unit === 'YEAR')){
+                                for(const [key, items] of Object.entries(statData)){
+                                    for(const [k, v] of Object.entries(items)){
+                                        if(!v || !countData[k]) continue;
 
+                                        statData[key][k] = v/countData[k];
+                                        console.log(statData[key][k]);
+                                    }
+                                }
+                            }
                            resolve(statData);
                     })
                     .catch(err => reject(err));
