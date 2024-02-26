@@ -1,4 +1,4 @@
-.myChart {
+.chart {
     width: 40vw;
     height: 40vh;
 }
@@ -20,4 +20,17 @@
 
 .observatory{
     cursor: pointer;
+}
+
+/* 테이블 스타일 */
+.minimalistBlack {
+    border: none;
+    width: 20vw;
+    text-align: center;
+}
+.divTable.minimalistBlack .divTableHeading, .divTable.minimalistBlack .divTableHead, .divTable.minimalistBlack .divTableCell {
+    border: none;
+}
+
+.dashList {
 }

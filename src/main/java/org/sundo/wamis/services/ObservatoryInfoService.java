@@ -109,7 +109,10 @@ public class ObservatoryInfoService {
         }
 
         if (StringUtils.hasText(type)) {
-            if (!type.equals("ALL")) {
+            if(type.equals("cctv")){
+                andBuilder.and(observatory.cctvUrlH.isNotEmpty());
+                andBuilder.and(observatory.cctvUrlL.isNotEmpty());
+            }else if (!type.equals("ALL")) {
                 andBuilder.and(observatory.type.eq(type));
             }
         }
@@ -128,9 +131,9 @@ public class ObservatoryInfoService {
             } else if (order.equals("flw")) {
                 sort = Sort.by(desc("fw"));
             } else if (order.equals("upstream")) {
-
+                sort = Sort.by(desc("lon"));
             } else if (order.equals("downstream")){
-
+                sort = Sort.by(asc("lon"));
             }
         }
 
@@ -159,7 +162,6 @@ public class ObservatoryInfoService {
 
         if("rf".equals(type)){
             observatory.setData(observatory.getRf());
-
 
         }else if ("wl".equals(type)){
             observatory.setData(observatory.getWl());
