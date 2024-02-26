@@ -254,3 +254,11 @@ h2{
     color: #0000ff;
 }
 
+
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
+
+    @page { margin: 0; }
+}
