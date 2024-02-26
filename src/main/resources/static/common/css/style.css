@@ -153,6 +153,10 @@ h2{
     margin-bottom: 10px;
 }
 
+.mgn-10px {
+    margin: 10px;
+}
+
 /* 테이블 S */
 .minimalistBlack {
   border: 3px solid #000000;
