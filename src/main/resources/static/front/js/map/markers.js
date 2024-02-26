@@ -11,7 +11,8 @@ function addMarker(items){
             normal: 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소 기본: 빨강
             outlier: 'https://ifh.cc/g/zv2YT2.png'  // 강수량관측소 이상치 값 넘겼을떄
         },
-        'flw': 'https://ifh.cc/g/onQwV8.png'   // 유량 관측소: 노랑
+        'flw': 'https://ifh.cc/g/onQwV8.png',   // 유량 관측소: 노랑
+        'cctv' : 'https://ifh.cc/g/tk6pwR.png'   // cctv
     }
     // 마커 값 설정
     for(const item of items) {
@@ -80,7 +81,7 @@ function addMarker(items){
         });
 
         // 마커 레이어 생성
-            const markerLayer = new ol.layer.Vector({
+        const markerLayer = new ol.layer.Vector({
             source: markerSource, //마커 feacture들
             style: markerStyle //마커 스타일
         });
@@ -112,14 +113,17 @@ function addMarker(items){
 
                 let endpoint;
                 switch(item.type) {
-                    case 'rf':
+                    case 'rf':  // 강수량
                         endpoint = '/map/popup/rf';
                         break;
-                    case 'wl':
+                    case 'wl':  // 수위
                         endpoint = '/map/popup/wl';
                         break;
-                    case 'flw':
+                    case 'flw':  // 유량
                         endpoint = '/map/popup/flw';
+                        break;
+                    case 'cctv':  // cctv
+                        endpoint = '/map/popup/cctv';
                         break;
                     default:
                         console.error('Unknown marker type:', item.type);
@@ -129,7 +133,7 @@ function addMarker(items){
                 const url = `${endpoint}?obscd=${obscd}&item=${encodeURIComponent(JSON.stringify(item))}`;  // 타입에 맞게 url결정
 
                 // 팝업을 띄우는 코드
-                popup.open(url, 370, 260);
+                popup.open(url, 430, 260);
             });
         });
     }
