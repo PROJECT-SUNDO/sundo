@@ -62,6 +62,8 @@ public class MapController {
 						Model model) {
 
 		Observatory observatory = observatoryInfoService.get(obscd);
+
+
 		model.addAttribute("observatory", observatory);
 
 		commonProcess("info", model);
