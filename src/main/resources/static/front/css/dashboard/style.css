@@ -18,6 +18,10 @@
     border-bottom: 2px solid #fff;
 }
 
+.observatory{
+    cursor: pointer;
+}
+
 /* 테이블 스타일 */
 .minimalistBlack {
     border: none;
