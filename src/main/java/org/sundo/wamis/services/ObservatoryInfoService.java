@@ -98,22 +98,18 @@ public class ObservatoryInfoService {
         String obsnm = search.getObsnm();
         String type = search.getType();
 
+
+
+
         if (StringUtils.hasText(obscd)) {
-
             obscd = obscd.trim();
-
             andBuilder.and(observatory.obscd.contains(obscd));
-
         }
 
         if (StringUtils.hasText(obsnm)) {
-
             obsnm = obsnm.trim();
-
             andBuilder.and(observatory.obsnm.contains(obsnm));
-
         }
-
 
         if (StringUtils.hasText(type)) {
             if(type.equals("cctv")){
@@ -121,6 +117,11 @@ public class ObservatoryInfoService {
                 andBuilder.and(observatory.cctvUrlL.isNotEmpty());
             }else if (!type.equals("ALL")) {
                 andBuilder.and(observatory.type.eq(type));
+                if(type.equals("flw")){
+                    andBuilder.and(observatory.clsyn.isNull());
+                }else{
+                    andBuilder.and(observatory.clsyn.eq("운영"));
+                }
             }
         }
 
