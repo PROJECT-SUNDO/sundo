@@ -142,21 +142,22 @@ window.addEventListener("DOMContentLoaded", function() {
               data: [8, 27, 3, 5, 10, 3],
               // dataset의 배경색(rgba값을 String으로 표현)
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+
               ],
               // dataset의 선 색(rgba값을 String으로 표현)
               borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
               ],
               // dataset의 선 두께(Number)
               borderWidth: 1
@@ -190,8 +191,8 @@ window.addEventListener("DOMContentLoaded", function() {
           },
           {
               label: '라인차트테스트',
-              data: [65, 59, 80, 81, 56, 55, 40],
-              borderColor: 'rgba(75, 192, 192, 1)',
+              data: [56, 55, 40, 65, 59, 80, 81],
+              borderColor: 'rgba(153, 102, 255, 1)',
               borderWidth: 1,
               fill: false
             }]
