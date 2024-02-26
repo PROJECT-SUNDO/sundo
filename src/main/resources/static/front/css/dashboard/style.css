@@ -17,3 +17,16 @@
 .dashboardBtns button.on, .dashboardBtns button:hover{
     border-bottom: 2px solid #fff;
 }
+
+/* 테이블 스타일 */
+.minimalistBlack {
+    border: none;
+    width: 20vw;
+    text-align: center;
+}
+.divTable.minimalistBlack .divTableHeading, .divTable.minimalistBlack .divTableHead, .divTable.minimalistBlack .divTableCell {
+    border: none;
+}
+
+.dashList {
+}
