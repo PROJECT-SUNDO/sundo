@@ -120,12 +120,11 @@ window.addEventListener("DOMContentLoaded", function() {
 
                     }
                 }
-
             } // endfor
 
             console.log(statData);
 
-            /* statData 출력 */
+            /* list info 데이터 S */
             const statTable = document.querySelector(".divTable");
             const thead = statTable.querySelector(".divTableHeading");
             const tbody = statTable.querySelector(".divTableBody");
@@ -275,6 +274,7 @@ window.addEventListener("DOMContentLoaded", function() {
                                     // 데이터
                                     const dataCell = document.createElement("div");
                                     dataCell.classList.add("divTableCell");
+                                    /* 대시보드 - 월 : rowData[dateKey] */
                                     dataCell.textContent = rowData[dateKey];
                                     console.log('rowData[dateKey]' + rowData[dateKey]);
                                     row.appendChild(dataCell);
@@ -285,6 +285,7 @@ window.addEventListener("DOMContentLoaded", function() {
                         }
                     }
                 }
+                url += getCurrentDate();
             } else if(unit === 'MONTH') {
                 thead.innerHTML = "";
                 const typeHeader = document.createElement("div");
@@ -301,15 +302,16 @@ window.addEventListener("DOMContentLoaded", function() {
 
                 // tbody
                 tbody.innerHTML = "";
+                let sum, avg = 0;
                 for (const key in statData) {
                     if (statData.hasOwnProperty(key)) {
                         const rowData = statData[key];
                         for (const dateKey in rowData) {
                             if (rowData.hasOwnProperty(dateKey)) {
                                 if (dateKey.includes(type)) {
-                                    // ex) wl_2350 -> 2350
                                     const yearText = dateKey.substring(3, 7);
                                     const monthText = dateKey.substring(8);
+                                    // ex) 2024-02
                                     const var_substring = `${yearText}-${monthText}`;
 
                                     const row = document.createElement("div");
@@ -322,11 +324,21 @@ window.addEventListener("DOMContentLoaded", function() {
                                     // 데이터
                                     const dataCell = document.createElement("div");
                                     dataCell.classList.add("divTableCell");
+
                                     // wl, fw는 평균 구하기
                                     if(type === 'wl' || type === 'fw') {
                                         const daysInMonth = getDaysInMonth(parseInt(yearText), parseInt(monthText));
-                                        rowData[dateKey] /= daysInMonth;
+
+                                        /* 대시?
+                                        sum += rowData[dateKey];
+                                        console.log('sum ' + sum);
+                                        dataCell.textContent = rowData[dateKey];
+                                        */
+
+                                        rowData[dateKey] /= daysInMonth; // 데이터
                                         dataCell.textContent = rowData[dateKey].toFixed(2); // 두 자리까지 반올림
+                                    } else {
+                                        dataCell.textContent = rowData[dateKey]
                                     }
                                     row.appendChild(dataCell);
 
@@ -335,6 +347,9 @@ window.addEventListener("DOMContentLoaded", function() {
                             }
                         }
                     }
+                    /* 대시?
+                    avg = (sum / 30).toFixed(2); // 두 자리까지 반올림
+                    */
                 }
             } else if(unit === 'YEAR') {
                 thead.innerHTML = "";
@@ -385,14 +400,39 @@ window.addEventListener("DOMContentLoaded", function() {
                     }
                 }
             }
-
-
+            /* list info 데이터 E */
 
         } catch (err) {
             console.error(err);
         }
     });
 
+    /* 대시보드 - 월 */
+    // 현재 년월일
+    function getCurrentDate() {
+        // 현재
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요, 두 자리로 표시하기 위해 0을 채움
+        const day = String(currentDate.getDate()).padStart(2, '0'); // 두 자리로 표시하기 위해 0을 채움
+        return `${year}${month}${day}`;
+    }
+
+    function get30DaysAgo() {
+        const currentDate = new Date();
+        const thirtyDaysAgo = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000); // 현재 날짜로부터 30일 전의 날짜를 계산
+
+        const year = thirtyDaysAgo.getFullYear();
+        const month = String(thirtyDaysAgo.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요, 두 자리로 표시하기 위해 0을 채움
+        const day = String(thirtyDaysAgo.getDate()).padStart(2, '0'); // 두 자리로 표시하기 위해 0을 채움
+
+        return `${year}${month}${day}`;
+    }
+
+    function get30DateTime(){
+            const url = getCurrentDate() + '/' + get30DaysAgo();
+        return url_30;
+    }
 
     // 현재 월이 아니면 해당 월의 전체 날짜 출력, 현재 월이면 오늘까지 날짜 출력
     function getDaysInMonth(year, month) {
@@ -410,7 +450,6 @@ window.addEventListener("DOMContentLoaded", function() {
         } else {
             daysUntilToday = daysInTargetMonth;
         }
-
         return daysUntilToday;
     }
 
