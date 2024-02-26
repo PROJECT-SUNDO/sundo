@@ -65,7 +65,9 @@ public class DashboardController implements ExceptionProcessor {
         }
 
         addScript.add("dashboard/dashboard");
+        addCommonScript.add("api");
         addCss.add("dashboard/style");
+
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("addScript", addScript);
         model.addAttribute("addCommonScript", addCommonScript);
