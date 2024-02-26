@@ -99,7 +99,7 @@ function addMarker(items){
 
 
         // 마커를 클릭하면 실행되는 함수
-        mapLib.map.on('click', function(event) {
+        mapLib.map.addEventListener('click', function(event) {
             mapLib.map.forEachFeatureAtPixel(event.pixel, function(feature) {
                 const { popup } = commonLib;
                 const obscd = feature.get('name');   // 클릭된 마커의 name: obscd
@@ -112,7 +112,8 @@ function addMarker(items){
                 }
 
                 let endpoint;
-                switch(item.type) {
+                const type = frmSide.location.pathname.split("/").pop();
+                switch(type) {
                     case 'rf':  // 강수량
                         endpoint = '/map/popup/rf';
                         break;

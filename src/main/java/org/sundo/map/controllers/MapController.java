@@ -14,7 +14,9 @@ import org.sundo.commons.ListData;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.list.controllers.RequestObservatory;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.repositories.ObservatoryRepository;
 import org.sundo.wamis.services.ObservatoryInfoService;
+import org.sundo.wamis.services.ObservatoryNotFoundException;
 
 
 @Controller
@@ -24,6 +26,7 @@ public class MapController {
 
 	private final ObservatoryInfoService observatoryInfoService;
 	private final ObjectMapper om;
+	private final ObservatoryRepository observatoryRepository;
 	
 	@GetMapping
 	public String map(@ModelAttribute RequestObservatory form,
@@ -61,7 +64,7 @@ public class MapController {
 						@RequestParam("obscd") String obscd,
 						Model model) {
 
-		Observatory observatory = observatoryInfoService.get(obscd);
+		Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
 
 		model.addAttribute("observatory", observatory);
 
