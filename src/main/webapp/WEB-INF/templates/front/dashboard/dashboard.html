@@ -3,8 +3,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
+
     <h1>대시보드</h1>
     <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}" id="searchFrm" name="searchFrm">
+
         <div class="flex align-center">
             <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
             <div>검색</div>
@@ -41,6 +43,11 @@
         </div>
 
         <div class="dashList">
+
+            <h2 th:if="*{type == 'rf'}"  th:text="#{강수량표}"></h2>
+            <h2 th:if="*{type == 'wl'}" th:text="#{수위표}"></h2>
+            <h2 th:if="*{type == 'flw'}"  th:text="#{유량표}"></h2>
+
             <div class="divTable minimalistBlack">
                 <div class="divTableHeading">
                     <div class="divTableRow">

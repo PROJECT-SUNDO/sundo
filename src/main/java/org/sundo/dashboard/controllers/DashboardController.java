@@ -58,6 +58,7 @@ public class DashboardController implements ExceptionProcessor {
             addScript.add("dashboard/rf");
         }else if(mode.equals("wl")){
             pageTitle = "수위 대시보드";
+            addScript.add("dashboard/wl");
         }else if(mode.equals("flw")){
             pageTitle = "유량 대시보드";
             addScript.add("dashboard/flw");
