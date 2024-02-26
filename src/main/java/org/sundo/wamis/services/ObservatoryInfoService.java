@@ -167,14 +167,18 @@ public class ObservatoryInfoService {
 
     private void addInfo(Observatory observatory){
         String type = observatory.getType();
+        double data = 0;
 
         if("rf".equals(type)){
-            observatory.setData(observatory.getRf());
+            data = observatory.getRf();
+            observatory.setData(data);
 
         }else if ("wl".equals(type)){
-            observatory.setData(observatory.getWl());
+            data = observatory.getWl();
+            observatory.setData(data);
         }else if("flw".equals(type)){
-            observatory.setData(observatory.getFw());
+            data = observatory.getFw();
+            observatory.setData(data);
         }
 
     }

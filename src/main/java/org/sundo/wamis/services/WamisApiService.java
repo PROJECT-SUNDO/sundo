@@ -350,7 +350,7 @@ public class WamisApiService {
             Pattern pattern2 = Pattern.compile("\"fw\"\\s*:\\s*\"?([^,\"]+)\"?,");
             Matcher matcher2 = pattern2.matcher(data);
             if (matcher2.find()) {
-                String fw = matcher1.group(1);
+                String fw = matcher2.group(1);
                 if (StringUtils.hasText(fw)) {
                     oitem.setFw(Double.parseDouble(fw));
                 }

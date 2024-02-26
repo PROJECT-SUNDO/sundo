@@ -3,24 +3,27 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
-    <h1>관측소 정보 수정</h1>
-    <div class="submitBtn">
-        <a th:href="@{/list}"  class="btn" >목록</a>
-    </div>
-    <hr>
-    <div class="flex align-center">
-        <form name="frmJoin" method="post" th:action="@{/list/save}" autocomplete="off" th:object="${requestObservatory}">
-            <input type="hidden" name="mode" value="update">
-            <input type="hidden" name="obscd" th:field="*{obscd}">
-            <input type="hidden" name="type" th:field="*{type}">
-            <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+    <div class="observatory_box">
+        <h1>관측소 정보 수정</h1>
+        <div class="listbtn">
+            <a th:href="@{/list}"  class="btn" ><i class="xi-list"></i>목록</a>
+        </div>
+        <br>
+        <hr>
+        <div class="flex align-center">
+            <form name="frmJoin" method="post" th:action="@{/list/save}" autocomplete="off" th:object="${requestObservatory}">
+                <input type="hidden" name="mode" value="update">
+                <input type="hidden" name="obscd" th:field="*{obscd}">
+                <input type="hidden" name="type" th:field="*{type}">
+                <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
 
-            <th:block th:replace="~{front/list/_form::form}"></th:block>
+                <th:block th:replace="~{front/list/_form::form}"></th:block>
 
-            <div class="submitBtn">
-                <button type="submit" th:text="#{수정}"></button>
-            </div>
-        </form>
+                <div class="submitBtn">
+                    <button type="submit" th:text="#{수정}"></button>
+                </div>
+            </form>
+        </div>
     </div>
 </main>
 </html>
