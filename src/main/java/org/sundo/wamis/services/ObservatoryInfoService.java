@@ -85,7 +85,6 @@ public class ObservatoryInfoService {
      * @return
      */
     public ListData<Observatory> getList(ObservatorySearch search) {
-        System.out.println(search);
 
         int page = Utils.onlyPositiveNumber(search.getPage(), 1);
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 10);
@@ -150,7 +149,6 @@ public class ObservatoryInfoService {
 
         List<Observatory> items = data.getContent();
         items.forEach(this::addInfo);
-        System.out.println(items);
 
         return new ListData<>(items, pagination);
     }
