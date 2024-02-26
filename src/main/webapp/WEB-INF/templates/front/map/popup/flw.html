@@ -6,18 +6,18 @@
     <section th:object="${observatory}">
         <h2 class="text-center" th:text="*{obsnm}"></h2>
         <div class="h-line"></div>
-        <div class="divTable">
-            <div class="divTableRow">
-                <div class="divTableCell" th:text="#{코드}"></div>
-                <div class="divTableCell" th:text="*{obscd}"></div>
+        <div class="divTable minimalistBlackPopup mgn-10px">
+            <div class="divTableRowPopup">
+                <div class="divTableCellPopup box-bgc" th:text="#{코드}"></div>
+                <div class="divTableCellPopup" th:text="*{obscd}"></div>
             </div>
-            <div class="divTableRow">
-                <div class="divTableCell" th:text="#{유량값}"></div>
-                <div class="divTableCell" th:text="*{fw}"></div>
+            <div class="divTableRowPopup">
+                <div class="divTableCellPopup box-bgc" th:text="#{유량값}"></div>
+                <div class="divTableCellPopup" th:text="*{fw}"></div>
             </div>
-            <div class="divTableRow">
-                <div class="divTableCell" th:text="#{위치}"></div>
-                <div class="divTableCell" th:text="*{addr + ' ' + etcaddr}"></div>
+            <div class="divTableRowPopup">
+                <div class="divTableCellPopup box-bgc" th:text="#{위치}"></div>
+                <div class="divTableCellPopup" th:text="*{addr + ' ' + etcaddr}"></div>
             </div>
         </div>
     </section>
