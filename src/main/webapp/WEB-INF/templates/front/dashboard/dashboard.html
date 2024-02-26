@@ -38,9 +38,7 @@
 
 
     <div class=" flex">
-        <div class="chart">
-            <canvas id="myChart"></canvas>
-        </div>
+        <div class="chart"></div>
 
         <div class="dashList">
 
@@ -59,9 +57,9 @@
                         <div th:if="*{type == 'flw'}" th:text="#{유량}" class="divTableHead"></div>
                     </div>
                 </div>
-                <div class="divTableBody observatory"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
+                <div class="divTableBody"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
 
-                    <div class="divTableRow" th:data-obscd="${item.obscd}">
+                    <div class="divTableRow observatory" th:data-obscd="${item.obscd}">
                         <div th:text="${status.count}"  class="divTableCell">cell1_1</div>
 
                         <div class="divTableCell">
