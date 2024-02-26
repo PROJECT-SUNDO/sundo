@@ -33,7 +33,10 @@
             <div>
                 <input type="text" class="inputNum" name="rf" th:if="*{type == 'rf'}" th:field="*{rf}">
                 <input type="text" class="inputNum" name="wl" th:if="*{type == 'wl'}" th:field="*{wl}">
-                <input type="text" class="inputNum" name="flw" th:if="*{type == 'flw'}" th:field="*{flw}">
+                <input type="text" class="inputNum" name="flw" th:if="*{type == 'flw'}" th:field="*{fw}">
+                <span class="unit" th:classappend="${requestObservation.type == 'rf'? 'rf' : ''}
+                          +${requestObservation.type == 'wl'? 'wl': ''}
+                          +${requestObservation.type == 'flw'? 'fw': ''}"></span>
             </div>
         </div>
         <button type="submit" class="saveBtn">

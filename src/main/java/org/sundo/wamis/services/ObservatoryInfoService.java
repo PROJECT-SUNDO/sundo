@@ -55,14 +55,24 @@ public class ObservatoryInfoService {
             obsnm = obs.getObsnm();
             clsyn = "운영".equals(obs.getClsyn());
         }
+        double outlier = obs.getOutlier();
+
+        if("wl".equals(type)){
+            try{
+                outlier = Double.parseDouble(obs.getWrnwl().toString());
+            }catch (Exception e){
+                outlier = 0;
+            }
+        }
 
         RequestObservatory form = RequestObservatory.builder()
+                .mode("update")
                 .obscd(obscd)
                 .obsnm(obsnm)
                 .clsyn(clsyn)
                 .type(type)
                 .useOutlier(obs.isUseOutlier())
-                .outlier(obs.getOutlier())
+                .outlier(outlier)
                 .build();
 
         return form;
@@ -126,6 +136,10 @@ public class ObservatoryInfoService {
                 sort = Sort.by(desc("wl"));
             } else if (order.equals("flw")) {
                 sort = Sort.by(desc("fw"));
+            } else if (order.equals("upstream")) {
+
+            } else if (order.equals("downstream")){
+
             }
         }
 
