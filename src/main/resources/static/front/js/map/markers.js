@@ -42,6 +42,7 @@ function addMarker(items){
 
             properties : {
                 name: "markers",
+                item: item, // 관측소의 모든 정보를 저장
             },
             name: obscd
         });
@@ -101,11 +102,18 @@ function addMarker(items){
             mapLib.map.forEachFeatureAtPixel(event.pixel, function(feature) {
                 const { popup } = commonLib;
                 const obscd = feature.get('name');   // 클릭된 마커의 name: obscd
+                const item = feature.get('properties').item;    // 클릭된 마커의 item: item
+
+                // item이 undefined인지 확인
+                if (!item) {
+                    console.error('Item is undefined:', feature);
+                    return;
+                }
 
                 let endpoint;
-                switch(obscd) {
+                switch(item.type) {
                     case 'rf':
-                        endpoint = '/map/popup/rf';
+                        endpoint = '//map/popup/rf';
                         break;
                     case 'wl':
                         endpoint = '/map/popup/wl';
@@ -114,11 +122,11 @@ function addMarker(items){
                         endpoint = '/map/popup/flw';
                         break;
                     default:
-                        console.error('Unknown marker type:', obscd);
+                        console.error('Unknown marker type:', item.type);
                         return;
                 }
 
-                const url = `${endpoint}?obscd=${obscd}`;  // 타입에 맞게 url결정
+                const url = `${endpoint}?obscd=${obscd}&item=${encodeURIComponent(JSON.stringify(item))}`;  // 타입에 맞게 url결정
 
                 // 팝업을 띄우는 코드
                 popup.open(url, 450, 450);
