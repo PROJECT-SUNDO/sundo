@@ -29,8 +29,8 @@ main {
 .minimalistBlack {
     border: none;
     border-top: 1px solid;
-    width: 20vw;
     text-align: center;
+    width: 15vw;
 }
 .divTable.minimalistBlack .divTableHeading, .divTable.minimalistBlack .divTableHead, .divTable.minimalistBlack .divTableCell {
     border: none;
@@ -43,4 +43,8 @@ main {
     border: 1px solid;
     border-radius: 5%;
     padding: 10px;
+}
+
+.divTableCell {
+    border-bottom: 1px solid;
 }
