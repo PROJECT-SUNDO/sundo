@@ -47,7 +47,9 @@
                         <div th:text="#{연번}" class="divTableHead">head1</div>
                         <div th:text="#{관측소 명}" class="divTableHead">head2</div>
                         <div th:text="#{관측소 코드}" class="divTableHead">head4</div>
-                        <div th:text="#{강수량}" class="divTableHead">head4</div>
+                        <div th:if="*{type == 'rf'}" th:text="#{강수량}" class="divTableHead">head4</div>
+                        <div th:if="*{type == 'wl'}" th:text="#{수위}" class="divTableHead">head4</div>
+                        <div th:if="*{type == 'flw'}" th:text="#{유량}" class="divTableHead">head4</div>
                     </div>
                 </div>
                 <div class="divTableBody observatory"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
