@@ -40,7 +40,7 @@ public class DashboardController implements ExceptionProcessor {
         model.addAttribute("items", items);
         model.addAttribute("pagination", data.getPagination());
 
-        return "front/dashboard/" + type;
+        return "front/dashboard/dashboard";
     }
 
 
