@@ -10,11 +10,18 @@ window.addEventListener("DOMContentLoaded", function(){
     for(const tabBtn of tabBtns){
         tabBtn.addEventListener("click", function(){
 
+            // 모든 버튼에서 'on' 클래스 제거
+            tabBtns.forEach((btn) => {
+                btn.classList.remove('on');
+            });
+
+            // 현재 클릭된 버튼에 'on' 클래스 추가
+            this.classList.add('on');
+
             if(aside.classList.contains("dn")){
                 aside.classList.remove("dn");
                 angleEl.className="xi-angle-left-thin";
             }
-
 
         });
     }
@@ -32,8 +39,6 @@ window.addEventListener("DOMContentLoaded", function(){
         }
 
     })
-
-
 
     /* 꺽쇠 버튼 클릭 - 관측소 목록 토글 E */
 
