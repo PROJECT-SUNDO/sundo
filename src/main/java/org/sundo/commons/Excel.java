@@ -26,7 +26,6 @@ public class Excel {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet();
 
-
         for (int i = 0; i < rows.size(); i++) {
             Row row = sheet.createRow(i); // 엑셀 행 생성
             Object[] items = rows.get(i);
