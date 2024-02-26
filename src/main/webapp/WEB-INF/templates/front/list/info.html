@@ -44,6 +44,7 @@
                     ~
                     <input type="date" name="edate" th:field="*{edate}">
 
+
                     <select name="timeUnit" id="timeUnit" th:field="*{timeUnit}">
                         <option value="10M" th:text="#{10분}"></option>
                         <option value="1H" th:text="#{1시간}"></option>
@@ -57,12 +58,11 @@
         </div>
 
         <div class="divTable minimalistBlack">
-            <table id="statDataTable">
-                <thead>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div class="divTableHeading">
+            </div>
+            <div class="divTableBody">
+
+            </div>
         </div>
 
         <th:block th:replace="~{common/_pagination::pagination}"></th:block>
