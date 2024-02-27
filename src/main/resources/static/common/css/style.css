@@ -234,6 +234,7 @@ h2{
     display: grid;
     justify-content: center;
     align-items: center;
+    margin: 0 20px;
 }
 
 .searchIcon i {
@@ -252,4 +253,32 @@ h2{
     height: 20px;
     border: 2px solid;
     background-color: var(--font-color);
+}
+
+/* 검색 창 */
+.search{
+    clear: both;
+    border: 1px solid #222;
+    border-radius: 5px;
+    padding: 15px;
+}
+.searchTxt{
+    border-bottom: 1px solid #222;
+    padding-bottom: 10px;
+}
+.obsForm{
+    padding-top: 10px;
+}
+.obsForm span{
+    padding: 0 10px;
+}
+.obsForm input{
+    padding: 0 5px;
+}
+.searchBtn{
+    background: var(--main-color);
+    color: #fff;
+    padding: 5px 10px;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
 }
