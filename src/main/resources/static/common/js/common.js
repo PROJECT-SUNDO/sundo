@@ -46,6 +46,80 @@ commonLib.ajaxLoad = function(method, url, params, responseType) {
         };
     });
 };
+/**
+* 엑셀 다운로드
+* @param fileName 엑셀파일명 (ex. excel.xls)
+* @param sheetName 시트명
+* @param headers 시트내용(html - table)
+*/
+commonLib.excelDown = function(fileName, sheetName, headers, rows) {
+
+    let excelData = "<table border='1'>";
+    if (headers) {
+        excelData += "<thead><tr>";
+        for (const item of headers) {
+            excelData += `<th>${item}</th>`;
+        }
+        excelData += "</tr></thead>"
+    }
+
+    if (rows && rows.length > 0) {
+        excelData += "<tbody>";
+        for (const row of rows) {
+            excelData += "<tr>";
+            for (const item of row) {
+                excelData += `<td>${item}</td>`;
+            }
+            excelData += "</tr>";
+        }
+        excelData += "</tbody>";
+    }
+    excelData += "</table>";
+    let html = '';
+    html += '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+    html += '    <head>';
+    html += '        <meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';
+    html += '        <xml>';
+    html += '            <x:ExcelWorkbook>';
+    html += '                <x:ExcelWorksheets>';
+    html += '                    <x:ExcelWorksheet>'
+    html += '                        <x:Name>' + sheetName + '</x:Name>';   // 시트이름
+    html += '                        <x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions>';
+    html += '                    </x:ExcelWorksheet>';
+    html += '                </x:ExcelWorksheets>';
+    html += '            </x:ExcelWorkbook>';
+    html += '        </xml>';
+    html += '    </head>';
+    html += '    <body>';
+
+    // ----------------- 시트 내용 부분 -----------------
+    html += excelData;
+    // ----------------- //시트 내용 부분 -----------------
+
+    html += '    </body>';
+    html += '</html>';
+
+    // 데이터 타입
+    const data_type = 'data:application/vnd.ms-excel';
+    const ua = window.navigator.userAgent;
+    const blob = new Blob([html], {type: "application/csv;charset=utf-8;"});
+
+    if ((ua.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) && window.navigator.msSaveBlob) {
+        // ie이고 msSaveBlob 기능을 지원하는 경우
+        navigator.msSaveBlob(blob, fileName);
+    } else {
+        // ie가 아닌 경우 (바로 다운이 되지 않기 때문에 클릭 버튼을 만들어 클릭을 임의로 수행하도록 처리)
+        const anchor = window.document.createElement('a');
+        anchor.href = window.URL.createObjectURL(blob);
+        anchor.download = fileName;
+        document.body.appendChild(anchor);
+        anchor.click();
+
+        // 클릭(다운) 후 요소 제거
+        document.body.removeChild(anchor);
+    }
+}
+
 
 /*
 * 숫자만 입력가능하도록
