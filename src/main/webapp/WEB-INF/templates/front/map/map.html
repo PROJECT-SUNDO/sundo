@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{front/layouts/main}">
+<th:block layout:fragment="addScript">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</th:block>
 <main layout:fragment="content">
 	<div class="flex content">
-		<div class="side flex">
+		<div class="side flex no-print">
 			<section class="asideBtns">
 				<a th:href="@{/map/search/wl}" target="frmSide">
 					<button class="font-15px" type="button">
@@ -32,7 +35,7 @@
 				</a>
 			</section>
 
-			<section class="flex align-center aside-area">
+			<section class="flex align-center aside-area no-print">
 				<div class="aside dn">
 					<iframe name="frmSide" th:src="@{/map/search/wl}" class="aside_content"></iframe>
 				</div>
@@ -45,7 +48,7 @@
 			</section>
 		</div>
 		<section class="map_area">
-			<div class="map_btns flex-column">
+			<div class="map_btns flex-column no-print">
 				<div class="mgn-bottom-10px">
 					<button type="button" class="map_btn on" data-map="Base" th:text="#{일반지도}"></button>
 					<button type="button" class="map_btn" data-map="Satellite" th:text="#{위성지도}"></button>

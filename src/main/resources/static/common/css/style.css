@@ -80,7 +80,7 @@ h2{
 }
 
 .dn {
-	display: none;
+	display: none !important;
 }
 
 .flex{
@@ -118,8 +118,8 @@ h2{
 
 /* 가로선 */
 .h-line{
-    width: 100%;
-    margin: 15px;
+    width: 90%;
+    margin: 10px auto;
     border-bottom: 2px solid #222;
 }
 
@@ -127,6 +127,7 @@ h2{
 .text-center{
     width: 100%;
     text-align: center;
+    padding-top: 0;
 }
 
 .pst-abs{
@@ -151,6 +152,10 @@ h2{
 }
 .mgn-bottom-10px{
     margin-bottom: 10px;
+}
+
+.mgn-10px {
+    margin: 10px;
 }
 
 /* 테이블 S */
@@ -180,6 +185,8 @@ h2{
   color: #000000;
   text-align: left;
 }
+
+.divTable .minimalistBlack .divTableRow
 .minimalistBlack .tableFootStyle {
   font-size: 14px;
   font-weight: bold;
@@ -189,11 +196,34 @@ h2{
 .minimalistBlack .tableFootStyle {
   font-size: 14px;
 }
+
+/* map popup 관측소 s */
+.minimalistBlackPopup {
+    border: 3px solid #000000;
+    text-align: left;
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+}
+.divTable.minimalistBlackPopup .divTableRowPopup .divTableCellPopup  {
+    border: 1px solid #000000;
+    padding: 5px 6px;
+    white-space: nowrap; /* 줄바꿈 없이 텍스트를 한 줄로 계속 표시 */
+}
+
+.box-bgc  {
+    background-color: aliceblue;
+    text-align: center;
+}
+/* map popup 관측소 e */
+
 /* DivTable.com */
 .divTable{ display: table; }
 .divTableRow { display: table-row; }
+.divTableRowPopup { display: table-row; }
 .divTableHeading { display: table-header-group;}
 .divTableCell, .divTableHead { display: table-cell;}
+.divTableCellPopup { display: table-cell;}
 .divTableHeading { display: table-header-group;}
 .divTableFoot { display: table-footer-group;}
 .divTableBody { display: table-row-group;}
@@ -224,61 +254,11 @@ h2{
     color: #0000ff;
 }
 
-/* 검색 아이콘*/
 
-.searchIcon {
-    background-color: #000;
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    margin: 0 20px;
-}
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
 
-.searchIcon i {
-    color: #fff;
-}
-
-.submitBtn button{
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
-}
-
-.submitBtn a{
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
-}
-
-/* 검색 창 */
-.search{
-    clear: both;
-    border: 1px solid #222;
-    border-radius: 5px;
-    padding: 15px;
-}
-.searchTxt{
-    border-bottom: 1px solid #222;
-    padding-bottom: 10px;
-}
-.obsForm{
-    padding-top: 10px;
-}
-.obsForm span{
-    padding: 0 10px;
-}
-.obsForm input{
-    padding: 0 5px;
-}
-.searchBtn{
-    background: var(--main-color);
-    color: #fff;
-    padding: 5px 10px;
-    border: 1px solid var(--main-color);
-    border-radius: 3px;
+    @page { margin: 0; }
 }

@@ -114,7 +114,7 @@ public class ListController implements ExceptionProcessor {
 	 */
 	@PostMapping("/save")
 	public String save (@Valid RequestObservatory form, Errors errors, Model model){
-		commonProcess(form.getMode(), model);
+		commonProcess("list", model);
 		//form에서 검증하고 실패하면 errors로 보냄
 
 		observatoryValidator.validate(form, errors);
@@ -309,7 +309,7 @@ public class ListController implements ExceptionProcessor {
 		}else if(mode.equals("info")) {
 			addCss.add("list/setting");
 			addScript.add("list/info");
-			addScript.add("list/api");
+			addCommonScript.add("api");
 		}
 
 		model.addAttribute("addCss", addCss);
