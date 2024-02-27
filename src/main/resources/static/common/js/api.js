@@ -35,6 +35,7 @@ const api = {
                  case "rf" : url += "rainfall"; break;
                  case "wl":
                  case "fw":
+                 case "flw": // info type
                      url += "waterlevel"; break;
              }
              url += "/list";
@@ -51,7 +52,7 @@ const api = {
              edate = `${edate.replace(/\D/g, '')}2359`;
 
              url += `/${obscd}/${sdate}/${edate}.json`;
-
+             console.log("url " + url);
              fetch(url)
                     .then(res => res.json())
                     .then(result => {
