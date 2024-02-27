@@ -23,6 +23,8 @@ function addMarker(items){
         'cctv' : {width: 380, height: 380}   // cctv
     };
 
+    const type = frmSide.location.pathname.split("/").pop();
+
     // 마커 값 설정
     for(const item of items) {
 
@@ -64,7 +66,7 @@ function addMarker(items){
 
         // 해당 타입과 상황에 맞는 마커 이미지 URL 가져오기
         let markerImageUrl;
-        const type = frmSide.location.pathname.split("/").pop();
+
         if (type === 'rf') { // 강수량 관측소인 경우
             // 이상치 값을 넘는지 확인
             if (item.data > item.outlier) {
@@ -107,45 +109,78 @@ function addMarker(items){
         mapLib.map.getView().setZoom(11);
 
 
-        // 마커를 클릭하면 팝업 함수 실행
-        mapLib.map.addEventListener('click', function(event) {
-            mapLib.map.forEachFeatureAtPixel(event.pixel, function(feature) {
-                const { popup } = commonLib;
-                const obscd = feature.get('name');   // 클릭된 마커의 name: obscd
-                const item = feature.get('properties').item;    // 클릭된 마커의 item: item
 
-                // item이 undefined인지 확인
-                if (!item) {
-                    console.error('Item is undefined:', feature);
+    }
+
+    // 마커를 클릭하면 팝업 함수 실행
+    mapLib.map.addEventListener('click', function(event) {
+        // const pixel = event.pixel;
+        // console.log('Screen coordinates:', pixel);
+
+        mapLib.map.forEachFeatureAtPixel(event.pixel, function(feature) {
+            const { popup } = commonLib;
+            const obscd = feature.get('name');   // 클릭된 마커의 name: obscd
+            const item = feature.get('properties').item;    // 클릭된 마커의 item: item
+
+            const coordinates = feature.getGeometry().getCoordinates();
+            const mapProjection = "EPSG:3857";
+            const dataProjection = "EPSG:4326";
+            const position = ol.proj.transform(coordinates, mapProjection, dataProjection); // 마커의 위치를 화면 좌표로 변환
+
+
+            // 화면 좌표를 사용하여 팝업의 위치를 설정
+            const pixel = mapLib.map.getPixelFromCoordinate(position);
+            const popupEl = document.getElementById("layer_popup_map");
+            if (popupEl) {
+                popupEl.style.left = pixel[0] + 'px';  // 마커 오른쪽에 팝업이 뜨도록 left 속성 조정
+                popupEl.style.top = (pixel[1] - 300) + 'px';  // 마커 위에 팝업이 뜨도록 top 속성 조정
+            }
+
+            // item이 undefined인지 확인
+            if (!item) {
+                console.error('Item is undefined:', feature);
+                return;
+            }
+
+            let endpoint;
+            switch(type) {
+                case 'rf':  // 강수량
+                    endpoint = '/map/popup/rf';
+                    break;
+                case 'wl':  // 수위
+                    endpoint = '/map/popup/wl';
+                    break;
+                case 'flw':  // 유량
+                    endpoint = '/map/popup/flw';
+                    break;
+                case 'cctv':  // cctv
+                    endpoint = '/map/popup/cctv';
+                    break;
+                default:
+                    console.error('Unknown marker type:', item.type);
                     return;
-                }
+            }
 
-                let endpoint;
-                switch(type) {
-                    case 'rf':  // 강수량
-                        endpoint = '/map/popup/rf';
-                        break;
-                    case 'wl':  // 수위
-                        endpoint = '/map/popup/wl';
-                        break;
-                    case 'flw':  // 유량
-                        endpoint = '/map/popup/flw';
-                        break;
-                    case 'cctv':  // cctv
-                        endpoint = '/map/popup/cctv';
-                        break;
-                    default:
-                        console.error('Unknown marker type:', item.type);
-                        return;
-                }
+            const url = `${endpoint}?obscd=${obscd}&item=${encodeURIComponent(JSON.stringify(item))}`;  // 타입에 맞게 url결정
 
-                const url = `${endpoint}?obscd=${obscd}&item=${encodeURIComponent(JSON.stringify(item))}`;  // 타입에 맞게 url결정
+            // 팝업을 띄우는 코드
+            //popup.open(url, 430, 350);
+            const {width, height} = popupSizes[type]; // 타입에 맞는 팝업 크기 가져오기
+            popup.open(url, width, height);
 
-                // 팝업을 띄우는 코드
-                //popup.open(url, 430, 350);
-                const {width, height} = popupSizes[type]; // 타입에 맞는 팝업 크기 가져오기
-                popup.open(url, width, height);
-            });
+            // 반복 끝내기
+            return true;
+        });
+    });
+}
+
+window.addEventListener("DOMContentLoaded", function() {
+    const el = document.getElementById("map");
+    if (el) {
+        el.addEventListener("click", function(e) {
+           const xpos = e.pageX + e.offsetX;
+           const ypos = e.pageY + e.offsetY;
+           console.log(xpos, ypos);
         });
     }
-}
+});

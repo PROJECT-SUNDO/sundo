@@ -100,7 +100,6 @@ h2{
     float: right;
 }
 
-
 .font-18px{
     font-size: 18px;
     font-weight: 500;
@@ -132,6 +131,13 @@ h2{
 }
 #layer_popup {
     position: fixed;
+    z-index: 101;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+#layer_popup_map {
+    position: absolute;
     z-index: 101;
     background: #fff;
     border-radius: 5px;
