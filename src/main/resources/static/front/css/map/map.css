@@ -27,6 +27,10 @@
     cursor: pointer;
 }
 
+.asideBtns button.on, .asideBtns button:hover{
+    background: #293051;
+}
+
 .asideBtns button>i{
     font-size: 50px;
     padding: 10px;
@@ -90,5 +94,4 @@
     color: #fff;
 }
 
-
-
+/* 마커 팝업 */

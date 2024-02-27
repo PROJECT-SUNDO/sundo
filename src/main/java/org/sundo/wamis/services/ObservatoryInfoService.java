@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -25,6 +26,9 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static org.springframework.data.domain.Sort.Order.asc;
+import static org.springframework.data.domain.Sort.Order.desc;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -36,9 +40,11 @@ public class ObservatoryInfoService {
     private final WaterLevelFlowRepository waterLevelFlowRepository;
 
     public Observatory get(String obscd) {
-        Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
+        //Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
+        QObservatory observatory = QObservatory.observatory;
+        List<Observatory> items = (List<Observatory>)observatoryRepository.findAll(observatory.obscd.eq(obscd));
 
-        return data;
+        return items == null || items.isEmpty() ? null : items.get(0);
     }
 
     public RequestObservatory getRequest(String obscd, String type){
@@ -55,7 +61,7 @@ public class ObservatoryInfoService {
 
         if("wl".equals(type)){
             try{
-                outlier = Double.parseDouble(obs.getWrnwl().toString());
+                outlier = Double.parseDouble(obs.getWrnwl());
             }catch (Exception e){
                 outlier = 0;
             }
@@ -94,35 +100,60 @@ public class ObservatoryInfoService {
         String obsnm = search.getObsnm();
         String type = search.getType();
 
+
+
+
         if (StringUtils.hasText(obscd)) {
-
             obscd = obscd.trim();
-
             andBuilder.and(observatory.obscd.contains(obscd));
-
         }
 
         if (StringUtils.hasText(obsnm)) {
-
             obsnm = obsnm.trim();
-
             andBuilder.and(observatory.obsnm.contains(obsnm));
-
         }
 
-
         if (StringUtils.hasText(type)) {
+            if(type.equals("cctv")){
+                andBuilder.and(observatory.cctvUrlH.isNotEmpty());
+                andBuilder.and(observatory.cctvUrlL.isNotEmpty());
+                andBuilder.and(observatory.type.ne("flw"));
+            }else if (!type.equals("ALL")) {
 
-            if (!type.equals("ALL")) {
                 andBuilder.and(observatory.type.eq(type));
+                if(type.equals("flw")){
+                    andBuilder.and(observatory.clsyn.isNull());
+                }else{
+                    andBuilder.and(observatory.clsyn.eq("운영"));
+                }
             }
         }
 
         /* 검색 조건 E */
+        /* 정렬 조건 S */
+        String order = search.getOrder();
+        Sort sort = Sort.by(asc("obscd"));
+        if (StringUtils.hasText(order)) {
+            if (order.equals("obsnm")) {
+                sort = Sort.by(asc("obsnm"));
+            } else if (order.equals("rf")) {
+                sort = Sort.by(desc("rf"));
+            } else if (order.equals("wl")) {
+                sort = Sort.by(desc("wl"));
+            } else if (order.equals("flw")) {
+                sort = Sort.by(desc("fw"));
+            } else if (order.equals("upstream")) {
+                sort = Sort.by(desc("lon"));
+            } else if (order.equals("downstream")){
+                sort = Sort.by(asc("lon"));
+            }
+        }
 
+        /* 정렬 조건 E */
         /* 페이징 처리 S */
 
-        Pageable pageable = PageRequest.of(page - 1, limit);
+
+        Pageable pageable = PageRequest.of(page - 1, limit, sort);
 
         // 단일 테이블 불러올때
         Page<Observatory> data = observatoryRepository.findAll(andBuilder, pageable);
@@ -140,28 +171,18 @@ public class ObservatoryInfoService {
 
     private void addInfo(Observatory observatory){
         String type = observatory.getType();
-        String obscd = observatory.getObscd();
+        double data = 0;
 
         if("rf".equals(type)){
-            List<Precipitation> precipitations = precipitationRepository.findByRfobscdOrderByYmdDesc(obscd).orElse(null);
+            data = observatory.getRf();
+            observatory.setData(data);
 
-            if(precipitations != null && !precipitations.isEmpty()){
-                observatory.setData(precipitations.get(0).getRf());
-            }
-
-        }else if ("wl".equals(type) || "flw".equals(type)){
-            List<WaterLevelFlow> waterLevelFlows = waterLevelFlowRepository.findByWlobscdOrderByYmdDesc(obscd).orElse(null);
-            if(waterLevelFlows != null && !waterLevelFlows.isEmpty()){
-                double data = 0;
-                if("wl".equals(type)){
-                    data = waterLevelFlows.get(0).getWl();
-                }else{
-                    data = waterLevelFlows.get(0).getFw();
-                }
-
-                observatory.setData(data);
-
-            }
+        }else if ("wl".equals(type)){
+            data = observatory.getWl();
+            observatory.setData(data);
+        }else if("flw".equals(type)){
+            data = observatory.getFw();
+            observatory.setData(data);
         }
 
     }

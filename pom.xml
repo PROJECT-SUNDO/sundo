@@ -65,7 +65,6 @@
 		    <scope>test</scope>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
@@ -157,6 +156,11 @@
 			<artifactId>querydsl-apt</artifactId>
 			<version>4.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 
 
 		<!-- 표준프레임워크 실행환경 S -->
@@ -240,8 +244,6 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.2.0</version>
 		</dependency>
-
-
 
 		<!-- mysql이나 oracle DB 사용시 아래 설정 추가
         <dependency>

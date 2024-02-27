@@ -3,10 +3,90 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
+
     <h1>대시보드</h1>
-    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}">
-    <div>
-        <canvas id="myChart"></canvas>
+    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}" id="searchFrm" name="searchFrm" class="no-print">
+
+        <div class="flex align-center no-print">
+            <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
+            <div>검색</div>
+        </div>
+        <hr>
+        <div class="flex align-center">
+            <input type="hidden" name="type" id="type" th:field="*{type}">
+            <input type="text" class="onlyNum" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
+            <label for="obscd">관측소 코드 </label>
+            <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
+            <label for="obsnm">관측소명</label>
+            <div class="searchBtn">
+                <button type="submit" class="btn">검색</button>
+            </div>
+        </div>
+        <div class="flex radio">
+            <div>
+                <input type="radio" name="select" id="month" value="MONTH" checked>
+                <label for="month">월단위별</label>
+                <input type="radio" name="select" id="year" value="YEAR">
+                <label for="year">연단위별</label>
+            </div>
+
+            <div>
+                <button type="button" onclick="print()"><i class="fa fa-download" aria-hidden="true"></i><th:block th:text="저장"></th:block></button>
+            </div>
+        </div>
+    </form>
+
+
+    <div class=" flex">
+        <div class="chart"></div>
+
+        <div class="dashList">
+
+            <h2 th:if="*{type == 'rf'}"  th:text="#{강수량표}"></h2>
+            <h2 th:if="*{type == 'wl'}" th:text="#{수위표}"></h2>
+            <h2 th:if="*{type == 'flw'}"  th:text="#{유량표}"></h2>
+
+            <div class="divTable minimalistBlack">
+                <div class="divTableHeading">
+                    <div class="divTableRow">
+                        <div th:text="#{연번}" class="divTableHead"></div>
+                        <div th:text="#{관측소 명}" class="divTableHead"></div>
+                        <div th:text="#{관측소 코드}" class="divTableHead"></div>
+                        <div th:if="*{type == 'rf'}" th:text="#{강수량}" class="divTableHead"></div>
+                        <div th:if="*{type == 'wl'}" th:text="#{수위}" class="divTableHead"></div>
+                        <div th:if="*{type == 'flw'}" th:text="#{유량}" class="divTableHead"></div>
+                    </div>
+                </div>
+                <div class="divTableBody"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
+
+                    <div class="divTableRow observatory" th:data-obscd="${item.obscd}">
+                        <div th:text="${status.count}"  class="divTableCell">cell1_1</div>
+
+                        <div class="divTableCell">
+                            <span th:text="${item.obsnm}"></span>
+                            <input type="hidden" th:name="${'obsnm' + status.count}" th:value="${item.obsnm}" th:id="*{'obsnm' + status.count}">
+                        </div>
+
+                        <div class="divTableCell">
+                            <span th:text="${item.obscd}"></span>
+                            <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" th:id="*{'obscd_' + status.count}">
+                        </div>
+
+                        <div class="divTableCell">
+                            <span th:if="${item.type == 'rf'}" th:text="${item.rf}"></span>
+                            <span th:if="${item.type == 'wl'}" th:text="${item.wl}"></span>
+                            <span th:if="${item.type == 'flw'}" th:text="${item.fw}"></span>
+                            <span class="unit" th:classappend="${item.type == 'rf'? 'rf' : ''}
+                          +${item.type == 'wl'? 'wl': ''}
+                          +${item.type == 'flw'? 'fw': ''}"></span>
+                            <input type="hidden" th:name="${'obscd_' + status.count}" th:value="${item.obscd}" class="obscd">
+                        </div>
+                    </div>
+                    <th:block th:unless="*{items != null && !items.isEmpty()}" th:text="#{데이터_없음}"></th:block>
+                </div>
+            </div>
+            <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+        </div>
     </div>
 </main>
 </html>

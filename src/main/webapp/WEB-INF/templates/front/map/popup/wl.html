@@ -3,25 +3,26 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/popup}">
 <main layout:fragment="content">
-    <section th:object="${requestObservation}">
+    <section th:object="${observatory}">
         <h2 class="text-center" th:text="*{obsnm}"></h2>
         <div class="h-line"></div>
-        <div class="divTable">
-            <div class="divTableRow">
-                <div class="divTableCell" th:text="#{코드}"></div>
-                <div class="divTableCell" th:text="*{obscd}"></div>
+        <div></div>
+        <div class="divTable minimalistBlackPopup mgn-10px">
+            <div class="divTableRowPopup">
+                <div class="divTableCellPopup box-bgc" th:text="#{코드}"></div>
+                <div class="divTableCellPopup" th:text="*{obscd}"></div>
             </div>
-            <div class="divTableRow">
-                <div class="divTableCell" th:text="#{현재수위}"></div>
-                <div class="divTableCell"th:text="*{currentOb}"></div>
+            <div class="divTableRowPopup">
+                <div class="divTableCellPopup box-bgc" th:text="#{현재수위}"></div>
+                <div class="divTableCellPopup" th:text="*{wl}"></div>
             </div>
-            <div class="divTableRow">
-                <div class="divTableCell" th:text="#{수위변화}"></div>
-                <div class="divTableCell" th:text="*{reqOb}"></div>
+            <div class="divTableRowPopup">
+                <div class="divTableCellPopup box-bgc" th:text="#{수위변화}"></div>
+                <div class="divTableCellPopup" th:text="*{wl}"></div>
             </div>
-            <div class="divTableRow">
-                <div class="divTableCell" th:text="#{위치}"></div>
-                <div class="divTableCell" th:text="*{loc}"></div>
+            <div class="divTableRowPopup">
+                <div class="divTableCellPopup box-bgc" th:text="#{위치}"></div>
+                <div class="divTableCellPopup" th:text="*{addr + ' ' + etcaddr}"></div>
             </div>
         </div>
     </section>
