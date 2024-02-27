@@ -134,7 +134,7 @@ function addMarker(items){
                 const url = `${endpoint}?obscd=${obscd}&item=${encodeURIComponent(JSON.stringify(item))}`;  // 타입에 맞게 url결정
 
                 // 팝업을 띄우는 코드
-                popup.open(url, 430, 260);
+                popup.open(url, 430, 350);
             });
         });
     }

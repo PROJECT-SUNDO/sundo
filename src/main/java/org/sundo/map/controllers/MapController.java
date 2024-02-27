@@ -64,7 +64,7 @@ public class MapController {
 						@RequestParam("obscd") String obscd,
 						Model model) {
 
-		Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
+		Observatory observatory = observatoryRepository.getOne(obscd, type.equals("cctv") ? "wl" : type).orElseThrow(ObservatoryNotFoundException::new);
 
 		model.addAttribute("observatory", observatory);
 
