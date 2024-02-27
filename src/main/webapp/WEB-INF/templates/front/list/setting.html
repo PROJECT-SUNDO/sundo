@@ -25,13 +25,15 @@
                 <div>
                     <span th:text="#{관측유형}"></span>
                     :
-                    <span th:text="*{type}"></span>
+                    <span th:if="*{type == 'rf'}" th:text="#{강수량}"></span>
+                    <span th:if="*{type == 'wl'}" th:text="#{수위}"></span>
+                    <span th:if="*{type == 'flw'}" th:text="#{유량}"></span>
                 </div>
             </div>
             <form th:action="@{/list/setting/save}" method="post" th:object="${requestObservatory}" target="ifrmProcess" autocomplete="off" id="editForm">
                 <div class="observatoryForm mgn-bottom-10px">
                     <input type="hidden" name="obscd" th:value="*{obscd}">
-                    <input type="hidden" name="type" th:value="*{type}">
+                    <input type="hidden" id="type" name="type" th:value="*{type}">
                     <div>
                         <span th:text="#{사용여부}"></span>
                         <input type="checkbox" name="useOutlier" id="useOutlier" th:field="*{useOutlier}">
@@ -112,7 +114,7 @@
                 </div>
             </div>
         </div>
-        <form id="editFrm">
+        <form id="submitFrm">
             <input type="hidden" name="type" th:value="${requestObservatory.type}">
         </form>
         <th:block th:replace="~{common/_pagination::pagination}"></th:block>

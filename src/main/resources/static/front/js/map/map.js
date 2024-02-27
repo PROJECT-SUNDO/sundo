@@ -58,26 +58,28 @@ window.addEventListener("DOMContentLoaded", function(){
     });
     /* 오버뷰 맵 E */
 
-	const map = new ol.Map({
-		target : 'map',
-		layers : [
+    const map = new ol.Map({
+        target : 'map',
+        layers : [
             new ol.layer.Tile({
                 source: mapBaseSource,
             }),
             new ol.layer.Tile({
-               source:mapSatelliteSource,
+                source:mapSatelliteSource,
             }),
-		],
-		view: new ol.View({
-		    projection: mapProjection,
-			center: center.getCoordinates(),
-			zoom: 8.5
-		}),
-		controls: ol.control.defaults().extend([overViewMap]),
-	});
-	map.addControl(new ol.control.ScaleLine());
+        ],
+        view: new ol.View({
+            projection: mapProjection,
+            center: center.getCoordinates(),
+            zoom: 8.5
+        }),
+        controls: ol.control.defaults().extend([overViewMap]),
+    });
+    mapLib.map = map;
+    map.addControl(new ol.control.ScaleLine());
 
 	/* 지도 표시 E */
+
 	/* geoserver - 한강하천, 한강수계 S */
 
     const river = new ol.layer.Tile({
@@ -222,13 +224,65 @@ window.addEventListener("DOMContentLoaded", function(){
 	});
 
 	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
+
+
+    /* 저장하기 버튼 S */
+
+    // 버튼 DOM 객체를 변수에 저장
+    const saveBtn = document.getElementById("save_map");
+    const savePngBtn = document.getElementById("save_map_png");
+    const savePdfBtn = document.getElementById("save_map_pdf");
+    const btnBox = document.getElementById("save_map_box");
+
+    // 저장 버튼을 눌렀을 때의 동작
+    saveBtn.onclick = function() {
+        btnBox.style.display = "flex"; // 이미지 저장, PDF 저장 버튼을 보여줌
+        saveBtn.disabled = true; // 저장 버튼을 비활성화
+    };
+
+    // 이미지 저장 버튼을 눌렀을 때의 동작
+    savePngBtn.onclick = function() {
+        btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
+        saveBtn.disabled = false; // 저장 버튼을 활성화
+        // 이미지 저장 관련 코드를 작성
+
+        html2canvas(document.querySelector("#map"), {
+            useCORS: true,
+            allowTaint: true,
+        }).then(canvas => {
+            document.body.appendChild(canvas);
+            let dataURL = canvas.toDataURL("image/png");
+            dataURL = dataURL.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+            dataURL = dataURL.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=map.png');
+
+            const aLink = document.createElement("a");
+            aLink.download="map.png";
+            aLink.href = dataURL;
+            aLink.click();
+        });
+    };
+
+    // PDF 저장 버튼을 눌렀을 때의 동작
+    savePdfBtn.onclick = function() {
+        btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
+        saveBtn.disabled = false; // 저장 버튼을 활성화
+        // PDF 저장 관련 코드를 작성
+
+        print();
+
+    };
+    /* 저장하기 버튼 E */
+    
+    /* 마커 추가 s */
+    window.addEventListener("message", function(e) {
+        if (!e.data.map) {
+            return;
+        }
+
+        const items = e.data.map;
+        addMarker(items);
+    });
+    /* 마커 추가 e */
 });
-
-
-
-
-
-
-
 
 

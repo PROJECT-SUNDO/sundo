@@ -25,21 +25,66 @@
     justify-content: space-between;
 }
 
-.submitBtn button{
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
-}
-
-.submitBtn a{
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
-}
-
-h1 {
-    font-size: 25px;
+.observatory_box h1 {
+    padding: 10px 20px;
+    font-size: 30px;
     font-weight : bold;
+}
+
+.observatory_box{
+    border: 1px solid #222;
+    border-radius: 5px;
+    height: flex;
+    padding: 10px 20px;
+    margin: 20px 30px;
+}
+
+.listbtn{
+    float: right;
+    position: relative
+    top: 50px
+    width: 50px;
+    height: 20px;
+    border: 2px solid;
+    background-color: var(--font-color);
+    text-align: center;
+}
+.submitBtn a{
+    float: right;
+    width: 40px;
+    height: 20px;
+    border: 2px solid;
+    background-color: var(--font-color);
+}
+
+.flex{
+    padding: 10px 20px;
+}
+
+.submitBtn {
+    text-align: center;
+}
+.submitBtn button{
+
+    width: 40px;
+    height: 20px;
+    border: 2px solid;
+    background-color: var(--font-color);
+}
+
+.form_box dl {
+    display: flex; margin-bottom: 10px;
+}
+
+.form_box dt {
+    width: 90px;
+}
+
+.form_box dd {
+    width: 270px;
+    }
+
+.form_box dd input {
+    font-size: 11px;
+    width: 220px;
 }

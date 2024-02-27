@@ -54,6 +54,6 @@ public class WamisCctvApiService {
             }
         }
 
-        repository.flush();
+        repository.saveAllAndFlush(items);
     }
 }

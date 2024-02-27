@@ -121,5 +121,15 @@ public class Utils {
     public String[] getParams(String name) {
         return request.getParameterValues(name);
     }
+
+    public boolean isOutlier(double data, String out){
+        try {
+            double outlier = StringUtils.hasText(out) ? Double.parseDouble(out) : 3.0;
+            return data >= outlier;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
 
