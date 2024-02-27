@@ -172,6 +172,20 @@ function addMarker(items){
             return true;
         });
     });
+
+    // 맵의 viewport에 'mousemove' 이벤트 리스너를 추가합니다.
+    mapLib.map.getViewport().addEventListener('mousemove', function(e) {
+        // 현재 마우스 위치에 대한 픽셀 값을 가져옵니다.
+        const pixel = mapLib.map.getEventPixel(e);
+
+        // 해당 픽셀 위치에 feature(마커)가 있는지 확인합니다.
+        const hit = mapLib.map.hasFeatureAtPixel(pixel);
+
+        // feature가 있으면 마우스 커서를 'pointer'로 변경하고,
+        // 그렇지 않으면 기본 값으로 설정합니다.
+        mapLib.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+    });
+
 }
 
 window.addEventListener("DOMContentLoaded", function() {

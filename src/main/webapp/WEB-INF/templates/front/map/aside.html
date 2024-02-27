@@ -70,7 +70,7 @@
             parent.postMessage({map: items}, "*");
         }
 
-        // 관측소 선택시 마커 표시하기
+        /* 관측소 선택시 마커 표시하기 s */
         function addMarkerForObscd(obscd) {
             const items = JSON.parse(document.getElementById("jsonData").value.trim());
             const item = items.find(item => item.obsnm === obscd);
@@ -86,6 +86,7 @@
                 addMarker(item);  // 마커 추가
             }
         });
+        /* 관측소 선택시 마커 표시하기 e */
     </script>
 
 </main>
