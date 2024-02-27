@@ -11,7 +11,7 @@
         <br>
         <hr>
 
-        <div class="flex align-center">
+        <div class="box">
             <form name="frmList" method="post" th:action="@{/list/save}" autocomplete="off">
                 <input type="hidden" name="mode" value="write">
                 <div class="error global" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
