@@ -127,7 +127,7 @@ public class ObservatoryInfoService {
                     andBuilder.and(observatory.clsyn.eq("운영"));
                 }
             }
-        }
+        } 
 
         /* 검색 조건 E */
         /* 정렬 조건 S */
