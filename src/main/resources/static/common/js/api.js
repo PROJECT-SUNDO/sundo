@@ -51,7 +51,7 @@ const api = {
              edate = `${edate.replace(/\D/g, '')}2359`;
 
              url += `/${obscd}/${sdate}/${edate}.json`;
-
+            console.log(url);
              fetch(url)
                     .then(res => res.json())
                     .then(result => {
