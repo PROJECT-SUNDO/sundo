@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", function(){
 
     });
 
-
+/* api 데이터 가져오기 */
 if (typeof frmSearch === 'undefined' || !frmSearch) return;
 
     frmSearch.addEventListener("submit", async function(e) {
@@ -29,7 +29,10 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
             const statData = await api.getData();
             console.log(statData);
 
-            const type = frmSearch.type.value;
+            let type = frmSearch.type.value;
+            if(type === 'flw') {
+                type = 'fw';
+            }
 
             /* list info 데이터 S */
             const statTable = document.querySelector(".divTable");
@@ -73,12 +76,36 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
                         for (const dateKey in rowData) {
                             if (rowData.hasOwnProperty(dateKey)) {
                                 if (dateKey.includes(type)) {
-                                    // ex) wl_2350 -> 2350   dateKey.substring(3, 5) + ':' + dateKey.substring(5);
-                                    const var_substring = `${dateKey.substring(3, 5)}:${dateKey.substring(5)}`;
-                                    const combinedText = `${key} ${var_substring}`;
+                                     const var_substring = `${dateKey.substring(3, 5)}:${dateKey.substring(5)}`;
+                                     const combinedText = `${key} ${var_substring}`;
+                                     const row = document.createElement("div");
+                                     row.classList.add("divTableRow");
+                                    if(type === 'wl' || type === 'fw') {
+                                        if(rowData[dateKey] !== " ") {
+                                            // 날짜 + 시간
+                                            const dateCell = document.createElement("div");
+                                            dateCell.classList.add("divTableCell");
+                                            dateCell.textContent = combinedText;
+                                            row.appendChild(dateCell);
+                                            // 데이터
+                                            const dataCell = document.createElement("div");
+                                            dataCell.classList.add("divTableCell");
 
-                                    const row = document.createElement("div");
-                                    row.classList.add("divTableRow");
+                                            dataCell.textContent = rowData[dateKey];
+                                            row.appendChild(dataCell);
+
+                                            tbody.appendChild(row);
+                                        }
+                                    } else {
+                                    //key랑 date가 같고 time이 같으면
+                                    console.log('key'+key);
+                                    //console.log(getCurrentDateTime());
+                                    const date = getCurrentDateTime().substring(0, 10);
+                                    const time = getCurrentDateTime().substring(10, 14);
+                                    console.log('date'+date);
+                                    console.log('time'+time);
+                                    if(key === date) {
+
                                     // 날짜 + 시간
                                     const dateCell = document.createElement("div");
                                     dateCell.classList.add("divTableCell");
@@ -87,11 +114,16 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
                                     // 데이터
                                     const dataCell = document.createElement("div");
                                     dataCell.classList.add("divTableCell");
+
                                     dataCell.textContent = rowData[dateKey];
-                                    console.log('rowData[dateKey]' + rowData[dateKey]);
                                     row.appendChild(dataCell);
 
                                     tbody.appendChild(row);
+
+                                    }
+
+                                    }
+
                                 }
                             }
                         }
@@ -301,6 +333,16 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
             console.error(err);
         }
     });
+    function getCurrentDateTime() {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요, 두 자리로 표시하기 위해 0을 채움
+        const day = String(currentDate.getDate()).padStart(2, '0'); // 두 자리로 표시하기 위해 0을 채움
+        const hours = String(currentDate.getHours()).padStart(2, '0'); // 시간을 두 자리로 표시하기 위해 0을 채움
+        const minutes = String(currentDate.getMinutes()).padStart(2, '0'); // 분을 두 자리로 표시하기 위해 0을 채움
+
+        return `${year}.${month}.${day}${hours}${minutes}`;
+    }
 
     function get30DateTime(){
             const url = getCurrentDate() + '/' + get30DaysAgo();
