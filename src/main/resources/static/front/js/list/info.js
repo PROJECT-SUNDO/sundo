@@ -20,13 +20,14 @@ window.addEventListener("DOMContentLoaded", function(){
     });
 
 
-//if (typeof frmSearch === 'undefined' || !frmSearch) return;
+if (typeof frmSearch === 'undefined' || !frmSearch) return;
 
     frmSearch.addEventListener("submit", async function(e) {
         const unit = document.querySelector("#timeUnit").value;
         e.preventDefault();
         try {
             const statData = await api.getData();
+            console.log(statData);
 
             const type = frmSearch.type.value;
 
@@ -187,7 +188,6 @@ window.addEventListener("DOMContentLoaded", function(){
                         }
                     }
                 }
-                url += getCurrentDate();
             } else if(unit === 'MONTH') {
                 thead.innerHTML = "";
                 const typeHeader = document.createElement("div");
