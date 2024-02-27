@@ -54,7 +54,7 @@
                     </select>
                 </div>
                 <button type="submit" class="searchBtn" th:text="#{검색}"></button>
-
+                <button type="button" class="saveBtn" id="excelDownload">저장</button>
             </form>
         </div>
 
@@ -65,7 +65,7 @@
 
             </div>
         </div>
-        <button type="button" class="saveBtn" id="excelDownload">저장</button>
+
         <th:block th:replace="~{common/_pagination::pagination}"></th:block>
     </section>
 

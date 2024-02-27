@@ -164,6 +164,7 @@ excelDown() {
                 const unit = frmSearch.timeUnit.value;
                 const fileName = `${type}_${unit}_${Date.now()}.xls`;
                 let headers = [], rows = [];
+                console.log(unit);
                 switch(unit) {
                     case '1H': // 1시간
                         headers.push("년월일");
@@ -251,7 +252,7 @@ excelDown() {
                             for (let i = 1; i <= 5; i++) {
                                 row[i] = 0;
                             }
-
+                            console.log(items);
                             const _items = [];
                             for (const [key, value] of Object.entries(items)) {
                                 if (type === 'wl' && key.indexOf("wl_") !== -1) continue;
