@@ -6,12 +6,12 @@ function addMarker(items){
     }
 
     const markerImages = {
-        'wl': 'https://ifh.cc/g/f3vGzl.png',  // 수위관측소: 파랑
+        'wl': 'https://ifh.cc/g/LOYpqF.png',  // 수위관측소: 파랑
         'rf': {
-            normal: 'https://ifh.cc/g/3O0MmJ.png',  // 강수량관측소 기본: 빨강
+            normal: 'https://ifh.cc/g/T3dOrD.png',  // 강수량관측소 기본: 빨강
             outlier: 'https://ifh.cc/g/zv2YT2.png'  // 강수량관측소 이상치 값 넘겼을떄
         },
-        'flw': 'https://ifh.cc/g/onQwV8.png',   // 유량 관측소: 노랑
+        'flw': 'https://ifh.cc/g/5vB6gZ.png',   // 유량 관측소: 노랑
         'cctv' : 'https://ifh.cc/g/tk6pwR.png'   // cctv
     }
 
@@ -63,7 +63,11 @@ function addMarker(items){
         });
 
         // 해당 타입과 상황에 맞는 마커 이미지 URL 가져오기
-        let  markerImageUrl;
+        let markerImageUrl;
+
+        // if (frmSide.location.pathname.split("/").pop() === 'cctv') { // cctv인 경우
+        //     markerImageUrl = markerImages['cctv'];
+        // } else
         if (item.type === 'rf') { // 강수량 관측소인 경우
             // 이상치 값을 넘는지 확인
             if (item.data > item.outlier) {
@@ -76,7 +80,6 @@ function addMarker(items){
         } else { // 그 외의 경우
             // 관측소 타입별로 마커사용
             markerImageUrl = markerImages[item.type];
-
         }
 
         // 마커 스타일 설정
