@@ -24,11 +24,6 @@
     padding: 0 20px;
 }
 
-.page-link{
-    display: flex;
-    align-items: center;
-}
-
 .page-link button{
     cursor: pointer;
     color: #fff;

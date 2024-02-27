@@ -9,15 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.sundo.commons.ListData;
 import org.sundo.list.controllers.ObservatorySearch;
 import org.sundo.list.controllers.RequestObservatory;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.repositories.ObservatoryRepository;
 import org.sundo.wamis.services.ObservatoryInfoService;
+import org.sundo.wamis.services.ObservatoryNotFoundException;
 
 
 @Controller
@@ -27,6 +26,7 @@ public class MapController {
 
 	private final ObservatoryInfoService observatoryInfoService;
 	private final ObjectMapper om;
+	private final ObservatoryRepository observatoryRepository;
 	
 	@GetMapping
 	public String map(@ModelAttribute RequestObservatory form,
@@ -59,11 +59,17 @@ public class MapController {
 		return "front/map/aside";
 	}
 
-	@GetMapping("/{info}")
-	public String info(@PathVariable("info")String info, Model model){
+	@GetMapping("/popup/{type}")
+	public String popup(@PathVariable("type") String type,
+						@RequestParam("obscd") String obscd,
+						Model model) {
+
+		Observatory observatory = observatoryRepository.getOne(obscd, type).orElseThrow(ObservatoryNotFoundException::new);
+
+		model.addAttribute("observatory", observatory);
 
 		commonProcess("info", model);
-		return "front/map/popup/" + info;
+		return "front/map/popup/" + type;
 	}
 	
 	private void commonProcess(String mode, Model model) {
