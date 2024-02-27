@@ -19,9 +19,119 @@ window.addEventListener("DOMContentLoaded", function(){
 
     });
 
+const info = {
+    async init() {
+const unit = document.querySelector("#timeUnit").value;
+        try {
+            const statData = await api.getData();
+            console.log(statData);
+
+            let type = frmSearch.type.value;
+            if(type === 'flw') {
+                type = 'fw';
+            }
+
+            /* list info 데이터 S */
+            const statTable = document.querySelector(".divTable");
+            const thead = statTable.querySelector(".divTableHeading");
+            const tbody = statTable.querySelector(".divTableBody");
+
+            // thead 출력
+            thead.innerHTML = "";
+            const headerRow = document.createElement("div");
+            headerRow.classList.add("divTableRow");
+            const fixedHeader = document.createElement("div");
+            fixedHeader.classList.add("divTableHead");
+            // 고정항목
+            fixedHeader.textContent = "관측일시";
+            headerRow.appendChild(fixedHeader);
+
+            const rfText = "강수량(mm)";
+            const wlText = "수위(m)";
+            const fwText = "유량(㎥/sec)";
+            thead.innerHTML = "";
+
+                const typeHeader = document.createElement("div");
+                typeHeader.classList.add("divTableHead");
+                if (type === 'rf') {
+                    typeHeader.textContent = rfText;
+                } else if (type === 'wl') {
+                    typeHeader.textContent = wlText;
+                } else if (type === 'fw') {
+                    typeHeader.textContent = fwText;
+                }
+                headerRow.appendChild(typeHeader);
+                thead.appendChild(headerRow);
+
+                // tbody
+                tbody.innerHTML = "";
+                for (const key in statData) {
+                    if (statData.hasOwnProperty(key)) {
+                        const rowData = statData[key];
+                        for (const dateKey in rowData) {
+                            if (rowData.hasOwnProperty(dateKey)) {
+                                if (dateKey.includes(type)) {
+                                     const var_substring = `${dateKey.substring(3, 5)}:${dateKey.substring(5)}`;
+                                     const combinedText = `${key} ${var_substring}`;
+                                     const row = document.createElement("div");
+                                     row.classList.add("divTableRow");
+                                    if(type === 'wl' || type === 'fw') {
+                                        if(rowData[dateKey] !== " ") {
+                                            // 날짜 + 시간
+                                            const dateCell = document.createElement("div");
+                                            dateCell.classList.add("divTableCell");
+                                            dateCell.textContent = combinedText;
+                                            row.appendChild(dateCell);
+                                            // 데이터
+                                            const dataCell = document.createElement("div");
+                                            dataCell.classList.add("divTableCell");
+
+                                            dataCell.textContent = rowData[dateKey];
+                                            row.appendChild(dataCell);
+
+                                            tbody.appendChild(row);
+                                        }
+                                    } else {
+                                    //현재 시간-3분 까지만 출력
+                                    const date = getCurrentDateTime().substring(0, 10);
+                                    const time = getCurrentDateTime().substring(10, 13) + '0';
+                                        if(key === date) {
+                                            if (dateKey.substring(3) <= time) {
+                                            // 날짜 + 시간
+                                            const dateCell = document.createElement("div");
+                                            dateCell.classList.add("divTableCell");
+                                            dateCell.textContent = combinedText;
+                                            row.appendChild(dateCell);
+                                            // 데이터
+                                            const dataCell = document.createElement("div");
+                                            dataCell.classList.add("divTableCell");
+
+                                            dataCell.textContent = rowData[dateKey];
+                                            row.appendChild(dataCell);
+
+                                            tbody.appendChild(row);
+                                            }
+
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
+}
+
+
+
 /* api 데이터 가져오기 */
 if (typeof frmSearch === 'undefined' || !frmSearch) return;
-
+    info.init();
     frmSearch.addEventListener("submit", async function(e) {
         const unit = document.querySelector("#timeUnit").value;
         e.preventDefault();
@@ -97,31 +207,27 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
                                             tbody.appendChild(row);
                                         }
                                     } else {
-                                    //key랑 date가 같고 time이 같으면
-                                    console.log('key'+key);
-                                    //console.log(getCurrentDateTime());
+                                    //현재 시간-3분 까지만 출력
                                     const date = getCurrentDateTime().substring(0, 10);
-                                    const time = getCurrentDateTime().substring(10, 14);
-                                    console.log('date'+date);
-                                    console.log('time'+time);
-                                    if(key === date) {
+                                    const time = getCurrentDateTime().substring(10, 13) + '0';
+                                        if(key === date) {
+                                            if (dateKey.substring(3) <= time) {
+                                            // 날짜 + 시간
+                                            const dateCell = document.createElement("div");
+                                            dateCell.classList.add("divTableCell");
+                                            dateCell.textContent = combinedText;
+                                            row.appendChild(dateCell);
+                                            // 데이터
+                                            const dataCell = document.createElement("div");
+                                            dataCell.classList.add("divTableCell");
 
-                                    // 날짜 + 시간
-                                    const dateCell = document.createElement("div");
-                                    dateCell.classList.add("divTableCell");
-                                    dateCell.textContent = combinedText;
-                                    row.appendChild(dateCell);
-                                    // 데이터
-                                    const dataCell = document.createElement("div");
-                                    dataCell.classList.add("divTableCell");
+                                            dataCell.textContent = rowData[dateKey];
+                                            row.appendChild(dataCell);
 
-                                    dataCell.textContent = rowData[dateKey];
-                                    row.appendChild(dataCell);
+                                            tbody.appendChild(row);
+                                            }
 
-                                    tbody.appendChild(row);
-
-                                    }
-
+                                        }
                                     }
 
                                 }
@@ -198,8 +304,8 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
                             if (rowData.hasOwnProperty(dateKey)) {
                                 if (dateKey.includes(type)) {
                                     // ex) wl_2350 -> 2350
-                                    const var_substring = `-${dateKey.substring(3)}`;
-                                    const combinedText = `${key}${var_substring}`;
+                                    const var_substring = `${dateKey.substring(3)}`;
+                                    const combinedText = `${key}.${var_substring}`;
 
                                     const row = document.createElement("div");
                                     row.classList.add("divTableRow");
@@ -244,8 +350,7 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
                                 if (dateKey.includes(type)) {
                                     const yearText = dateKey.substring(3, 7);
                                     const monthText = dateKey.substring(8);
-                                    // ex) 2024-02
-                                    const var_substring = `${yearText}-${monthText}`;
+                                    const var_substring = `${yearText}.${monthText}`;
 
                                     const row = document.createElement("div");
                                     row.classList.add("divTableRow");
@@ -335,6 +440,7 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
     });
     function getCurrentDateTime() {
         const currentDate = new Date();
+        const delayedDate = new Date(currentDate.getTime() - 3 * 60000); // 현재 시간에서 3분을 더한 시간을 계산
         const year = currentDate.getFullYear();
         const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요, 두 자리로 표시하기 위해 0을 채움
         const day = String(currentDate.getDate()).padStart(2, '0'); // 두 자리로 표시하기 위해 0을 채움
