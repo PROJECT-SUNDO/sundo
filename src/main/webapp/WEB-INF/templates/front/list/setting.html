@@ -25,7 +25,9 @@
                 <div>
                     <span th:text="#{관측유형}"></span>
                     :
-                    <span th:text="*{type}"></span>
+                    <span th:if="*{type == 'rf'}" th:text="#{강수량}"></span>
+                    <span th:if="*{type == 'wl'}" th:text="#{수위}"></span>
+                    <span th:if="*{type == 'flw'}" th:text="#{유량}"></span>
                 </div>
             </div>
             <form th:action="@{/list/setting/save}" method="post" th:object="${requestObservatory}" target="ifrmProcess" autocomplete="off" id="editForm">

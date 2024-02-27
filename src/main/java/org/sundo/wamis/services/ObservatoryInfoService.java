@@ -61,7 +61,7 @@ public class ObservatoryInfoService {
 
         if("wl".equals(type)){
             try{
-                outlier = Double.parseDouble(obs.getWrnwl().toString());
+                outlier = Double.parseDouble(obs.getWrnwl());
             }catch (Exception e){
                 outlier = 0;
             }
@@ -117,7 +117,9 @@ public class ObservatoryInfoService {
             if(type.equals("cctv")){
                 andBuilder.and(observatory.cctvUrlH.isNotEmpty());
                 andBuilder.and(observatory.cctvUrlL.isNotEmpty());
+                andBuilder.and(observatory.type.ne("flw"));
             }else if (!type.equals("ALL")) {
+
                 andBuilder.and(observatory.type.eq(type));
                 if(type.equals("flw")){
                     andBuilder.and(observatory.clsyn.isNull());
@@ -169,14 +171,18 @@ public class ObservatoryInfoService {
 
     private void addInfo(Observatory observatory){
         String type = observatory.getType();
+        double data = 0;
 
         if("rf".equals(type)){
-            observatory.setData(observatory.getRf());
+            data = observatory.getRf();
+            observatory.setData(data);
 
         }else if ("wl".equals(type)){
-            observatory.setData(observatory.getWl());
+            data = observatory.getWl();
+            observatory.setData(data);
         }else if("flw".equals(type)){
-            observatory.setData(observatory.getFw());
+            data = observatory.getFw();
+            observatory.setData(data);
         }
 
     }
