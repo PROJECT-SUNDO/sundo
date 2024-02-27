@@ -108,6 +108,9 @@ h2{
     font-size: 15px;
     font-weight: 500;
 }
+.cursor {
+    cursor: pointer;
+}
 
 /* 팝업 공통 S */
 #layer_dim {
