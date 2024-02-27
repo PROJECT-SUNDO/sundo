@@ -246,6 +246,20 @@ window.addEventListener("DOMContentLoaded", function(){
         saveBtn.disabled = false; // 저장 버튼을 활성화
         // 이미지 저장 관련 코드를 작성
 
+        html2canvas(document.querySelector("#map"), {
+            useCORS: true,
+            allowTaint: true,
+        }).then(canvas => {
+            document.body.appendChild(canvas);
+            let dataURL = canvas.toDataURL("image/png");
+            dataURL = dataURL.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+            dataURL = dataURL.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=map.png');
+
+            const aLink = document.createElement("a");
+            aLink.download="map.png";
+            aLink.href = dataURL;
+            aLink.click();
+        });
     };
 
     // PDF 저장 버튼을 눌렀을 때의 동작
@@ -254,9 +268,11 @@ window.addEventListener("DOMContentLoaded", function(){
         saveBtn.disabled = false; // 저장 버튼을 활성화
         // PDF 저장 관련 코드를 작성
 
+        print();
+
     };
     /* 저장하기 버튼 E */
-
+    
     /* 마커 추가 s */
     window.addEventListener("message", function(e) {
         if (!e.data.map) {
