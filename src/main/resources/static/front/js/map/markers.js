@@ -12,7 +12,7 @@ function addMarker(items){
             outlier: 'https://ifh.cc/g/zv2YT2.png'  // 강수량관측소 이상치 값 넘겼을떄
         },
         'flw': 'https://ifh.cc/g/5vB6gZ.png',   // 유량 관측소: 노랑
-        'cctv' : 'https://ifh.cc/g/tk6pwR.png'   // cctv
+        'cctv' : 'https://ifh.cc/g/LMzbNh.png'   // cctv
     }
 
     // 타입에 따른 팝업 크기 정의
@@ -64,11 +64,8 @@ function addMarker(items){
 
         // 해당 타입과 상황에 맞는 마커 이미지 URL 가져오기
         let markerImageUrl;
-
-        // if (frmSide.location.pathname.split("/").pop() === 'cctv') { // cctv인 경우
-        //     markerImageUrl = markerImages['cctv'];
-        // } else
-        if (item.type === 'rf') { // 강수량 관측소인 경우
+        const type = frmSide.location.pathname.split("/").pop();
+        if (type === 'rf') { // 강수량 관측소인 경우
             // 이상치 값을 넘는지 확인
             if (item.data > item.outlier) {
                 // 이상치값을 넘으면 이상치마커
@@ -79,7 +76,7 @@ function addMarker(items){
             }
         } else { // 그 외의 경우
             // 관측소 타입별로 마커사용
-            markerImageUrl = markerImages[item.type];
+            markerImageUrl = markerImages[type];
         }
 
         // 마커 스타일 설정
@@ -110,7 +107,7 @@ function addMarker(items){
         mapLib.map.getView().setZoom(11);
 
 
-        // 마커를 클릭하면 실행되는 함수
+        // 마커를 클릭하면 팝업 함수 실행
         mapLib.map.addEventListener('click', function(event) {
             mapLib.map.forEachFeatureAtPixel(event.pixel, function(feature) {
                 const { popup } = commonLib;
@@ -124,7 +121,6 @@ function addMarker(items){
                 }
 
                 let endpoint;
-                const type = frmSide.location.pathname.split("/").pop();
                 switch(type) {
                     case 'rf':  // 강수량
                         endpoint = '/map/popup/rf';
