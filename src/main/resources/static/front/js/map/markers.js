@@ -14,6 +14,15 @@ function addMarker(items){
         'flw': 'https://ifh.cc/g/onQwV8.png',   // 유량 관측소: 노랑
         'cctv' : 'https://ifh.cc/g/tk6pwR.png'   // cctv
     }
+
+    // 타입에 따른 팝업 크기 정의
+    const popupSizes = {
+        'rf': {width: 430, height: 260},  // 강수량
+        'wl': {width: 430, height: 260},  // 수위
+        'flw': {width: 430, height: 230},  // 유량
+        'cctv' : {width: 380, height: 380}   // cctv
+    };
+
     // 마커 값 설정
     for(const item of items) {
 
@@ -134,7 +143,9 @@ function addMarker(items){
                 const url = `${endpoint}?obscd=${obscd}&item=${encodeURIComponent(JSON.stringify(item))}`;  // 타입에 맞게 url결정
 
                 // 팝업을 띄우는 코드
-                popup.open(url, 430, 350);
+                //popup.open(url, 430, 350);
+                const {width, height} = popupSizes[type]; // 타입에 맞는 팝업 크기 가져오기
+                popup.open(url, width, height);
             });
         });
     }
