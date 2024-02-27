@@ -59,7 +59,7 @@ public class ObservatoryInfoService {
 
         if("wl".equals(type)){
             try{
-                outlier = Double.parseDouble(obs.getWrnwl().toString());
+                outlier = Double.parseDouble(obs.getWrnwl());
             }catch (Exception e){
                 outlier = 0;
             }
@@ -115,7 +115,9 @@ public class ObservatoryInfoService {
             if(type.equals("cctv")){
                 andBuilder.and(observatory.cctvUrlH.isNotEmpty());
                 andBuilder.and(observatory.cctvUrlL.isNotEmpty());
+                andBuilder.and(observatory.type.ne("flw"));
             }else if (!type.equals("ALL")) {
+
                 andBuilder.and(observatory.type.eq(type));
                 if(type.equals("flw")){
                     andBuilder.and(observatory.clsyn.isNull());
