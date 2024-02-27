@@ -44,8 +44,11 @@
         <div class="divTableBody">
             <div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
                 <div class="divTableCell" th:text="*{obsnm}"></div>
-                <div class="divTableCell data" th:classappend="*{ data>= outlier} ? 'on' : ''">
-                    <span th:text="*{data}"></span>
+                <div class="divTableCell data" th:classappend="*{ (type != 'wl' && data >= outlier) or (type == 'wl' && @utils.isOutlier(data, wrnwl))} ? 'on'">
+                    <span th:if="${observatorySearch.type == 'rf'}" th:text="*{rf}"></span>
+                    <span th:if="${observatorySearch.type == 'wl'}" th:text="*{wl}"></span>
+                    <span th:if="${observatorySearch.type == 'flw'}" th:text="*{fw}"></span>
+                    <span th:if="${observatorySearch.type == 'cctv'}" th:text="#{정상}"></span>
                     <span class="unit" th:classappend="${observatorySearch.type == 'rf'? 'rf' : ''}
                           +${observatorySearch.type == 'wl'? 'wl': ''}
                           +${observatorySearch.type == 'flw'? 'fw': ''}"></span>

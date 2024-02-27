@@ -40,9 +40,11 @@ public class ObservatoryInfoService {
     private final WaterLevelFlowRepository waterLevelFlowRepository;
 
     public Observatory get(String obscd) {
-        Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
+        //Observatory data = observatoryRepository.findByObscd(obscd).orElseThrow(ObservationNotFoundException::new);
+        QObservatory observatory = QObservatory.observatory;
+        List<Observatory> items = (List<Observatory>)observatoryRepository.findAll(observatory.obscd.eq(obscd));
 
-        return data;
+        return items == null || items.isEmpty() ? null : items.get(0);
     }
 
     public RequestObservatory getRequest(String obscd, String type){
@@ -59,7 +61,7 @@ public class ObservatoryInfoService {
 
         if("wl".equals(type)){
             try{
-                outlier = Double.parseDouble(obs.getWrnwl().toString());
+                outlier = Double.parseDouble(obs.getWrnwl());
             }catch (Exception e){
                 outlier = 0;
             }
@@ -115,7 +117,9 @@ public class ObservatoryInfoService {
             if(type.equals("cctv")){
                 andBuilder.and(observatory.cctvUrlH.isNotEmpty());
                 andBuilder.and(observatory.cctvUrlL.isNotEmpty());
+                andBuilder.and(observatory.type.ne("flw"));
             }else if (!type.equals("ALL")) {
+
                 andBuilder.and(observatory.type.eq(type));
                 if(type.equals("flw")){
                     andBuilder.and(observatory.clsyn.isNull());
