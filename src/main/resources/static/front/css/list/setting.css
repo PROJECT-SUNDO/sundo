@@ -1,21 +1,3 @@
-.content{
-    padding: 10px 20px;
-}
-
-.title button{
-    cursor: pointer;
-    height: 30px;
-    background: #fff;
-    border: 1px solid var(--main-color);
-    color: var(--main-color);
-    border-radius: 3px;
-    padding: 0 10px;
-}
-.title button:hover{
-    background: var(--main-color);
-    color: #fff;
-}
-
 .observatory{
     border: 1px solid #222;
     border-radius: 5px;

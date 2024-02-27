@@ -4,6 +4,7 @@ main {
 .chart {
     width: 50vw;
     height: 50vh;
+    margin-right: 50px;
 }
 canvas {
     border: 1px solid;
@@ -56,4 +57,24 @@ canvas {
 
 .divTableCell {
     border-bottom: 1px solid;
+}
+
+.search>div:nth-child(2) {
+    padding: 20px 0 0 20px;
+}
+.search>div:nth-child(2) button {
+    float: right;
+}
+.saveBtn {
+    background: var(--main-color);
+    color: #fff;
+    padding: 5px 10px;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+}
+.saveBtn i, .searchTxt i {
+    margin-right: 3px;
+}
+.searchTxt {
+    justify-content: space-between;
 }
