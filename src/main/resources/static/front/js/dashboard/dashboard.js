@@ -54,8 +54,8 @@ const dashboard = {
                 for (const [key, items] of Object.entries(data)) {
                     if (unit == '1D') {
                         for (const [k, v] of Object.entries(items)) {
-                            if (type === 'wl' && k.indexOf("wl_") !== -1) continue;
-                            if (type === 'fw' && k.indexOf("fw_") !== -1) continue;
+                            if (type === 'wl' && k.indexOf("fw_") !== -1) continue;
+                            if (type === 'fw' && k.indexOf("wl_") !== -1) continue;
 
                             const field = `${key}.${k.split('_').pop()}`;
                             labels.push(field);
@@ -64,8 +64,8 @@ const dashboard = {
 
                     } else {
                         for (const [k, v] of Object.entries(items)) {
-                            if (type === 'wl' && k.indexOf("wl_") !== -1) continue;
-                            if (type === 'fw' && k.indexOf("fw_") !== -1) continue;
+                            if (type === 'wl' && k.indexOf("fw_") !== -1) continue;
+                            if (type === 'fw' && k.indexOf("wl_") !== -1) continue;
 
                             let field = k.split("_");
                             field.shift();
