@@ -25,12 +25,13 @@ main {
     cursor: pointer;
 }
 
+
 /* 테이블 스타일 */
 .minimalistBlack {
     border: none;
     border-top: 1px solid;
     text-align: center;
-    width: 15vw;
+    width: 300px;
 }
 .divTable.minimalistBlack .divTableHeading, .divTable.minimalistBlack .divTableHead, .divTable.minimalistBlack .divTableCell {
     border: none;
@@ -41,7 +42,7 @@ main {
 
 .dashList {
     border: 1px solid;
-    border-radius: 5%;
+    border-radius: 2%;
     padding: 10px;
 }
 
