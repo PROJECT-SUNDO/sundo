@@ -79,4 +79,19 @@ window.addEventListener("DOMContentLoaded", function(){
             this.submit();
         })
     }
+
+    /* 강수량, 유량, 수위 단위 노출 */
+    const units = document.querySelectorAll(".unit");
+    for(const unit of units){
+        if(unit.classList.contains("rf")){
+            // 강수량
+            unit.innerHTML = "mm";
+        }else if(unit.classList.contains("wl")){
+            // 수위
+            unit.innerHTML = "m";
+        }else if(unit.classList.contains("fw")){
+            // 유량
+            unit.innerHTML = "m<sup>3</sup>/sec";
+        }
+    }
 })

@@ -55,14 +55,24 @@ public class ObservatoryInfoService {
             obsnm = obs.getObsnm();
             clsyn = "운영".equals(obs.getClsyn());
         }
+        double outlier = obs.getOutlier();
+
+        if("wl".equals(type)){
+            try{
+                outlier = Double.parseDouble(obs.getWrnwl().toString());
+            }catch (Exception e){
+                outlier = 0;
+            }
+        }
 
         RequestObservatory form = RequestObservatory.builder()
+                .mode("update")
                 .obscd(obscd)
                 .obsnm(obsnm)
                 .clsyn(clsyn)
                 .type(type)
                 .useOutlier(obs.isUseOutlier())
-                .outlier(obs.getOutlier())
+                .outlier(outlier)
                 .build();
 
         return form;
@@ -75,7 +85,6 @@ public class ObservatoryInfoService {
      * @return
      */
     public ListData<Observatory> getList(ObservatorySearch search) {
-        System.out.println(search);
 
         int page = Utils.onlyPositiveNumber(search.getPage(), 1);
         int limit = Utils.onlyPositiveNumber(search.getLimit(), 10);
@@ -89,27 +98,30 @@ public class ObservatoryInfoService {
         String obsnm = search.getObsnm();
         String type = search.getType();
 
+
+
+
         if (StringUtils.hasText(obscd)) {
-
             obscd = obscd.trim();
-
             andBuilder.and(observatory.obscd.contains(obscd));
-
         }
 
         if (StringUtils.hasText(obsnm)) {
-
             obsnm = obsnm.trim();
-
             andBuilder.and(observatory.obsnm.contains(obsnm));
-
         }
 
-
         if (StringUtils.hasText(type)) {
-
-            if (!type.equals("ALL")) {
+            if(type.equals("cctv")){
+                andBuilder.and(observatory.cctvUrlH.isNotEmpty());
+                andBuilder.and(observatory.cctvUrlL.isNotEmpty());
+            }else if (!type.equals("ALL")) {
                 andBuilder.and(observatory.type.eq(type));
+                if(type.equals("flw")){
+                    andBuilder.and(observatory.clsyn.isNull());
+                }else{
+                    andBuilder.and(observatory.clsyn.eq("운영"));
+                }
             }
         }
 
@@ -126,6 +138,10 @@ public class ObservatoryInfoService {
                 sort = Sort.by(desc("wl"));
             } else if (order.equals("flw")) {
                 sort = Sort.by(desc("fw"));
+            } else if (order.equals("upstream")) {
+                sort = Sort.by(desc("lon"));
+            } else if (order.equals("downstream")){
+                sort = Sort.by(asc("lon"));
             }
         }
 
@@ -144,7 +160,6 @@ public class ObservatoryInfoService {
 
         List<Observatory> items = data.getContent();
         items.forEach(this::addInfo);
-        System.out.println(items);
 
         return new ListData<>(items, pagination);
     }
@@ -152,14 +167,18 @@ public class ObservatoryInfoService {
 
     private void addInfo(Observatory observatory){
         String type = observatory.getType();
+        double data = 0;
 
         if("rf".equals(type)){
-            observatory.setData(observatory.getRf());
+            data = observatory.getRf();
+            observatory.setData(data);
 
         }else if ("wl".equals(type)){
-            observatory.setData(observatory.getWl());
+            data = observatory.getWl();
+            observatory.setData(data);
         }else if("flw".equals(type)){
-            observatory.setData(observatory.getFw());
+            data = observatory.getFw();
+            observatory.setData(data);
         }
 
     }

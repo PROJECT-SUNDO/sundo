@@ -1,0 +1,36 @@
+.chart {
+    width: 40vw;
+    height: 40vh;
+}
+
+.dashboardBtns{
+    margin-left: 10px;
+}
+
+.dashboardBtns button {
+    color: #fff;
+    font-weight: 700;
+    height: 30px;
+    width: 80px;
+}
+
+.dashboardBtns button.on, .dashboardBtns button:hover{
+    border-bottom: 2px solid #fff;
+}
+
+.observatory{
+    cursor: pointer;
+}
+
+/* 테이블 스타일 */
+.minimalistBlack {
+    border: none;
+    width: 20vw;
+    text-align: center;
+}
+.divTable.minimalistBlack .divTableHeading, .divTable.minimalistBlack .divTableHead, .divTable.minimalistBlack .divTableCell {
+    border: none;
+}
+
+.dashList {
+}
