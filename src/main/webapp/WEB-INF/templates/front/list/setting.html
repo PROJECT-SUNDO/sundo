@@ -25,7 +25,9 @@
                 <div>
                     <span th:text="#{관측유형}"></span>
                     :
-                    <span th:text="*{type}"></span>
+                    <span th:if="*{type == 'rf'}" th:text="#{강수량}"></span>
+                    <span th:if="*{type == 'wl'}" th:text="#{수위}"></span>
+                    <span th:if="*{type == 'flw'}" th:text="#{유량}"></span>
                 </div>
             </div>
             <form th:action="@{/list/setting/save}" method="post" th:object="${requestObservatory}" target="ifrmProcess" autocomplete="off" id="editForm">
@@ -46,9 +48,9 @@
             </form>
         </div>
         <!-- 관측소 데이터 검색 -->
-        <div class="observationSearch mgn-bottom-10px">
-            <div class="flex alc searchTxt">
-                <i class="fa fa-search" aria-hidden="true"></i>
+        <div class="search mgn-bottom-10px">
+            <div class="flex align-center searchTxt">
+                <div class="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></div>
                 <div>검색</div>
             </div>
             <form th:object="${observationSearch}" class="flex align-center obsForm">
@@ -60,7 +62,6 @@
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
                     <input type="date" name="sdate" th:field="*{sdate}">
-                    ~
                     <input type="date" name="edate" th:field="*{edate}">
                 </div>
                 <button type="submit" class="searchBtn" th:text="#{검색}"></button>
