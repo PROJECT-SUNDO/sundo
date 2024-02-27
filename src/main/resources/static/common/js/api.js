@@ -72,7 +72,7 @@ const api = {
                                let hour, min;
                                if (ymdhm.length > 8) {
                                    hour = ymdhm.substring(8, 10);
-                                   min = ymdhm.substring(10);
+                                   min = ymdhm.substring(8);
                                }
 
                                let key = `${year}.${month}.${day}`;
