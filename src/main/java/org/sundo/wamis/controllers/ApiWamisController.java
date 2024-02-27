@@ -8,6 +8,7 @@ import org.sundo.wamis.services.StatisticService;
 import org.sundo.wamis.services.WamisApiService;
 import org.sundo.wamis.services.WamisCctvApiService;
 
+
 @RestController
 @RequestMapping("/api/wamis")
 @RequiredArgsConstructor
