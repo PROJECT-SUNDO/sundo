@@ -1,3 +1,7 @@
+main {
+    padding: 20px 20px 0;
+}
+
 .searchIcon {
     background-color: #000;
     width: 27px;
@@ -93,4 +97,13 @@
 .form_box dd input {
     font-size: 11px;
     width: 220px;
+}
+.searchBtn {
+    float: right;
+}
+.searchBtn i {
+    margin-right: 3px;
+}
+.search>div{
+    justify-content: space-between;
 }
