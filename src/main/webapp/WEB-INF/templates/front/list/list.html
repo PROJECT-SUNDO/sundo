@@ -4,7 +4,7 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
     <h2>관측소 정보</h2>
-    <div class="search">
+    <div class="search mgn-bottom-10px">
         <div class="flex align-center">
             <div class="flex align-center">
                 <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
@@ -35,7 +35,10 @@
     </div>
 
     <div class="submitBtn">
-        <a th:href="@{/list/add}" class="btn" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>등록</a>
+        <a th:href="@{/list/add}" class="btn mgn-bottom-10px flex align-center" >
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            <span>등록</span>
+        </a>
     </div>
     <div class="divTable minimalistBlack">
         <div class="divTableHeading">
