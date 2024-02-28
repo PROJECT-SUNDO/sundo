@@ -3,38 +3,38 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
-
-    <h1>대시보드</h1>
-    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}" id="searchFrm" name="searchFrm" class="no-print">
-
-        <div class="flex align-center no-print">
-            <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
-            <div>검색</div>
-        </div>
-        <hr>
-        <div class="flex align-center">
-            <input type="hidden" name="type" id="type" th:field="*{type}">
-            <input type="text" class="onlyNum" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
-            <label for="obscd">관측소 코드 </label>
-            <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
-            <label for="obsnm">관측소명</label>
-            <div class="searchBtn">
-                <button type="submit" class="btn">검색</button>
+    <form th:action="@{/dashboard/} + ${type}" method="get" th:object="${observatorySearch}" id="searchFrm" name="searchFrm" class="no-print">
+        <div class="search">
+            <div class="flex align-center searchTxt">
+                <div class="flex align-center">
+                    <div class="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                    <div th:text="검색"></div>
+                </div>
+                <div class="flex align-center searchClose">
+                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                    <div th:text="닫기"></div>
+                </div>
+            </div>
+            <div>
+                <label for="obscd">관측소 코드 </label>
+                <input type="hidden" name="type" id="type" th:field="*{type}">
+                <input type="text" class="onlyNum" id="obscd" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
+                <label for="obsnm">관측소명</label>
+                <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
+                <button type="submit" class="searchBtn">검색</button>
             </div>
         </div>
         <div class="flex radio">
-            <div>
+            <div class="grw-1">
                 <input type="radio" name="select" id="month" value="MONTH" checked>
                 <label for="month">월단위별</label>
                 <input type="radio" name="select" id="year" value="YEAR">
                 <label for="year">연단위별</label>
             </div>
-
-            <div>
-                <button type="button" onclick="print()"><i class="fa fa-download" aria-hidden="true"></i><th:block th:text="저장"></th:block></button>
-            </div>
+            <button class="saveBtn"><i class="fa fa-download" aria-hidden="true"></i><th:block th:text="저장"></th:block></button>
         </div>
     </form>
+
 
 
     <div class=" flex">
