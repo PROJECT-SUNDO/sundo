@@ -246,7 +246,7 @@ window.addEventListener("DOMContentLoaded", function(){
     });
 
     // 이미지 저장 버튼을 눌렀을 때의 동작
-    savePngBtn.onclick = function() {
+    savePngBtn.addEventListener("click", function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
         // 'on' 클래스 추가
         this.classList.add("on");
@@ -266,20 +266,31 @@ window.addEventListener("DOMContentLoaded", function(){
             aLink.download="map.png";
             aLink.href = dataURL;
             aLink.click();
+
+            // 이미지 저장 작업이 끝난 후 'on' 클래스 제거
+            saveBtn.classList.remove("on");
+            btnBox.style.display = ""; // 빈 문자열을 설정하면 원래의 값으로 변경 btnBox 스타일 초기화
+            btnBox.classList.add("dn");
+            this.classList.remove("on");
         });
-    };
+    });
 
     // PDF 저장 버튼을 눌렀을 때의 동작
-    savePdfBtn.onclick = function() {
+    savePdfBtn.addEventListener("click", function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
         // 'on' 클래스 추가
         this.classList.add("on");
         // saveBtn.disabled = false; // 저장 버튼을 활성화
-        // PDF 저장 관련 코드를 작성
 
+        // PDF 저장 관련 코드를 작성
         print();
 
-    };
+        // PDF 저장 작업이 끝난 후 'on' 클래스 제거
+        saveBtn.classList.remove("on");
+        btnBox.style.display = ""; // 빈 문자열을 설정하면 원래의 값으로 변경 btnBox 스타일 초기화
+        btnBox.classList.add("dn");
+        this.classList.remove("on");
+    });
     /* 저장하기 버튼 E */
     
     /* 마커 추가 s */

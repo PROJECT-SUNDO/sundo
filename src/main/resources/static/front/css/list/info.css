@@ -1,0 +1,39 @@
+.observatory{
+    border: 1px solid #222;
+    border-radius: 5px;
+    height: 40px;
+}
+
+.observatory div{
+    padding: 0 15px;
+    line-height: 40px;
+}
+
+.observatory span{
+    line-height: 40px;
+}
+
+.excelBtn{
+    background: var(--main-color);
+    color: #fff;
+    padding: 5px 10px;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+}
+
+.excelBtn i, .searchTxt i {
+    margin-right: 3px;
+}
+
+.btns{
+   flex-direction: row-reverse;
+}
+
+.info-list-wrap {
+    height: 400px;
+    overflow-y: auto;
+    position: relative;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+.info-list-wrap * { box-sizing: border-box; }

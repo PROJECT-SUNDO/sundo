@@ -31,7 +31,6 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatoryValidator observatoryValidator;
 	private final ObservationInfoService observationInfoService;
 	private final ObservatoryInfoService observatoryInfoService;
-	private final StatisticInfoService statisticInfoService;
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
@@ -301,13 +300,15 @@ public class ListController implements ExceptionProcessor {
 		}else if (mode.equals("setEdit")){
 			pageTitle = "관측값 수정";
 			addCss.add("list/setting");
-
+			addCss.add("list/edit_obs");
+			addScript.add("list/edit_obs");
 		}else if (mode.equals("delObs")){
 			pageTitle = null;
 			addCss.add("list/delete_obs");
 			addScript.add("list/delete_obs");
 		}else if(mode.equals("info")) {
-			addCss.add("list/setting");
+			addCss.add("list/info");
+			addCss.add("list/style");
 			addScript.add("list/info");
 			addCommonScript.add("api");
 		}
