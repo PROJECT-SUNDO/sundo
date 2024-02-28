@@ -299,6 +299,8 @@ window.addEventListener("DOMContentLoaded", function(){
         if (!e.data.map) {
             return;
         }
+        const { popup } = commonLib;
+        popup.close();
 
         const items = e.data.map;
         addMarker(items);
