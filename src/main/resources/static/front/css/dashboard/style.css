@@ -80,3 +80,7 @@ main {
 .searchTxt {
     justify-content: space-between;
 }
+
+.search{
+    margin: 10px;
+}
