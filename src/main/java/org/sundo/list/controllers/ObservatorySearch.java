@@ -28,5 +28,4 @@ public class ObservatorySearch {
     private String lon; // 경도
 
     private String lat; // 위도
-
 }
