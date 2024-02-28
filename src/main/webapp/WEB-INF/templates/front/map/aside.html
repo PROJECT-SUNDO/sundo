@@ -43,8 +43,8 @@
         </div>
         <div class="divTableBody">
             <div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item : ${items}" th:object="${item}">
-                <div class="divTableCell" th:text="*{obsnm}"></div>
-                <div class="divTableCell data" th:classappend="*{ (type != 'wl' && data >= outlier) or (type == 'wl' && @utils.isOutlier(data, wrnwl))} ? 'on'">
+                <div class="divTableCell cursor" th:text="*{obsnm}" onclick="addMarkerForObscd(this.textContent)"></div>
+                <div class="divTableCell data" th:classappend="*{ (type != 'wl' && data >= outlier) or (type == 'wl' && @utils.isOutlier(data, wrnwl))} ? 'on'" id="obscd-list">
                     <span th:if="${observatorySearch.type == 'rf'}" th:text="*{rf}"></span>
                     <span th:if="${observatorySearch.type == 'wl'}" th:text="*{wl}"></span>
                     <span th:if="${observatorySearch.type == 'flw'}" th:text="*{fw}"></span>
@@ -69,6 +69,24 @@
 
             parent.postMessage({map: items}, "*");
         }
+
+        /* 관측소 선택시 마커 표시하기 s */
+        function addMarkerForObscd(obscd) {
+            const items = JSON.parse(document.getElementById("jsonData").value.trim());
+            const item = items.find(item => item.obsnm === obscd);
+            if (item) {
+                parent.postMessage({map: [item]}, "*");
+            }
+        }
+
+        document.querySelector("#obscd-list").addEventListener("click", function(e) {
+            if (e.target.tagName === "LI") {
+                const obscd = e.target.textContent;  // 클릭된 관측소명 가져오기
+                const item = getItemForObscd(obscd);  // 관측소명에 해당하는 아이템 가져오기
+                addMarker(item);  // 마커 추가
+            }
+        });
+        /* 관측소 선택시 마커 표시하기 e */
     </script>
 
 </main>
