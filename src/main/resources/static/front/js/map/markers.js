@@ -110,8 +110,12 @@ function addMarker(items){
 
     }
 
+
+    mapLib.map.removeEventListener("click", markerClick);
     // 마커를 클릭하면 팝업 함수 실행
-    mapLib.map.addEventListener('click', function(event) {
+    mapLib.map.addEventListener('click', markerClick);
+    function markerClick(event) {
+
         // const pixel = event.pixel;
         // console.log('Screen coordinates:', pixel);
 
@@ -165,13 +169,13 @@ function addMarker(items){
             // 팝업을 띄우는 코드
             //popup.open(url, 430, 350);
             const {width, height} = popupSizes[type]; // 타입에 맞는 팝업 크기 가져오기
+            popup.close();
             popup.open(url, width, height);
 
             // 반복 끝내기
             return true;
         });
-    });
-
+    }
     // 맵의 viewport에 'mousemove' 이벤트 리스너를 추가합니다.
     mapLib.map.getViewport().addEventListener('mousemove', function(e) {
         // 현재 마우스 위치에 대한 픽셀 값을 가져옵니다.
@@ -192,8 +196,8 @@ window.addEventListener("DOMContentLoaded", function() {
     if (el) {
         el.addEventListener("click", function(e) {
             /* 클릭한 좌표 저장 S */
-            const xpos = e.offsetX + 10;
-            const ypos = e.offsetY + 30;
+            const xpos = e.pageX;
+            const ypos = e.pageY;
             window.popupXpos = xpos;
             window.popupYpos = ypos;
 
