@@ -51,6 +51,18 @@ const api = {
              sdate = `${sdate.replace(/\D/g, '')}0000`;
              edate = `${edate.replace(/\D/g, '')}2359`;
 
+          /*   // 4년치
+             if(unit === 'YEAR') {
+             const currentYear = date.getFullYear();
+             console.log(currentYear);
+                for(let year=currentYear; year <= currentYear-3; year++ ) {
+                    sdate = `${year}01010000`;
+                    edate = `${year}12312359`;
+                    console.log('dd');
+                    console.log(`${sdate}/${edate}`);
+                }
+             }*/
+
              url += `/${obscd}/${sdate}/${edate}.json`;
              console.log("url " + url);
              fetch(url)
@@ -292,7 +304,8 @@ excelDown() {
 };
 
 window.addEventListener("DOMContentLoaded", function() {
-    if (typeof frmSearch === 'undefined' || !frmSearch) return;
+
+ /*   if (typeof frmSearch === 'undefined' || !frmSearch) return;
 
     frmSearch.addEventListener("submit", async function(e) {
     //console.log('클릭');
@@ -302,8 +315,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
             const type = frmSearch.type.value;
 
-            /*처리된 데이터(statData)를 기반으로 HTML 테이블을 동적으로 생성하여 화면에 표시합니다. */
-            /* statData 출력 */
+            *//*처리된 데이터(statData)를 기반으로 HTML 테이블을 동적으로 생성하여 화면에 표시합니다. *//*
+            *//* statData 출력 *//*
             const statDataTable = document.getElementById("statDataTable");
             const thead = statDataTable.querySelector("thead");
             const tbody = statDataTable.querySelector("tbody");
@@ -358,11 +371,11 @@ window.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-        /*요청 처리 중 발생할 수 있는 오류를 캐치하고, 콘솔에 오류 메시지를 출력*/
+        *//*요청 처리 중 발생할 수 있는 오류를 캐치하고, 콘솔에 오류 메시지를 출력*//*
         } catch (err) {
             console.error(err);
         }
-    });
+    });*/
 
     const excelDownload = document.getElementById("excelDownload");
     if (excelDownload) {
