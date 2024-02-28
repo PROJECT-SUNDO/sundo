@@ -70,7 +70,7 @@ commonLib.popup = {
                 popupEl.style.top = top + 'px';
             }
 
-            //document.body.appendChild(layerDimEl);
+            document.body.appendChild(layerDimEl);
             document.body.appendChild(popupEl);
 
             const els = document.querySelectorAll(".layer_popup");
