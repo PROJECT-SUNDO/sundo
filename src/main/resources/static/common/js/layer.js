@@ -19,7 +19,7 @@ commonLib.popup = {
 
         /* 레이어 팝업 요소 생성 S */
         const popupEl = document.createElement("div"); // 팝업
-        popupEl.id = "layer_popup";
+        popupEl.id = url.includes('map') ? "layer_popup_map" : "layer_popup";
         popupEl.style.width = width + "px";
         popupEl.style.height = height + "px";
 
@@ -43,7 +43,9 @@ commonLib.popup = {
         /* 레이어 팝업 가운데 배치 좌표 구하기 E */
 
         const layerDimEl = document.createElement("div"); // 레이어 배경
-        layerDimEl.id = "layer_dim";
+        //layerDimEl.id = "layer_dim";
+        /* URL에 'map'이 포함된 경우와 그렇지 않은 경우를 구분 */
+        layerDimEl.id = url.includes('map') ? "layer_dim_map" : "layer_dim";
 
         /* 레이어 팝업 요소 생성 E */
 
@@ -63,9 +65,14 @@ commonLib.popup = {
         const popupEl = document.getElementById("layer_popup");
         if (popupEl) popupEl.parentElement.removeChild(popupEl); // 하위 노드 삭제
 
+        const popupMapEl = document.getElementById("layer_popup_map");
+        if (popupMapEl) popupMapEl.parentElement.removeChild(popupMapEl); // 하위 노드 삭제
+
         const layerDimEl = document.getElementById("layer_dim");
         if(layerDimEl) layerDimEl.parentElement.removeChild(layerDimEl); // 하위 노드 삭제
 
+        const layerDimMapEl = document.getElementById("layer_dim_map");
+        if(layerDimMapEl) layerDimMapEl.parentElement.removeChild(layerDimMapEl); // 하위 노드 삭제
     },
 
 }

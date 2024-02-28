@@ -148,9 +148,18 @@ public class WamisApiService {
                 }
             }
             List<Observatory> items2 = items.stream().filter(s -> StringUtils.hasText(s.getAddr()) && (s.getAddr().contains("서울") || s.getAddr().contains("경기도"))).collect(Collectors.toList());
+
+            items2.forEach(s -> {
+                if(s.getType().equals("rf")){
+                    updatePrecipitation("10M", s.getObscd());
+                }else{
+                    updateWaterLevelFlow("10M", s.getObscd());
+                }
+
+            });
             observatoryRepository.saveAllAndFlush(items2);
 
-            return items;
+            return items2;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -375,4 +384,22 @@ public class WamisApiService {
             observatory.setBbsnnm("하류");
         }
     }
+    public void update() {
+        List<Observatory> items = getObservatories("rf");
+        List<Observatory> items2 = getObservatories("wl");
+        List<Observatory> items3 = getObservatories("flw");
+        items.addAll(items2);
+        items.addAll(items3);
+
+        items.forEach(s -> {
+            if(s.getType().equals("rf")){
+                updatePrecipitation("10M", s.getObscd());
+            }else{
+                updateWaterLevelFlow("10M", s.getObscd());
+            }
+        });
+    }
+
+
+
 }

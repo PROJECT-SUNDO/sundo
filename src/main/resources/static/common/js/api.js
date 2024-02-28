@@ -35,6 +35,7 @@ const api = {
                  case "rf" : url += "rainfall"; break;
                  case "wl":
                  case "fw":
+                 case "flw": // info type
                      url += "waterlevel"; break;
              }
              url += "/list";
@@ -50,8 +51,20 @@ const api = {
              sdate = `${sdate.replace(/\D/g, '')}0000`;
              edate = `${edate.replace(/\D/g, '')}2359`;
 
-             url += `/${obscd}/${sdate}/${edate}.json`;
+          /*   // 4년치
+             if(unit === 'YEAR') {
+             const currentYear = date.getFullYear();
+             console.log(currentYear);
+                for(let year=currentYear; year <= currentYear-3; year++ ) {
+                    sdate = `${year}01010000`;
+                    edate = `${year}12312359`;
+                    console.log('dd');
+                    console.log(`${sdate}/${edate}`);
+                }
+             }*/
 
+             url += `/${obscd}/${sdate}/${edate}.json`;
+             console.log("url " + url);
              fetch(url)
                     .then(res => res.json())
                     .then(result => {
@@ -72,7 +85,7 @@ const api = {
                                let hour, min;
                                if (ymdhm.length > 8) {
                                    hour = ymdhm.substring(8, 10);
-                                   min = ymdhm.substring(10);
+                                   min = ymdhm.substring(8);
                                }
 
                                let key = `${year}.${month}.${day}`;
@@ -154,5 +167,220 @@ const api = {
                     })
                     .catch(err => reject(err));
             });
+    },
+excelDown() {
+        const { excelDown } = commonLib;
+        this.getData()
+           .then(statData => {
+                const type = frmSearch.type.value;
+                const unit = frmSearch.timeUnit.value;
+                const fileName = `${type}_${unit}_${Date.now()}.xls`;
+                let headers = [], rows = [];
+                switch(unit) {
+                    case '1H': // 1시간
+                        headers.push("년월일");
+                        for (let i = 0; i < 24; i++) {
+                            headers.push(`${("" + i).padStart(2, '0')}`);
+                        }
+
+                        for (const [yearMonthDay, items] of Object.entries(statData)) {
+                            const row = [yearMonthDay];
+                            for (let i = 0; i< 24; i++) {
+                                row[i+1] = 0;
+                            }
+
+                            for (const [key, value] of Object.entries(items)) {
+                                if (type === 'wl' && key.indexOf("wl_") !== -1) continue;
+                                 if (type === 'fw' && key.indexOf("fw_") !== -1) continue;
+
+                                const hour = Number(key.split("_").pop());
+                                row[hour+1] = value;
+                            }
+
+                            rows.push(row);
+                        }
+                        break;
+                    case '1D':
+                        headers.push("년월");
+                        for (let i = 1; i <= 31; i++) {
+                          headers.push(`${("" + i).padStart(2, '0')}`);
+                        }
+
+                        for (const [yearMonth, items] of Object.entries(statData)) {
+                          const row = [yearMonth];
+                          for (let i = 1; i<= 31; i++) {
+                            row[i] = 0;
+                          }
+
+                          for (const [key, value] of Object.entries(items)) {
+                            if (type === 'wl' && key.indexOf("wl_") !== -1) continue;
+                            if (type === 'fw' && key.indexOf("fw_") !== -1) continue;
+
+                            const day = Number(key.split("_").pop());
+                            row[day] = value;
+                          }
+
+                          rows.push(row);
+                        }
+
+                        break;
+                    case 'MONTH' :
+                        headers.push("년도");
+                        for (let i = 1; i <= 12; i++) {
+                            headers.push(`${("" + i).padStart(2, '0')}`);
+                        }
+
+                        for (const [year, items] of Object.entries(statData)) {
+                            const row = [year];
+                            for (let i = 1; i<= 12; i++) {
+                                row[i] = 0;
+                            }
+                            for (const [key, value] of Object.entries(items)) {
+                                if (type === 'wl' && key.indexOf("wl_") !== -1) continue;
+                                if (type === 'fw' && key.indexOf("fw_") !== -1) continue;
+
+                                const month = Number(key.split("_").pop());
+                                row[month] = value;
+                            }
+
+                            rows.push(row);
+                        }
+
+                        break;
+                    case 'YEAR' :
+                        headers = Object.keys(statData);
+                        rows = [Object.values(statData)];
+
+                        break;
+                    default:
+                      headers.push("년월일");
+                      for (let i = 0; i < 2400; i+=10) {
+                        headers.push("'" + `${("" + i).padStart(4, '0')}`);
+                        if (i === 2350) {
+                            break;
+                        }
+
+                        if (i > 0 && i % 50 === 0) {
+                            i += 50;
+                            headers.push("'" + `${("" + i).padStart(4, '0')}`);
+                            continue;
+                        }
+                      }
+
+
+                       for (const [yearMonthDay, items] of Object.entries(statData)) {
+                            const row = [yearMonthDay];
+
+                            for (let i = 0; i <= 2400; i+=10) {
+                                row['10M' + i] = 0
+
+                                if (i === 2350) {
+                                    break;
+                                }
+
+                                if (i > 0 && i % 50 === 0) {
+                                    i += 50;
+                                    row['10M' + i] = 0
+                                    continue;
+                                }
+                            }
+
+                            for (const [key, value] of Object.entries(items)) {
+                                if (type === 'wl' && key.indexOf("fw_") !== -1) continue;
+                                if (type === 'fw' && key.indexOf("wl_") !== -1) continue;
+                                console.log(type, key, value);
+
+                                row['10M' + Number(key.split("_")[1])] = value;
+                            }
+                            rows.push(Object.values(row));
+                       }
+
+                }
+                console.log(headers, rows);
+                excelDown(fileName, "sheet1", headers, rows);
+           })
+           .catch(err => console.error(err));
     }
 };
+
+window.addEventListener("DOMContentLoaded", function() {
+
+ /*   if (typeof frmSearch === 'undefined' || !frmSearch) return;
+
+    frmSearch.addEventListener("submit", async function(e) {
+    //console.log('클릭');
+        e.preventDefault();
+        try {
+            const statData = await api.getData();
+
+            const type = frmSearch.type.value;
+
+            *//*처리된 데이터(statData)를 기반으로 HTML 테이블을 동적으로 생성하여 화면에 표시합니다. *//*
+            *//* statData 출력 *//*
+            const statDataTable = document.getElementById("statDataTable");
+            const thead = statDataTable.querySelector("thead");
+            const tbody = statDataTable.querySelector("tbody");
+
+            // thead 출력
+
+            thead.innerHTML = "";
+            const headerRow = document.createElement("tr");
+            const fixedHeader = document.createElement("th");
+            // 고정항목
+            fixedHeader.textContent = "관측일시";
+            headerRow.appendChild(fixedHeader);
+
+            const firstData = statData[Object.keys(statData)[0]];
+            const head_keys = Object.keys(firstData).reverse();
+            for (const key of head_keys) {
+                // 변수명에 타입 포함할 때만
+                if(key.includes(type)) {
+                // ex) wl_00 -> 00 으로 자르기
+                const var_substring = key.substring(3);
+                const th = document.createElement("th");
+                th.textContent = var_substring
+                headerRow.appendChild(th);
+                }
+            }
+            thead.appendChild(headerRow);
+
+            // tbody 출력
+            //const body_keys = Object.keys(statData).reverse();
+            tbody.innerHTML = ""; // tbody 초기화
+            for (const key in statData) {
+                if (statData.hasOwnProperty(key)) {
+                    const rowData = statData[key];
+                    const row = document.createElement("tr");
+
+                    // 날짜 추가
+                    const dateCell = document.createElement("td");
+                    dateCell.textContent = key;
+                    row.appendChild(dateCell);
+
+                    // 데이터 필드 순회 및 추가
+                    const row_keys = Object.keys(rowData).reverse();
+                    for (const dataKey of row_keys) {
+                        if (rowData.hasOwnProperty(dataKey)) {
+                            dataCell = document.createElement("td");
+                            dataCell.textContent = rowData[dataKey];
+                            row.appendChild(dataCell);
+                        }
+                    }
+
+                    tbody.appendChild(row);
+                }
+            }
+
+        *//*요청 처리 중 발생할 수 있는 오류를 캐치하고, 콘솔에 오류 메시지를 출력*//*
+        } catch (err) {
+            console.error(err);
+        }
+    });*/
+
+    const excelDownload = document.getElementById("excelDownload");
+    if (excelDownload) {
+        excelDownload.addEventListener("click", function() {
+            api.excelDown();
+        });
+    }
+});

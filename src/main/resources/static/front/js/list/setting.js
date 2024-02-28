@@ -34,15 +34,17 @@ window.addEventListener("DOMContentLoaded", function(){
 
     const deleteBtn = document.querySelector(".deleteBtn");
 
-    deleteBtn.addEventListener("click", function(){
-        const seqId = this.dataset.seqId;
-        const seq = document.getElementById(seqId).value;
-        const type = document.querySelector("#type").value;
-        const queryString = '?type=' + type;
-        const url = '/list/setting/delete/' + seq + queryString;
+    if(deleteBtn){
+        deleteBtn.addEventListener("click", function(){
+            const seqId = this.dataset.seqId;
+            const seq = document.getElementById(seqId).value;
+            const type = document.querySelector("#type").value;
+            const queryString = '?type=' + type;
+            const url = '/list/setting/delete/' + seq + queryString;
 
-        popup.open(url, 450, 200);
-    })
+            popup.open(url, 450, 200);
+        });
+    }
 
 
 

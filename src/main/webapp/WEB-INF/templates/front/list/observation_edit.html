@@ -3,46 +3,51 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
-    <div class="title">
-        <h2>관측값 수정</h2>
-        <button type="button" id="listBtn">
-            <i class="xi-list"></i>
-            <span th:text="#{목록}"></span>
-        </button>
-    </div>
-    <form th:object="${requestObservation}" th:action="@{/list/setting/edit}" method="post" target="ifrmProcess" autocomplete="off">
-        <input type="hidden" name="seq" th:value="*{seq}">
-        <input type="hidden" name="obscd" th:value="*{obscd}">
-        <input type="hidden" name="obsnm" th:value="*{obsnm}">
-        <input type="hidden" name="type" th:value="*{type}">
-        <input type="hidden" name="ymdhm" th:value="*{ymdhm}">
-        <div>
-            <div th:text="#{관측소명}"></div>
-            <div th:text="*{obsnm}"></div>
+    <div class="edit">
+        <div class="title flex just-btw align-center mgn-bottom-10px">
+            <h2>관측값 수정</h2>
+            <button type="button" id="listBtn">
+                <i class="xi-list"></i>
+                <span th:text="#{목록}"></span>
+            </button>
         </div>
-        <div>
-            <div th:text="#{관측유형}"></div>
-            <div th:text="*{type}"></div>
-        </div>
-        <div>
-            <div th:text="#{관측일시}"></div>
-            <div th:text="*{ymdhm}"></div>
-        </div>
-        <div>
-            <div th:text="#{관측값}"></div>
-            <div>
-                <input type="text" class="inputNum" name="rf" th:if="*{type == 'rf'}" th:field="*{rf}">
-                <input type="text" class="inputNum" name="wl" th:if="*{type == 'wl'}" th:field="*{wl}">
-                <input type="text" class="inputNum" name="flw" th:if="*{type == 'flw'}" th:field="*{fw}">
-                <span class="unit" th:classappend="${requestObservation.type == 'rf'? 'rf' : ''}
-                          +${requestObservation.type == 'wl'? 'wl': ''}
-                          +${requestObservation.type == 'flw'? 'fw': ''}"></span>
+        <hr />
+        <form th:object="${requestObservation}" class="searchFrm" th:action="@{/list/setting/edit}" method="post" target="ifrmProcess" autocomplete="off">
+            <input type="hidden" name="seq" th:value="*{seq}">
+            <input type="hidden" name="obscd" th:value="*{obscd}">
+            <input type="hidden" name="obsnm" th:value="*{obsnm}">
+            <input type="hidden" name="type" th:value="*{type}">
+            <input type="hidden" name="ymdhm" th:value="*{ymdhm}">
+            <div class="flex align-center mgn-bottom-10px">
+                <div class="cell" th:text="#{관측소명}"></div>
+                <div th:text="*{obsnm}"></div>
             </div>
-        </div>
-        <button type="submit" class="saveBtn">
-            <i class="fa fa-pencil-square-o"></i>
-            <span th:text="#{수정}"></span>
-        </button>
-    </form>
+            <div class="flex align-center mgn-bottom-10px">
+                <div class="cell" th:text="#{관측유형}"></div>
+                <div th:text="*{type}"></div>
+            </div>
+            <div class="flex align-center mgn-bottom-10px">
+                <div class="cell" th:text="#{관측일시}"></div>
+                <div th:text="*{ymdhm}"></div>
+            </div>
+            <div class="flex align-center mgn-bottom-10px">
+                <div class="cell" th:text="#{관측값}"></div>
+                <div>
+                    <input type="text" class="inputNum" name="rf" th:if="*{type == 'rf'}" th:field="*{rf}">
+                    <input type="text" class="inputNum" name="wl" th:if="*{type == 'wl'}" th:field="*{wl}">
+                    <input type="text" class="inputNum" name="flw" th:if="*{type == 'flw'}" th:field="*{fw}">
+                    <span class="unit" th:classappend="${requestObservation.type == 'rf'? 'rf' : ''}
+                              +${requestObservation.type == 'wl'? 'wl': ''}
+                              +${requestObservation.type == 'flw'? 'fw': ''}"></span>
+                </div>
+            </div>
+            <div class="btns flex align-center">
+                <button type="submit" class="saveBtn">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <span th:text="#{수정}"></span>
+                </button>
+            </div>
+        </form>
+    </div>
 </main>
 </html>

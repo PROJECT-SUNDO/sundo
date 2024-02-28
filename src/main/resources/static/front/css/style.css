@@ -3,6 +3,7 @@
     height: 100%;
 }
 
+
 /* header */
 .header{
     height: 100px;
@@ -38,4 +39,8 @@
 .page-link button.on, .page-link button:hover{
     background: #fff;
     color: #293051;
+}
+
+.searchClose{
+    cursor: pointer;
 }
