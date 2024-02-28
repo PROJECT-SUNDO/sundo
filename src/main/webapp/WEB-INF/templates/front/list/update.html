@@ -5,12 +5,12 @@
 <main layout:fragment="content" >
     <div class="observatory_box">
     <div class="title flex align-center mgn-bottom-10px just-btw">
-
         <h1>관측소 정보 수정</h1>
         <div class="listbtn flex align-center">
             <a th:href="@{/list}"  class="btn" ><i class="xi-list"></i>목록</a>
         </div>
     </div>
+        <hr>
         <div class="box">
             <form name="frmJoin" method="post" th:action="@{/list/save}" autocomplete="off" th:object="${requestObservatory}">
                 <input type="hidden" name="mode" value="update">
