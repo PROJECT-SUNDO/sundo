@@ -44,17 +44,23 @@ main {
 }
 
 .listbtn{
-    float: right;
     border-radius: 3px;
     padding: 0 15px;
     height: 30px;
-    background: var(--main-color);
+    background: #fff;
     border: 1px solid var(--main-color);
 }
+.listbtn:hover{
+    background: var(--main-color);
+}
+.listbtn a{
+    color: var(--main-color);
+}
 
-.listbtn a {
+.listbtn:hover a{
     color: #fff;
 }
+
 
 .submitBtn a{
     float: right;
@@ -106,4 +112,8 @@ main {
 }
 .search>div{
     justify-content: space-between;
+}
+
+[type="checkbox"]:enabled:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) #d3d3d3;
 }
