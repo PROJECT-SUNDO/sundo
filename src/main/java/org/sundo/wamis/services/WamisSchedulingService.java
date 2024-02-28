@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.sundo.wamis.entities.Observatory;
+import org.sundo.wamis.entities.QObservatory;
+import org.sundo.wamis.repositories.ObservatoryRepository;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +17,7 @@ public class WamisSchedulingService {
     private static Logger logger = Logger.getLogger(WamisSchedulingService.class);
 
     private final WamisApiService apiService;
+    private final ObservatoryRepository observatoryRepository;
 
 
     /**
