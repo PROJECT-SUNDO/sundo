@@ -1,16 +1,18 @@
 var commonLib = commonLib || {};
 
 commonLib.popup = {
+    isOpen : false,
     /**
-    * 레이어 팝업 열기
-    *
-    * @param url : 팝업으로 열 주소
-    * @param width : 팝업 너비, 기본값 350
-    * @param height : 팝업 높이, 기본값 350
-    */
+     * 레이어 팝업 열기
+     *
+     * @param url : 팝업으로 열 주소
+     * @param width : 팝업 너비, 기본값 350
+     * @param height : 팝업 높이, 기본값 350
+     */
     open(url, width, height) {
-        if(!url) return;
+        if(!url && this.isOpen) return;
 
+        this.isOpen = true;
 
         width = width || 350;
         height =  height || 350;
@@ -32,10 +34,10 @@ commonLib.popup = {
         iframeEl.src = url;
 
         /**
-        * appendChild
-        * 부모의 자식 노드 리스트 중 마지막 자식으로 붙인다
-        parentNode.appendChild(childNode);
-        */
+         * appendChild
+         * 부모의 자식 노드 리스트 중 마지막 자식으로 붙인다
+         parentNode.appendChild(childNode);
+         */
         popupEl.appendChild(iframeEl);
 
 
@@ -68,8 +70,15 @@ commonLib.popup = {
                 popupEl.style.top = top + 'px';
             }
 
-            document.body.appendChild(layerDimEl);
+            //document.body.appendChild(layerDimEl);
             document.body.appendChild(popupEl);
+
+            const els = document.querySelectorAll(".layer_popup");
+            if (els.length > 1) {
+                for (let i = 0; i < els.length - 1; i++) {
+                    els[i].parentElement.removeChild(els[i]);
+                }
+            }
         }, 500);
 
         /* 레이어 팝업 노출 S */
@@ -78,9 +87,9 @@ commonLib.popup = {
         layerDimEl.addEventListener("click", this.close);
     },
     /**
-    * 레이어 팝업 닫기
-    *
-    */
+     * 레이어 팝업 닫기
+     *
+     */
     close() {
         const popupEl = parent.document.getElementById("layer_popup");
         if (popupEl) popupEl.parentElement.removeChild(popupEl); // 하위 노드 삭제
@@ -98,6 +107,8 @@ commonLib.popup = {
         for (const el of els) {
             el.parentElement.removeChild(el);
         }
+
+        this.isOpen = false;
     },
 
 }
