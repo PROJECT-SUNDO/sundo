@@ -40,11 +40,18 @@
 
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
-                    <input type="date" name="sdate" th:field="*{sdate}">
-                    ~
-                    <input type="date" name="edate" th:field="*{edate}">
-
-
+                    <span class="viewdate">
+                        <input type="date" name="sdate" th:field="*{sdate}">
+                        ~
+                        <input type="date" name="edate" th:field="*{edate}">
+                    </span>
+                    <span class="onlyYear">
+                        <select name="startYear" id="startYear" th:field="*{sdate}">
+                        </select>
+                        ~
+                        <select name="endYear" id="endYear" th:field="*{edate}">
+                        </select>
+                    </span>
                     <select name="timeUnit" id="timeUnit" th:field="*{timeUnit}">
                         <option value="10M" th:text="#{10분}"></option>
                         <option value="1H" th:text="#{1시간}"></option>
@@ -58,16 +65,15 @@
             </form>
         </div>
 
-        <div class="divTable minimalistBlack">
+        <div class="divTable minimalistBlack" id="data">
             <div class="divTableHeading">
             </div>
             <div class="divTableBody">
-
             </div>
         </div>
-
-        <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+        <ul class="pagination" id="pagination"></ul>
     </section>
+
 
 </main>
 </html>

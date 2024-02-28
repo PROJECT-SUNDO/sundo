@@ -1,7 +1,8 @@
 var commonLib = commonLib || {};
 
 window.addEventListener("DOMContentLoaded", function(){
-
+    const onlyYearDiv = document.querySelector(".onlyYear");
+    onlyYearDiv.style.display = "none";
     const referrer = document.referrer;
     if (referrer.indexOf("/info") == -1) {
         sessionStorage.setItem("referrer", referrer);
@@ -10,14 +11,46 @@ window.addEventListener("DOMContentLoaded", function(){
     // 목록 버튼
     const listBtn = document.querySelector("#listBtn");
     listBtn.addEventListener("click", function(){
+        const referrer = sessionStorage.getItem("referrer");
+        const url = referrer ? referrer : '/list';
 
-       const referrer = sessionStorage.getItem("referrer");
-       const url = referrer ? referrer : '/list';
-
-       sessionStorage.removeItem("referrer");
-       location.href=url;
-
+        sessionStorage.removeItem("referrer");
+        location.href=url;
     });
+
+    const timeUnitEl = document.querySelector("#timeUnit");
+    const viewdateDiv = document.querySelector(".viewdate");
+
+    timeUnitEl.addEventListener("change", function(){
+        if(timeUnitEl.value === 'YEAR') {
+            viewdateDiv.style.display = "none";
+            onlyYearDiv.style.display = "block";
+            const startYearSelect = document.querySelector("#startYear");
+            const endYearSelect = document.querySelector("#endYear");
+            console.log(endYearSelect)
+            const currentYear = new Date().getFullYear();
+
+            for (let year = currentYear - 3; year <= currentYear; year++) {
+                const startOption = document.createElement("option");
+                startOption.value = year;
+                startOption.text = year;
+                startYearSelect.appendChild(startOption);
+                startYearSelect.lastElementChild.selected = true;
+
+                const endOption = document.createElement("option");
+                endOption.value = year;
+                endOption.text = year;
+                endYearSelect.appendChild(endOption);
+                endYearSelect.lastElementChild.selected = true;
+            }
+        } else {
+            onlyYearDiv.style.display = "none";
+            viewdateDiv.style.display = "block";
+        }
+    });
+
+
+
 
 const info = {
     async init() {
@@ -362,15 +395,9 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
                                     // 데이터
                                     const dataCell = document.createElement("div");
                                     dataCell.classList.add("divTableCell");
-
                                     // wl, fw는 평균 구하기
                                     if(type === 'wl' || type === 'fw') {
-                                        //const date_length =
-                                        const daysInMonth = getDaysInMonth(parseInt(yearText), parseInt(monthText));
-                                        dataCell.textContent = rowData[dateKey];
-
-                                        //rowData[dateKey] /= daysInMonth; // 데이터
-                                        //dataCell.textContent = rowData[dateKey].toFixed(2); // 두 자리까지 반올림
+                                        dataCell.textContent = rowData[dateKey].toFixed(2);
                                     } else {
                                         dataCell.textContent = rowData[dateKey]
                                     }
@@ -474,5 +501,7 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
         return daysUntilToday;
         }
 
+
 });
+
 
