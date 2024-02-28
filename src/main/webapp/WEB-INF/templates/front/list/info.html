@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
-    <section class="content">
+    <section class="content_list">
         <div class="flex just-btw title align-center">
             <h2>관측정보</h2>
             <button type="button" id="listBtn">
@@ -30,11 +30,17 @@
         </div>
         <!-- 관측소 데이터 검색 -->
         <div class="search mgn-bottom-10px">
-            <div class="flex align-center searchTxt">
-                <div class="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                <div>검색</div>
+            <div class="flex align-center just-btw mgn-bottom-10px">
+                <div class="flex align-center searchTxt">
+                    <div class="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                    <div>검색</div>
+                </div>
+                <div class="flex align-center searchClose">
+                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                    <div th:text="닫기"></div>
+                </div>
             </div>
-            <form th:object="${observationSearch}" name="frmSearch" class="flex align-center obsForm">
+            <form th:object="${observationSearch}" name="frmSearch" class="bdr-top flex align-center obsForm searchEl">
                 <input type="hidden" name="type" th:value="${requestObservatory.type}">
                 <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
                 <!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
