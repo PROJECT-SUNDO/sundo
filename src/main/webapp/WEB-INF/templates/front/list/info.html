@@ -5,6 +5,7 @@
 <main layout:fragment="content">
     <section class="content">
         <div class="flex just-btw title align-center">
+            <h2>관측정보</h2>
             <button type="button" id="listBtn">
                 <i class="xi-list"></i>
                 <span th:text="#{목록}"></span>
@@ -40,7 +41,7 @@
 
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
-                    <span class="viewdate">
+                    <span class="exceptYear">
                         <input type="date" name="sdate" th:field="*{sdate}">
                         ~
                         <input type="date" name="edate" th:field="*{edate}">
@@ -61,17 +62,22 @@
                     </select>
                 </div>
                 <button type="submit" class="searchBtn" th:text="#{검색}"></button>
-                <button type="button" class="saveBtn" id="excelDownload">저장</button>
             </form>
         </div>
-
-        <div class="divTable minimalistBlack" id="data">
-            <div class="divTableHeading">
+        <div>
+            <div class="flex align-center btns">
+                <button type="button" class="excelBtn mgn-bottom-10px" id="excelDownload">
+                    <i class="fa fa-download"></i><span th:text="저장"></span>
+                </button>
             </div>
-            <div class="divTableBody">
+                <div class="divTable minimalistBlack" id="data">
+                <div class="divTableHeading">
+                </div>
+                <div class="divTableBody">
+                </div>
             </div>
+            <ul class="pagination" id="pagination"></ul>
         </div>
-        <ul class="pagination" id="pagination"></ul>
     </section>
 
 
