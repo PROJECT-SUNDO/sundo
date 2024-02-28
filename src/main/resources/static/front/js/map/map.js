@@ -237,13 +237,18 @@ window.addEventListener("DOMContentLoaded", function(){
     // 저장 버튼을 눌렀을 때의 동작
     saveBtn.onclick = function() {
         btnBox.style.display = "flex"; // 이미지 저장, PDF 저장 버튼을 보여줌
-        saveBtn.disabled = true; // 저장 버튼을 비활성화
+
+        // 'on' 클래스 추가
+        this.classList.add("on");
+        // saveBtn.disabled = true; // 저장 버튼을 비활성화
     };
 
     // 이미지 저장 버튼을 눌렀을 때의 동작
     savePngBtn.onclick = function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
-        saveBtn.disabled = false; // 저장 버튼을 활성화
+        // 'on' 클래스 추가
+        this.classList.add("on");
+        // saveBtn.disabled = false; // 저장 버튼을 활성화
         // 이미지 저장 관련 코드를 작성
 
         html2canvas(document.querySelector("#map"), {
@@ -265,7 +270,9 @@ window.addEventListener("DOMContentLoaded", function(){
     // PDF 저장 버튼을 눌렀을 때의 동작
     savePdfBtn.onclick = function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
-        saveBtn.disabled = false; // 저장 버튼을 활성화
+        // 'on' 클래스 추가
+        this.classList.add("on");
+        // saveBtn.disabled = false; // 저장 버튼을 활성화
         // PDF 저장 관련 코드를 작성
 
         print();
