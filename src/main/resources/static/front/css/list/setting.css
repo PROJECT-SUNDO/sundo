@@ -1,22 +1,3 @@
-.content{
-    padding: 10px 20px;
-}
-
-.title button{
-    cursor: pointer;
-    height: 30px;
-    background: #fff;
-    border: 1px solid var(--main-color);
-    color: var(--main-color);
-    border-radius: 3px;
-    padding: 0 10px;
-}
-.title button:hover{
-    background: var(--main-color);
-    color: #fff;
-
-}
-
 .observatory{
     border: 1px solid #222;
     border-radius: 5px;
@@ -52,49 +33,6 @@
     float: right;
 }
 
-.observationSearch{
-    clear: both;
-    border: 1px solid #222;
-    border-radius: 5px;
-    padding: 15px;
-}
-
-.fa.fa-search{
-    border: 1px solid var(--main-color);
-    border-radius: 50%;
-    width: 27px;
-    height: 27px;
-    background: var(--main-color);
-    color: #fff;
-    text-align: center;
-    line-height: 27px;
-    margin: 0 20px;
-}
-
-.searchTxt{
-    border-bottom: 1px solid #222;
-    padding-bottom: 10px;
-}
-
-.obsForm{
-    padding-top: 10px;
-}
-
-.obsForm span{
-    padding: 0 10px;
-}
-
-.obsForm input{
-    padding: 0 5px;
-}
-
-.searchBtn{
-    background: var(--main-color);
-    color: #fff;
-    padding: 5px 10px;
-    border: 1px solid var(--main-color);
-    border-radius: 3px;
-}
 
 /* 알약버튼 */
 label {
