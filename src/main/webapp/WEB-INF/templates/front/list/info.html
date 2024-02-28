@@ -5,6 +5,7 @@
 <main layout:fragment="content">
     <section class="content">
         <div class="flex just-btw title align-center">
+            <h2>관측정보</h2>
             <button type="button" id="listBtn">
                 <i class="xi-list"></i>
                 <span th:text="#{목록}"></span>
@@ -40,7 +41,7 @@
 
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
-                    <span class="viewdate">
+                    <span class="exceptYear">
                         <input type="date" name="sdate" th:field="*{sdate}">
                         ~
                         <input type="date" name="edate" th:field="*{edate}">
