@@ -62,17 +62,22 @@
                     </select>
                 </div>
                 <button type="submit" class="searchBtn" th:text="#{검색}"></button>
-                <button type="button" class="saveBtn" id="excelDownload">저장</button>
             </form>
         </div>
-
-        <div class="divTable minimalistBlack" id="data">
-            <div class="divTableHeading">
+        <div>
+            <div class="flex align-center btns">
+                <button type="button" class="excelBtn mgn-bottom-10px" id="excelDownload">
+                    <i class="fa fa-download"></i><span th:text="저장"></span>
+                </button>
             </div>
-            <div class="divTableBody">
+                <div class="divTable minimalistBlack" id="data">
+                <div class="divTableHeading">
+                </div>
+                <div class="divTableBody">
+                </div>
             </div>
+            <ul class="pagination" id="pagination"></ul>
         </div>
-        <ul class="pagination" id="pagination"></ul>
     </section>
 
 
