@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
-    <form th:action="@{/dashboard}" method="get" th:object="${observatorySearch}" id="searchFrm" name="searchFrm" class="no-print">
+    <form th:action="@{/dashboard/} + ${type}" method="get" th:object="${observatorySearch}" id="searchFrm" name="searchFrm" class="no-print">
         <div class="search">
             <div class="flex align-center searchTxt">
                 <div class="flex align-center">
