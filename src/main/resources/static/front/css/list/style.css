@@ -117,3 +117,7 @@ main {
 [type="checkbox"]:enabled:hover {
   box-shadow: 0 0 0 max(4px, 0.2em) #d3d3d3;
 }
+.content_list {
+    height: 100%;
+    margin: 10px;
+}
