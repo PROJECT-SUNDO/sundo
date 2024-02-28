@@ -5,7 +5,7 @@ main {
     margin-left: 10px;
     margin-right: 10px;
     width: 70%;
-    min-height: 550px;
+    height: 550px;
     border: 1px solid #222;
     border-radius: 5px;
 }
@@ -39,7 +39,7 @@ main {
     border-top: 1px solid;
     text-align: center;
     width: 100%;
-    min-height: 500px;
+    height: 450px;
 }
 .divTable.minimalistBlack .divTableHeading, .divTable.minimalistBlack .divTableHead, .divTable.minimalistBlack .divTableCell {
     border: none;
@@ -50,9 +50,8 @@ main {
 .dashList {
     border: 1px solid;
     border-radius: 5px;
-    padding: 10px;
     width: 30%;
-    min-height: 550px;
+    height: 550px;
     margin-right: 10px;
 }
 
