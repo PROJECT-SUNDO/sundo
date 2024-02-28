@@ -255,14 +255,14 @@ excelDown() {
                     default:
                       headers.push("년월일");
                       for (let i = 0; i < 2400; i+=10) {
-                        headers.push(`${("" + i).padStart(4, '0')}`);
+                        headers.push("'" + `${("" + i).padStart(4, '0')}`);
                         if (i === 2350) {
                             break;
                         }
 
                         if (i > 0 && i % 50 === 0) {
                             i += 50;
-                            headers.push(`${("" + i).padStart(4, '0')}`);
+                            headers.push("'" + `${("" + i).padStart(4, '0')}`);
                             continue;
                         }
                       }

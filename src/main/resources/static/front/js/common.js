@@ -40,5 +40,24 @@ window.addEventListener("DOMContentLoaded", function(){
         });
     }
     /* 양식 공통 처리 E */
+
+
+    const searchClose = document.querySelector(".searchClose");
+    if(searchClose){
+        const textEl = searchClose.querySelector("div");
+        const searchEl = document.querySelector(".searchEl");
+        searchClose.addEventListener("click", function(){
+            if(searchClose.classList.contains("on")){
+                searchClose.classList.remove("on");
+                textEl.innerText = '닫기';
+                searchEl.classList.remove("dn");
+            }else{
+                searchClose.classList.add("on");
+                textEl.innerText = '열기';
+                searchEl.classList.add("dn");
+
+            }
+        })
+    }
 });
 
