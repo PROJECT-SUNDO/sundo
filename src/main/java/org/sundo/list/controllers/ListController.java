@@ -300,7 +300,8 @@ public class ListController implements ExceptionProcessor {
 		}else if (mode.equals("setEdit")){
 			pageTitle = "관측값 수정";
 			addCss.add("list/setting");
-
+			addCss.add("list/edit_obs");
+			addScript.add("list/edit_obs");
 		}else if (mode.equals("delObs")){
 			pageTitle = null;
 			addCss.add("list/delete_obs");
