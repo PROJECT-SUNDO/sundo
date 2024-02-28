@@ -31,7 +31,6 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatoryValidator observatoryValidator;
 	private final ObservationInfoService observationInfoService;
 	private final ObservatoryInfoService observatoryInfoService;
-	private final StatisticInfoService statisticInfoService;
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
