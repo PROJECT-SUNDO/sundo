@@ -27,6 +27,7 @@ commonLib.popup = {
         iframeEl.width = width;
         iframeEl.height = height;
         iframeEl.src = url;
+
         /**
         * appendChild
         * 부모의 자식 노드 리스트 중 마지막 자식으로 붙인다
@@ -49,9 +50,26 @@ commonLib.popup = {
 
         /* 레이어 팝업 요소 생성 E */
 
+
         /* 레이어 팝업 노출 S */
-        document.body.appendChild(layerDimEl);
-        document.body.appendChild(popupEl);
+        // document.body.appendChild(layerDimEl);
+        // document.body.appendChild(popupEl);
+
+        setTimeout(function() {
+            if (window.popupXpos && window.popupYpos) {
+                // 팝업이 화면 밖으로 나가지 않도록 좌표 조정
+                const left = Math.min(window.popupXpos, window.innerWidth - width);
+                const top = Math.min(window.popupYpos, window.innerHeight - height)
+
+                popupEl.style.left = left + 'px';
+                popupEl.style.top = top + 'px';
+                console.log("테스트", window.popupXpos, window.popupYpos);
+            }
+
+            document.body.appendChild(layerDimEl);
+            document.body.appendChild(popupEl);
+        }, 500);
+
         /* 레이어 팝업 노출 S */
 
         /* 레이어 배경 클릭 시 close 처리 */
