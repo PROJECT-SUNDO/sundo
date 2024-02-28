@@ -253,33 +253,50 @@ excelDown() {
 
                         break;
                     default:
-                       headers.push("년월일");
-                       for (let i = 0; i <= 50; i+=10) {
-                            headers.push(`${("" + i).padStart(2, '0')}`);
-                       }
+                      headers.push("년월일");
+                      for (let i = 0; i < 2400; i+=10) {
+                        headers.push(`${("" + i).padStart(4, '0')}`);
+                        if (i === 2350) {
+                            break;
+                        }
+
+                        if (i > 0 && i % 50 === 0) {
+                            i += 50;
+                            headers.push(`${("" + i).padStart(4, '0')}`);
+                            continue;
+                        }
+                      }
+
 
                        for (const [yearMonthDay, items] of Object.entries(statData)) {
                             const row = [yearMonthDay];
-                            for (let i = 1; i <= 5; i++) {
-                                row[i] = 0;
+
+                            for (let i = 0; i <= 2400; i+=10) {
+                                row['10M' + i] = 0
+
+                                if (i === 2350) {
+                                    break;
+                                }
+
+                                if (i > 0 && i % 50 === 0) {
+                                    i += 50;
+                                    row['10M' + i] = 0
+                                    continue;
+                                }
                             }
 
-                            const _items = [];
                             for (const [key, value] of Object.entries(items)) {
-                                if (type === 'wl' && key.indexOf("wl_") !== -1) continue;
-                                if (type === 'fw' && key.indexOf("fw_") !== -1) continue;
+                                if (type === 'wl' && key.indexOf("fw_") !== -1) continue;
+                                if (type === 'fw' && key.indexOf("wl_") !== -1) continue;
+                                console.log(type, key, value);
 
-                                _items.push(value);
+                                row['10M' + Number(key.split("_")[1])] = value;
                             }
-
-                            for (let i = 0; i < _items.length; i++) {
-                                row[i+1] = _items[i];
-                            }
-                            rows.push(row);
+                            rows.push(Object.values(row));
                        }
 
                 }
-
+                console.log(headers, rows);
                 excelDown(fileName, "sheet1", headers, rows);
            })
            .catch(err => console.error(err));
