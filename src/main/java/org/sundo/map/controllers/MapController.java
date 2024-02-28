@@ -66,6 +66,8 @@ public class MapController {
 
 		Observatory observatory = observatoryRepository.getOne(obscd, type.equals("cctv") ? "wl" : type).orElseThrow(ObservatoryNotFoundException::new);
 
+
+
 		model.addAttribute("observatory", observatory);
 
 		commonProcess("info", model);
