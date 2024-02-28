@@ -100,7 +100,6 @@ h2{
     float: right;
 }
 
-
 .font-18px{
     font-size: 18px;
     font-weight: 500;
@@ -109,10 +108,44 @@ h2{
     font-size: 15px;
     font-weight: 500;
 }
+.cursor {
+    cursor: pointer;
+}
 
 /* 팝업 공통 S */
-#layer_dim { position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; background:rgba(0, 0, 0, 0.7); cursor: pointer; }
-#layer_popup { position: fixed; z-index: 101; background: #fff; border-radius: 5px; overflow: hidden; }
+#layer_dim {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+#layer_dim_map {
+    /*position: fixed;*/
+    position: absolute; // 변경된 부분
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background:rgba(0, 0, 0, 0);
+    cursor: pointer;
+}
+#layer_popup {
+    position: fixed;
+    z-index: 101;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+#layer_popup_map {
+    position: absolute;
+    z-index: 101;
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
 #layer_popup iframe { border: 0; }
 /* 팝업 공통 E */
 
@@ -261,4 +294,71 @@ h2{
     }
 
     @page { margin: 0; }
+}
+
+/* 검색 아이콘*/
+
+.searchIcon {
+    background-color: #000;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+}
+
+.searchIcon i {
+    color: #fff;
+}
+
+/* 검색 창 */
+.search{
+    clear: both;
+    border: 1px solid #222;
+    border-radius: 5px;
+    padding: 15px;
+}
+.searchTxt{
+    border-bottom: 1px solid #222;
+    padding-bottom: 10px;
+}
+.obsForm{
+    padding-top: 10px;
+}
+.obsForm span{
+    padding: 0 10px;
+}
+.obsForm input{
+    padding: 0 5px;
+}
+.searchBtn{
+    background: var(--main-color);
+    color: #fff;
+    padding: 5px 10px;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+}
+
+/* 목록 버튼 */
+
+.title button{
+    cursor: pointer;
+    height: 30px;
+    background: #fff;
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+    border-radius: 3px;
+    padding: 0 10px;
+}
+.title button:hover{
+    background: var(--main-color);
+    color: #fff;
+}
+
+.searchClose {
+    border: 1px solid;
+    padding: 5px;
+    border-radius: 5px;
 }

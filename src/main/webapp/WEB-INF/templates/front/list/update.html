@@ -9,8 +9,9 @@
             <a th:href="@{/list}"  class="btn" ><i class="xi-list"></i>목록</a>
         </div>
         <br>
+        <br>
         <hr>
-        <div class="flex align-center">
+        <div class="box">
             <form name="frmJoin" method="post" th:action="@{/list/save}" autocomplete="off" th:object="${requestObservatory}">
                 <input type="hidden" name="mode" value="update">
                 <input type="hidden" name="obscd" th:field="*{obscd}">

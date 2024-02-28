@@ -3,33 +3,39 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
-    <h1>관측소 정보</h1>
-    <form id="searchFrm" th:action="@{/list}" method="get" th:object="${observatorySearch}">
+    <h2>관측소 정보</h2>
+    <div class="search">
         <div class="flex align-center">
-            <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
-            <div>검색</div>
-        </div>
-        <hr>
-        <div class="flex align-center">
-            <label for="obscd">관측소 코드 </label>
-            <input type="text" id="obscd" class="onlyNum" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
-            <label for="obsnm">관측소명</label>
-            <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
-            <label for="type">관측변수</label>
-            <select name="type" th:field="*{type}" id="type">
-                <option value="ALL">전체</option>
-                <option value="rf">강수량</option>
-                <option value="wl">수위</option>
-                <option value="flw">유량</option>
-            </select>
-            <div class="searchBtn">
-                <button type="submit" class="btn">검색</button>
+            <div class="flex align-center">
+                <div class="searchIcon"><div><i class="fa fa-search" aria-hidden="true"></i></div></div>
+                <div th:text="검색"></div>
+            </div>
+            <div class="flex align-center searchClose">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+                <div th:text="닫기"></div>
             </div>
         </div>
-    </form>
+        <form id="searchFrm" th:action="@{/list}" method="get" th:object="${observatorySearch}">
+            <hr>
+            <div class="align-center">
+                <label for="obscd">관측소 코드 </label>
+                <input type="text" id="obscd" class="onlyNum" name="obscd" th:field="*{obscd}" placeholder="xxxxxxx" data-form="searchFrm">
+                <label for="obsnm">관측소명</label>
+                <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="관측소 명을 입력하세요">
+                <label for="type">관측변수</label>
+                <select name="type" th:field="*{type}" id="type">
+                    <option value="ALL">전체</option>
+                    <option value="rf">강수량</option>
+                    <option value="wl">수위</option>
+                    <option value="flw">유량</option>
+                </select>
+            <button type="submit" class="searchBtn">검색</button>
+            </div>
+        </form>
+    </div>
 
     <div class="submitBtn">
-        <a th:href="@{/list/add}"  class="btn" >등록</a>
+        <a th:href="@{/list/add}" class="btn" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>등록</a>
     </div>
     <div class="divTable minimalistBlack">
         <div class="divTableHeading">
