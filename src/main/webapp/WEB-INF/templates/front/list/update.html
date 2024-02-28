@@ -4,15 +4,14 @@
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content" >
     <div class="observatory_box">
-        <div class="flex just-btw title align-center">
-            <h2 th:text="#{관측소 정보 수정}"></h2>
-            <button type="button" id="listBtn">
-                <i class="xi-list"></i>
-                <span th:text="#{목록}"></span>
-            </button>
+        <h1>관측소 정보 수정</h1>
+        <div class="listbtn">
+            <a th:href="@{/list}"  class="btn" ><i class="xi-list"></i>목록</a>
         </div>
+        <br>
+        <br>
         <hr>
-        <div class="flex align-center">
+        <div class="box">
             <form name="frmJoin" method="post" th:action="@{/list/save}" autocomplete="off" th:object="${requestObservatory}">
                 <input type="hidden" name="mode" value="update">
                 <input type="hidden" name="obscd" th:field="*{obscd}">
@@ -21,7 +20,7 @@
 
                 <th:block th:replace="~{front/list/_form::form}"></th:block>
 
-                <div class="text-center">
+                <div class="submitBtn">
                     <button type="submit" th:text="#{수정}"></button>
                 </div>
             </form>
