@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.sundo.wamis.entities.Observatory;
-import org.sundo.wamis.entities.QObservatory;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -18,6 +15,7 @@ public class WamisSchedulingService {
 
     private final WamisApiService apiService;
     private final ObservatoryRepository observatoryRepository;
+
 
 
     /**
@@ -34,5 +32,11 @@ public class WamisSchedulingService {
     public void updateWlFw() {
         apiService.updateWlFw10M();
     }
+
+    @Scheduled(fixedRate = 10L, timeUnit = TimeUnit.MINUTES)
+    public void updateObservation() {
+        apiService.update();
+    }
+
 }
 
