@@ -176,6 +176,7 @@ function addMarker(items){
             return true;
         });
     }
+
     // 맵의 viewport에 'mousemove' 이벤트 리스너를 추가합니다.
     mapLib.map.getViewport().addEventListener('mousemove', function(e) {
         // 현재 마우스 위치에 대한 픽셀 값을 가져옵니다.
