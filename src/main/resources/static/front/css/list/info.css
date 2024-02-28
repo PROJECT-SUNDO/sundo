@@ -28,3 +28,12 @@
 .btns{
    flex-direction: row-reverse;
 }
+
+.info-list-wrap {
+    height: 400px;
+    overflow-y: auto;
+    position: relative;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+.info-list-wrap * { box-sizing: border-box; }
