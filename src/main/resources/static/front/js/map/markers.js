@@ -108,10 +108,7 @@ function addMarker(items){
         mapLib.map.getView().setZoom(11);
 
 
-
     }
-
-
 
     // 마커를 클릭하면 팝업 함수 실행
     mapLib.map.addEventListener('click', function(event) {
@@ -195,7 +192,7 @@ window.addEventListener("DOMContentLoaded", function() {
     if (el) {
         el.addEventListener("click", function(e) {
             /* 클릭한 좌표 저장 S */
-            const xpos = e.offsetX + 30;
+            const xpos = e.offsetX + 10;
             const ypos = e.offsetY + 30;
             window.popupXpos = xpos;
             window.popupYpos = ypos;

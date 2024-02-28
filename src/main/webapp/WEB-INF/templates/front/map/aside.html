@@ -75,17 +75,17 @@
             const items = JSON.parse(document.getElementById("jsonData").value.trim());
             const item = items.find(item => item.obsnm === obscd);
             if (item) {
-                parent.postMessage({map: [item]}, "*");
+                // parent.postMessage({map: [item]}, "*"); // 새로운 마커로 추가시 필
             }
         }
-
-        document.querySelector("#obscd-list").addEventListener("click", function(e) {
-            if (e.target.tagName === "LI") {
-                const obscd = e.target.textContent;  // 클릭된 관측소명 가져오기
-                const item = getItemForObscd(obscd);  // 관측소명에 해당하는 아이템 가져오기
-                addMarker(item);  // 마커 추가
-            }
-        });
+        // // 새로운 마커로 추가
+        // document.querySelector("#obscd-list").addEventListener("click", function(e) {
+        //     if (e.target.tagName === "LI") {
+        //         const obscd = e.target.textContent;  // 클릭된 관측소명 가져오기
+        //         const item = getItemForObscd(obscd);  // 관측소명에 해당하는 아이템 가져오기
+        //         addMarker(item);  // 마커 추가
+        //     }
+        // });
         /* 관측소 선택시 마커 표시하기 e */
     </script>
 
