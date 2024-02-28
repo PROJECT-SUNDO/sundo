@@ -235,13 +235,15 @@ window.addEventListener("DOMContentLoaded", function(){
     const btnBox = document.getElementById("save_map_box");
 
     // 저장 버튼을 눌렀을 때의 동작
-    saveBtn.onclick = function() {
-        btnBox.style.display = "flex"; // 이미지 저장, PDF 저장 버튼을 보여줌
-
-        // 'on' 클래스 추가
-        this.classList.add("on");
-        // saveBtn.disabled = true; // 저장 버튼을 비활성화
-    };
+    saveBtn.addEventListener("click", function(){
+        if(saveBtn.classList.contains("on")){
+            saveBtn.classList.remove("on");
+            btnBox.classList.add("dn");
+        }else{
+            saveBtn.classList.add("on");
+            btnBox.classList.remove("dn");
+        }
+    });
 
     // 이미지 저장 버튼을 눌렀을 때의 동작
     savePngBtn.onclick = function() {
