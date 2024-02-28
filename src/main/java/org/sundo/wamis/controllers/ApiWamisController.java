@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.sundo.wamis.services.StatisticService;
 import org.sundo.wamis.services.WamisApiService;
 import org.sundo.wamis.services.WamisCctvApiService;
 
@@ -14,7 +13,6 @@ import org.sundo.wamis.services.WamisCctvApiService;
 @RequiredArgsConstructor
 public class ApiWamisController {
     private final WamisApiService apiService;
-    private final StatisticService statisticService;
     private final WamisCctvApiService cctvApiService;
     @GetMapping
     public void test() {
@@ -28,12 +26,6 @@ public class ApiWamisController {
     @GetMapping("/cctv")
     public void cctv(){
         cctvApiService.updateCctvUrls();
-    }
-
-
-    @GetMapping("/stat")
-    public void test2() {
-        statisticService.update();
     }
 
     @GetMapping("/test2")
