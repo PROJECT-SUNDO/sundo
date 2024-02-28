@@ -1,3 +1,7 @@
+main {
+    padding: 20px 20px 0;
+}
+
 .searchIcon {
     background-color: #000;
     width: 27px;
@@ -40,24 +44,35 @@
 }
 
 .listbtn{
-    float: right;
-    position: relative;
-    top: 50px;
-    width: 50px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
-    text-align: center;
+    border-radius: 3px;
+    padding: 0 15px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid var(--main-color);
 }
-.submitBtn a{
-    float: right;
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
+.listbtn:hover{
+    background: var(--main-color);
+}
+.listbtn a{
+    color: var(--main-color);
 }
 
-.flex{
+.listbtn:hover a{
+    color: #fff;
+}
+
+
+.submitBtn a{
+    float: right;
+    color: #fff;
+    border-radius: 3px;
+    padding: 0 15px;
+    height: 30px;
+    border: 1px solid var(--main-color);
+    background: var(--main-color);
+}
+
+.box{
     padding: 10px 20px;
 }
 
@@ -65,11 +80,12 @@
     text-align: center;
 }
 .submitBtn button{
-
-    width: 40px;
-    height: 20px;
-    border: 2px solid;
-    background-color: var(--font-color);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    height: 30px;
+    background: var(--main-color);
+    border: 1px solid var(--main-color);
 }
 
 .form_box dl {
@@ -87,4 +103,21 @@
 .form_box dd input {
     font-size: 11px;
     width: 220px;
+}
+.searchBtn {
+    float: right;
+}
+.searchBtn i {
+    margin-right: 3px;
+}
+.search>div{
+    justify-content: space-between;
+}
+
+[type="checkbox"]:enabled:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) #d3d3d3;
+}
+.content_list {
+    height: 100%;
+    margin: 10px;
 }

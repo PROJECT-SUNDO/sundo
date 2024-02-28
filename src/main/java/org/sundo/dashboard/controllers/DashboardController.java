@@ -25,7 +25,7 @@ public class DashboardController implements ExceptionProcessor {
     private final ObservatoryInfoService observatoryInfoService;
 
     @GetMapping("/{type}")
-    public String dashboard(@PathVariable("type") String type,
+    public String dashboard (@PathVariable("type") String type,
                             @ModelAttribute ObservatorySearch search,
                             Model model) {
         commonProcess(type, model);
