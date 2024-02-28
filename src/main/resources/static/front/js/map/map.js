@@ -246,7 +246,7 @@ window.addEventListener("DOMContentLoaded", function(){
     });
 
     // 이미지 저장 버튼을 눌렀을 때의 동작
-    savePngBtn.onclick = function() {
+    savePngBtn.addEventListener("click", function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
         // 'on' 클래스 추가
         this.classList.add("on");
@@ -267,10 +267,10 @@ window.addEventListener("DOMContentLoaded", function(){
             aLink.href = dataURL;
             aLink.click();
         });
-    };
+    });
 
     // PDF 저장 버튼을 눌렀을 때의 동작
-    savePdfBtn.onclick = function() {
+    savePdfBtn.addEventListener("click", function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
         // 'on' 클래스 추가
         this.classList.add("on");
@@ -279,7 +279,7 @@ window.addEventListener("DOMContentLoaded", function(){
 
         print();
 
-    };
+    });
     /* 저장하기 버튼 E */
     
     /* 마커 추가 s */
