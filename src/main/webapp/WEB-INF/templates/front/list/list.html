@@ -15,7 +15,7 @@
                 <div th:text="닫기"></div>
             </div>
         </div>
-        <form id="searchFrm" th:action="@{/list}" method="get" th:object="${observatorySearch}">
+        <form id="searchFrm" class="searchEl" th:action="@{/list}" method="get" th:object="${observatorySearch}">
             <hr>
             <div class="align-center">
                 <label for="obscd">관측소 코드 </label>
