@@ -75,17 +75,66 @@
             const items = JSON.parse(document.getElementById("jsonData").value.trim());
             const item = items.find(item => item.obsnm === obscd);
             if (item) {
+
                 parent.postMessage({map: [item]}, "*");
+
+                // item에서 경도와 위도 값을 가져옴
+                const { lon, lat } = item;
+
+                // 경도와 위도 값을 분-초 형식에서 십진법 형식으로 변환
+                const [lon1, lon2, lon3] = lon.split("-");
+                const lonDecimal = Number(lon1) + Number(lon2)/60 + Number(lon3)/3600;
+                const [lat1, lat2, lat3] = lat.split("-");
+                const latDecimal = Number(lat1) + Number(lat2)/60 + Number(lat3)/3600;
+
+                // 선택된 관측소로 지도의 중심을 이동
+                parent.mapLib.map.getView().animate({center: ol.proj.fromLonLat([lonDecimal, latDecimal])});
             }
         }
 
-        document.querySelector("#obscd-list").addEventListener("click", function(e) {
-            if (e.target.tagName === "LI") {
-                const obscd = e.target.textContent;  // 클릭된 관측소명 가져오기
-                const item = getItemForObscd(obscd);  // 관측소명에 해당하는 아이템 가져오기
-                addMarker(item);  // 마커 추가
-            }
-        });
+
+        // /* 관측소 선택시 화면이동 s */
+        //
+        // // moveToObscd 함수 정의
+        // function moveToObscd(obscd) {
+        //     // jsonData라는 ID를 가진 요소를 가져옴
+        //     const el = document.getElementById("jsonData");
+        //     // 요소가 존재하고, 값이 비어 있지 않은 경우
+        //     if (el && el.value.trim()) {
+        //         // 요소의 값을 JSON 형식으로 변환하여 items 배열에 저장
+        //         const items = JSON.parse(el.value.trim());
+        //         // items 배열에서 관측소 코드가 obscd와 같은 항목을 찾아 item에 저장
+        //         const item = items.find(item => item.obscd === obscd);
+        //         // item이 존재하는 경우
+        //         if (item) {
+        //             // item에서 경도와 위도 값을 가져옴
+        //             const { lon, lat } = item;
+        //             // 경도와 위도 값을 분-초 형식에서 십진법 형식으로 변환
+        //             const [lon1, lon2, lon3] = lon.split("-");
+        //             const lonDecimal = Number(lon1) + Number(lon2)/60 + Number(lon3)/3600;
+        //             const [lat1, lat2, lat3] = lat.split("-");
+        //             const latDecimal = Number(lat1) + Number(lat2)/60 + Number(lat3)/3600;
+        //
+        //             // 변환된 경도와 위도 값을 사용하여 새로운 좌표를 생성
+        //             const mapProjection = "EPSG:3857";
+        //             const dataProjection = "EPSG:4326";
+        //             const coord = new ol.proj.transform([lonDecimal, latDecimal], dataProjection, mapProjection);
+        //
+        //             // 지도의 중심을 새로운 좌표로 이동
+        //             parent.mapLib.map.getView().setCenter(coord);
+        //
+        //         }
+        //     }
+        // }
+        /* 관측소 선택시 화면이동 e */
+        // // 새로운 마커로 추가
+        // document.querySelector("#obscd-list").addEventListener("click", function(e) {
+        //     if (e.target.tagName === "LI") {
+        //         const obscd = e.target.textContent;  // 클릭된 관측소명 가져오기
+        //         const item = getItemForObscd(obscd);  // 관측소명에 해당하는 아이템 가져오기
+        //         addMarker(item);  // 마커 추가
+        //     }
+        // });
         /* 관측소 선택시 마커 표시하기 e */
     </script>
 
