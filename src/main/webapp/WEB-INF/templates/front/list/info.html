@@ -3,8 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
-    <section class="content">
+    <section class="content_list">
         <div class="flex just-btw title align-center">
+            <h2>관측정보</h2>
             <button type="button" id="listBtn">
                 <i class="xi-list"></i>
                 <span th:text="#{목록}"></span>
@@ -29,18 +30,24 @@
         </div>
         <!-- 관측소 데이터 검색 -->
         <div class="search mgn-bottom-10px">
-            <div class="flex align-center searchTxt">
-                <div class="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                <div>검색</div>
+            <div class="flex align-center just-btw mgn-bottom-10px">
+                <div class="flex align-center searchTxt">
+                    <div class="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></div>
+                    <div>검색</div>
+                </div>
+                <div class="flex align-center searchClose">
+                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                    <div th:text="닫기"></div>
+                </div>
             </div>
-            <form th:object="${observationSearch}" name="frmSearch" class="flex align-center obsForm">
+            <form th:object="${observationSearch}" name="frmSearch" class="bdr-top flex align-center obsForm searchEl">
                 <input type="hidden" name="type" th:value="${requestObservatory.type}">
                 <input type="hidden" name="obscd" th:value="${requestObservatory.obscd}">
                 <!--                <input type="hidden" name="timeUnit" th:value="${requestObservationData.timeUnit}">-->
 
                 <div class="grw-1">
                     <span th:text="#{조회기간}"></span>
-                    <span class="viewdate">
+                    <span class="exceptYear">
                         <input type="date" name="sdate" th:field="*{sdate}">
                         ~
                         <input type="date" name="edate" th:field="*{edate}">
@@ -61,17 +68,25 @@
                     </select>
                 </div>
                 <button type="submit" class="searchBtn" th:text="#{검색}"></button>
-                <button type="button" class="saveBtn" id="excelDownload">저장</button>
             </form>
         </div>
+        <div>
+            <div class="flex align-center btns">
+                <button type="button" class="excelBtn mgn-bottom-10px" id="excelDownload">
+                    <i class="fa fa-download"></i><span th:text="저장"></span>
+                </button>
+            </div>
+            <div class="info-list-wrap">
+                <div class="divTable minimalistBlack" id="data">
+                    <div class="divTableHeading">
+                    </div>
 
-        <div class="divTable minimalistBlack" id="data">
-            <div class="divTableHeading">
+                    <div class="divTableBody">
+                    </div>
+                </div>
             </div>
-            <div class="divTableBody">
-            </div>
+            <ul class="pagination" id="pagination"></ul>
         </div>
-        <ul class="pagination" id="pagination"></ul>
     </section>
 
 

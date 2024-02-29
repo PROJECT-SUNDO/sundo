@@ -2,7 +2,9 @@ var commonLib = commonLib || {};
 
 window.addEventListener("DOMContentLoaded", function(){
     const onlyYearDiv = document.querySelector(".onlyYear");
-    onlyYearDiv.style.display = "none";
+    const exceptYearDiv = document.querySelector(".exceptYear");
+    getExceptYearDiv();
+
     const referrer = document.referrer;
     if (referrer.indexOf("/info") == -1) {
         sessionStorage.setItem("referrer", referrer);
@@ -19,15 +21,13 @@ window.addEventListener("DOMContentLoaded", function(){
     });
 
     const timeUnitEl = document.querySelector("#timeUnit");
-    const viewdateDiv = document.querySelector(".viewdate");
+
 
     timeUnitEl.addEventListener("change", function(){
         if(timeUnitEl.value === 'YEAR') {
-            viewdateDiv.style.display = "none";
-            onlyYearDiv.style.display = "block";
+            getOnlyYearDiv();
             const startYearSelect = document.querySelector("#startYear");
             const endYearSelect = document.querySelector("#endYear");
-            console.log(endYearSelect)
             const currentYear = new Date().getFullYear();
 
             for (let year = currentYear - 3; year <= currentYear; year++) {
@@ -44,8 +44,7 @@ window.addEventListener("DOMContentLoaded", function(){
                 endYearSelect.lastElementChild.selected = true;
             }
         } else {
-            onlyYearDiv.style.display = "none";
-            viewdateDiv.style.display = "block";
+            getExceptYearDiv();
         }
     });
 
@@ -499,7 +498,17 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
             daysUntilToday = daysInTargetMonth;
         }
         return daysUntilToday;
-        }
+    }
+
+    function getExceptYearDiv() {
+        exceptYearDiv.style.display = "inline-block";
+        onlyYearDiv.style.display = "none";
+    }
+
+    function getOnlyYearDiv() {
+        exceptYearDiv.style.display = "none";
+        onlyYearDiv.style.display = "inline-block";
+    }
 
 
 });
