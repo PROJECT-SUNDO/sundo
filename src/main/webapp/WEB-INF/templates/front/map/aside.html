@@ -6,7 +6,7 @@
     <form class="searchFrm mgn-bottom-10px" th:object="${observatorySearch}">
         <div class="flex align-center mgn-bottom-10px">
             <input type="text" class="searchInp" th:placeholder="#{관측소명_입력}" name="obsnm">
-            <button type="submit" class="obsSearch">
+            <button type="submit" class="searchBtn">
                 <i class="xi-search"></i>
             </button>
         </div>
@@ -88,7 +88,14 @@
                 const latDecimal = Number(lat1) + Number(lat2)/60 + Number(lat3)/3600;
 
                 // 선택된 관측소로 지도의 중심을 이동
-                parent.mapLib.map.getView().animate({center: ol.proj.fromLonLat([lonDecimal, latDecimal])});
+                //parent.mapLib.map.getView().animate({center: ol.proj.fromLonLat([lonDecimal, latDecimal])});
+                if (parent.mapLib && parent.mapLib.map) {
+                    parent.mapLib.map.getView().animate({center: ol.proj.fromLonLat([lonDecimal, latDecimal])});
+                }
+
+                if (typeof parent.mapToMove === 'function') {
+                    parent.mapToMove(lonDecimal, latDecimal);
+                }
             }
         }
 
