@@ -64,5 +64,13 @@ window.addEventListener("DOMContentLoaded", function(){
         }
     })
 
+    const dates = document.querySelectorAll(".date");
+    for(const date of dates){
+        const dateTxt = date.innerText;
+        const txt = dateTxt.substring(0, 4) + "." + dateTxt.substring(4, 6) + "." + dateTxt.substring(6, 8) + " " + dateTxt.substring(8, 10) + ":" + dateTxt.substring(10, 12);
+
+        date.innerText = txt;
+    }
+
 
 })
