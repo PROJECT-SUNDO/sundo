@@ -52,9 +52,9 @@
                         <div th:text="#{연번}" class="divTableHead"></div>
                         <div th:text="#{관측소 명}" class="divTableHead"></div>
                         <div th:text="#{관측소 코드}" class="divTableHead"></div>
-                        <div th:if="*{type == 'rf'}" th:text="#{강수량}" class="divTableHead"></div>
-                        <div th:if="*{type == 'wl'}" th:text="#{수위}" class="divTableHead"></div>
-                        <div th:if="*{type == 'flw'}" th:text="#{유량}" class="divTableHead"></div>
+                        <div th:if="*{type == 'rf'}" class="divTableHead">강수량 (mm)</div>
+                        <div th:if="*{type == 'wl'}" class="divTableHead">수위 (m)</div>
+                        <div th:if="*{type == 'flw'}" class="divTableHead">유량 (m<sup>3</sup>/sec)</div>
                     </div>
                 </div>
                 <div class="divTableBody"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
