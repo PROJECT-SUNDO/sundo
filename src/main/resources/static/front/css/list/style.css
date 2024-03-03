@@ -89,6 +89,7 @@ main {
 }
 
 .form_box dl {
+    justify-content:space-between;
     display: flex; margin-bottom: 10px;
 }
 
