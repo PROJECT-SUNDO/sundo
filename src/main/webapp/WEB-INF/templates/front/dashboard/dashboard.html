@@ -52,6 +52,7 @@
                         <div th:text="#{연번}" class="divTableHead"></div>
                         <div th:text="#{관측소 명}" class="divTableHead"></div>
                         <div th:text="#{관측소 코드}" class="divTableHead"></div>
+
                         <div class="divTableHead">
                             <span th:if="*{type == 'rf'}" th:text="#{강수량}"></span>
                             <span th:if="*{type == 'wl'}" th:text="#{수위}"></span>
@@ -60,6 +61,7 @@
                           +*{type == 'wl'? 'wl': ''}
                           +*{type == 'flw'? 'fw': ''}"></span>
                         </div>
+
                     </div>
                 </div>
                 <div class="divTableBody"  th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}">
