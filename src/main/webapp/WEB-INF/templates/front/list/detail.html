@@ -5,7 +5,7 @@
 <main layout:fragment="content">
 <!-- 관측소 상세 정보 -->
 <div class="popupHeader">
-    <div class="popupHTitle" th:text="#{관측소 상세 정보}"></div>
+    <div class="popupHTitle" th:text="#{관측소_상세_정보}"></div>
 </div>
 <div class="popupBody" th:object="${observatory}">
     <div class="flex">
@@ -13,7 +13,7 @@
         <div th:text="*{obsnm}"></div>
     </div>
     <div class="flex">
-        <div th:text="#{관측소 코드}" class="obTitle"></div>
+        <div th:text="#{관측소_코드}" class="obTitle"></div>
         <div th:text="*{obscd}"></div>
     </div>
     <div class="flex">
@@ -21,7 +21,7 @@
         <div th:text="*{obsnm}"></div>
     </div>
     <div class="flex">
-        <div th:text="#{관측소 유형}" class="obTitle"></div>
+        <div th:text="#{관측소_유형}" class="obTitle"></div>
         <div th:text="#{*{type}}"></div>
     </div>
 </div>
