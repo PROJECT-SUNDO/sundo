@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{front/layouts/popup}">
+<main layout:fragment="content">
+    <form th:object="${requestObservation}" method="post" th:action="@{/list/delete}">
+        <input type="hidden" name="obscd" th:value="*{obscd}">
+        <h2 class="text-center" th:text="#{관측소_삭제_확인}"></h2>
+
+        <div class="submit_btns flex align-center">
+            <button type="submit" th:text="#{확인}"></button>
+            <button type="button" id="cancleBtn" th:text="#{취소}"></button>
+        </div>
+    </form>
+</main>
+</html>
