@@ -270,6 +270,15 @@ if (typeof frmSearch === 'undefined' || !frmSearch) return;
             } else if(unit === '1H') {
                 const firstData = statData[Object.keys(statData)[0]];
                 const head_keys = Object.keys(firstData).reverse();
+                const typeUnit = document.querySelector(".typeUnit");
+                typeUnit.innerHTML = "";
+                if (type === 'rf') {
+                    typeUnit.textContent = rfText;
+                } else if (type === 'wl') {
+                    typeUnit.textContent = wlText;
+                } else if (type === 'fw') {
+                    typeUnit.textContent = fwText;
+                }
                 for (const key of head_keys) {
                     // 변수명에 타입 포함할 때만
                     if(key.includes(type)) {

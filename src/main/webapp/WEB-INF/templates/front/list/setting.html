@@ -80,7 +80,12 @@
                 <div class="divTableRow">
                     <div class="divTableHead" th:text="#{연번}"></div>
                     <div class="divTableHead" th:text="#{날짜}"></div>
-                    <div class="divTableHead" th:text="#{이상치}"></div>
+                    <div class="divTableHead">
+                        <span th:text="#{이상치}"></span>
+                        <span class="unit" th:classappend="${observatorySearch.type == 'rf'? 'rf' : ''}
+                          +${observatorySearch.type == 'wl'? 'wl': ''}
+                          +${observatorySearch.type == 'flw'? 'fw': ''}"></span>
+                    </div>
                     <div class="divTableHead" th:text="#{수정}"></div>
                     <div class="divTableHead" th:text="#{삭제}"></div>
                 </div>
@@ -92,15 +97,12 @@
                     <div class="divTableCell date" th:text="*{ymdhm}"></div>
                     <div class="divTableCell" th:if="${requestObservatory.type == 'rf'}">
                         <span th:text="*{rf}"></span>
-                        <span class="rf unit"></span>
                     </div>
                     <div class="divTableCell" th:if="${requestObservatory.type == 'wl'}" >
                         <span th:text="*{wl}"></span>
-                        <span class="wl unit"></span>
                     </div>
                     <div class="divTableCell" th:if="${requestObservatory.type == 'flw'}">
                         <span th:text="*{fw}"></span>
-                        <span class="fw unit"></span>
                     </div>
                     <div class="divTableCell">
                         <!-- 수정 버튼 -->
