@@ -71,6 +71,62 @@ body {
     text-align: center;
     padding: 0px;
 }
+.aside-img {
+    width: 50px;
+    height: auto;
+}
+
+.legand-area{
+    height: 100%;
+    position: absolute;
+    right: 10px;
+    top: 110px;
+    z-index: 5;
+}
+.legandBtn{
+    background: #fff;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    padding: 0px;
+    /*position: absolute;*/
+    /*margin-top: 70px;*/
+    /*left: -14px;*/
+}
+.dinf {
+    display: inline-flex;
+    align-items: center;
+}
+.legand {
+    transition: all 0.5s ease;
+}
+.legand_content{
+    width: 115px;
+    height: 148px;
+    background-color: white;
+    border-radius: 6px;
+    border: 2px solid black;
+}
+.legand_content div {
+    margin: 5px 0 0 6px;
+}
+.legand-padding {
+    padding-top: 5px;
+}
+.zone1 i {
+    font-weight: bold;
+    color: #308d00 ;
+}
+.zone2 i {
+    font-weight: bold;
+    color: #275fff;
+}
+.legand_content img {
+    width: 15px;
+    height: auto;
+}
 
 .searchInp{
     width: 140px;
@@ -102,5 +158,3 @@ body {
     color: #fff;
 }
 
-
-/* 마커 팝업 */

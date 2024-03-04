@@ -83,6 +83,7 @@ public class ObservationInfoService {
         String type = search.getType();
         String obscd = search.getObscd().trim();
 
+
         // 수위, 유량일 경우
         QWaterLevelFlow waterLevelFlow = QWaterLevelFlow.waterLevelFlow;
         BooleanBuilder andBuilder = new BooleanBuilder();
@@ -111,6 +112,7 @@ public class ObservationInfoService {
         if(StringUtils.hasText(obscd)){
             andBuilder.and(waterLevelFlow.wlobscd.eq(obscd));
         }
+
 
         /* 페이징 처리 S */
 
