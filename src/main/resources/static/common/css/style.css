@@ -102,6 +102,11 @@ h2{
     font-size: 15px;
     font-weight: 500;
 }
+
+.font-13px{
+    font-size: 13px;
+    font-weight: 500;
+}
 .cursor {
     cursor: pointer;
 }

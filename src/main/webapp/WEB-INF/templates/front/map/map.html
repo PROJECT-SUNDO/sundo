@@ -11,7 +11,7 @@
 			<section class="asideBtns">
 				<a th:href="@{/map/search/wl}" target="frmSide">
 					<button class="font-15px" type="button">
-						<br />
+						<img src="/front/img/wl.png" class="aside-img"/><br />
 						<span th:text="#{수위}"></span>
 					</button>
 				</a>
@@ -23,7 +23,7 @@
 				</a>
 				<a th:href="@{/map/search/flw}" target="frmSide">
 					<button class="font-15px" type="button">
-						<br />
+						<img src="/front/img/flw.png" class="aside-img"/><br />
 						<span th:text="#{유량}"></span>
 					</button>
 				</a>
@@ -42,7 +42,6 @@
 				<div>
 					<button type="button" class="angleBtn">
 						<i class="xi-angle-right-thin"></i>
-
 					</button>
 				</div>
 			</section>
@@ -65,11 +64,11 @@
 					</button>
 				</div>
 
-                <button type="button" id="save_map" class="align-right mgn-bottom-10px wd-50px ht-50px">
-                    <i class="xi-save"></i>
-                    <span th:text="#{저장}"></span>
+				<button type="button" id="save_map" class="align-right mgn-bottom-10px wd-50px ht-50px">
+					<i class="xi-save"></i>
+					<span th:text="#{저장}"></span>
 				</button>
-				<div id="save_map_box" class="flex-column mgn-bottom-10px" style="display: none !important;">
+				<div id="save_map_box" class="flex-column mgn-bottom-10px dn">
 					<button type="button" id="save_map_png" class="wd-110px ht-35px align-right">
 						<span th:text="#{이미지 저장}"></span>
 					</button>
@@ -77,8 +76,40 @@
 						<span th:text="#{PDF 저장}"></span>
 					</button>
 				</div>
-
 			</div>
+
+			<!---->
+			<section class="flex align-center legand-area no-print">
+				<div class="dinf">
+					<button type="button" class="legandBtn">
+						<i class="xi-angle-left-thin"></i>
+					</button>
+					<div class="legand dn">
+						<div class="legand_content font-13px">
+							<div class="legand-padding zone1">
+								<i class="xi-checkbox-blank"></i> <span th:text="행정구역"></span>
+							</div>
+							<div class="zone2">
+								<i class="xi-checkbox-blank"></i> <span th:text="하천도"></span>
+							</div>
+							<div>
+								<img src="/front/img/pin_b.png"/><span th:text=" 수위관측소"></span>
+							</div>
+							<div>
+								<img src="/front/img/pin_r.png"/><span th:text=" 강수량관측소"></span>
+							</div>
+							<div>
+								<img src="/front/img/pin_y.png"/><span th:text=" 유량관측소"></span>
+							</div>
+							<div>
+								<img src="/front/img/cctv_p.png"/><span th:text=" CCTV"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!---->
+
 			<div id="map" class="map"></div>
 		</section>
 	</div>
