@@ -37,3 +37,9 @@
     box-sizing: border-box;
 }
 .info-list-wrap * { box-sizing: border-box; }
+
+.typeUnit{
+    float: right;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
