@@ -89,7 +89,7 @@
                 <div class="divTableRow" th:if="${items != null && !items.isEmpty()}" th:each="item, status : ${items}" th:object="${item}">
                     <input type="hidden" name="seq" th:id="${'seq_' + status.count}" th:value="*{seq}">
                     <div class="divTableCell" th:text="${status.count}"></div>
-                    <div class="divTableCell" th:text="*{ymdhm}"></div>
+                    <div class="divTableCell date" th:text="*{ymdhm}"></div>
                     <div class="divTableCell" th:if="${requestObservatory.type == 'rf'}">
                         <span th:text="*{rf}"></span>
                         <span class="rf unit"></span>
