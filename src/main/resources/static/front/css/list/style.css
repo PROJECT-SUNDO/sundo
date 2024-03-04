@@ -124,3 +124,6 @@ main {
     height: 100%;
     margin: 10px;
 }
+.pagination {
+    margin-top: 20px;
+}
