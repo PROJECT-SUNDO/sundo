@@ -89,6 +89,7 @@ public class MapController {
 			addScript.add("map/aside");
 			addScript.add("map/draw");
 			addScript.add("map/markers");
+			addScript.add("map/legand");
 			addCss.add("map/map");
 		} else if (mode.equals("info")) {
 			pageTitle = null;
