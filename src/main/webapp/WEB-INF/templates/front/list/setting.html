@@ -82,9 +82,9 @@
                     <div class="divTableHead" th:text="#{날짜}"></div>
                     <div class="divTableHead">
                         <span th:text="#{이상치}"></span>
-                        <span class="unit" th:classappend="${observatorySearch.type == 'rf'? 'rf' : ''}
-                          +${observatorySearch.type == 'wl'? 'wl': ''}
-                          +${observatorySearch.type == 'flw'? 'fw': ''}"></span>
+                        <span class="unit" th:classappend="${requestObservatory.type == 'rf'? 'rf' : ''}
+                          +${requestObservatory.type == 'wl'? 'wl': ''}
+                          +${requestObservatory.type == 'flw'? 'fw': ''}"></span>
                     </div>
                     <div class="divTableHead" th:text="#{수정}"></div>
                     <div class="divTableHead" th:text="#{삭제}"></div>

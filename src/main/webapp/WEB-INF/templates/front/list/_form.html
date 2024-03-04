@@ -8,6 +8,7 @@
                 <input type="text" id="obsnm" name="obsnm" th:field="*{obsnm}" placeholder="예)평창군(월정분교)">
                 <div class="error" th:each="err : ${#fields.errors('obsnm')}" th:text="${err}"></div>
             </dd>
+            <dt></dt><dd></dd>
         </dl>
         <dl>
             <dt for="type">관측변수</dt>
