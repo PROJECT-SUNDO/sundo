@@ -192,11 +192,14 @@ h2{
   text-align: left;
   border-collapse: collapse;
 }
+
 .divTable.minimalistBlack .divTableCell, .divTable.minimalistBlack .divTableHead {
+  text-align:center;
   border: 1px solid #000000;
   padding: 5px 4px;
 }
 .divTable.minimalistBlack .divTableBody .divTableCell {
+  text-align:center;
   font-size: 13px;
 }
 .divTable.minimalistBlack .divTableHeading {
@@ -210,7 +213,7 @@ h2{
   font-size: 15px;
   font-weight: bold;
   color: #000000;
-  text-align: left;
+  text-align: center;
 }
 
 .divTable .minimalistBlack .divTableRow
@@ -363,3 +366,4 @@ h2{
 a.page.on{
     font-weight: 800;
 }
+
