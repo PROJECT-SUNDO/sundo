@@ -159,13 +159,13 @@ window.addEventListener("DOMContentLoaded", function(){
     for(const unit of units){
         if(unit.classList.contains("rf")){
             // 강수량
-            unit.innerHTML = "mm";
+            unit.innerHTML = "(mm)";
         }else if(unit.classList.contains("wl")){
             // 수위
-            unit.innerHTML = "m";
+            unit.innerHTML = "(m)";
         }else if(unit.classList.contains("fw")){
             // 유량
-            unit.innerHTML = "m<sup>3</sup>/sec";
+            unit.innerHTML = "(m<sup>3</sup>/sec)";
         }
     }
 })

@@ -37,12 +37,14 @@ a { color:#222; text-decoration: none; }
     font-weight: 700;
 }
 .popupBody {
+
     padding: 20px 40px;
 }
 .popupBody .obTitle {
     width: 120px;
     font-weight: 500;
     font-size: 20px;
+    text-align: center;
 }
 .popupBody>div{
     padding: 10px;

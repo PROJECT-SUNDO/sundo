@@ -89,11 +89,13 @@ main {
 }
 
 .form_box dl {
+    justify-content:space-between;
     display: flex; margin-bottom: 10px;
 }
 
 .form_box dt {
     width: 90px;
+    text-align: center;
 }
 
 .form_box dd {
