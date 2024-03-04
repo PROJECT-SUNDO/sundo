@@ -3,16 +3,21 @@
 <th:block th:fragment="pagination" th:if="${pagination != null}" th:object="${pagination}">
     <div class="pagination">
         <div class="flex align-center">
+            <div>
             <th:block>
                 <a th:href="*{#strings.concat(baseURL, 'page=1')}" class="page"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
                 <a th:href="*{#strings.concat(baseURL, 'page=', prevRangePage)}" class="page"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
             </th:block>
+            </div>
+
             <a th:each="p : *{pages}" th:href="${p[1]}" th:text="${p[0]}" class="page" th:classappend="${'' + pagination.page == p[0]} ? 'on'"></a>
 
+            <div>
             <th:block>
                 <a th:href="*{#strings.concat(baseURL, 'page=', nextRangePage)}" class="page"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
                 <a th:href="*{#strings.concat(baseURL, 'page=', totalPages)}" class="page"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
             </th:block>
+            </div>
         </div>
     </div>
 </th:block>

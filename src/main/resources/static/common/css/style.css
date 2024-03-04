@@ -102,6 +102,11 @@ h2{
     font-size: 15px;
     font-weight: 500;
 }
+
+.font-13px{
+    font-size: 13px;
+    font-weight: 500;
+}
 .cursor {
     cursor: pointer;
 }
@@ -200,7 +205,6 @@ h2{
 }
 .divTable.minimalistBlack .divTableBody .divTableCell {
   text-align:center;
-  font-size: 13px;
 }
 .divTable.minimalistBlack .divTableHeading {
   background: #CFCFCF;
@@ -263,10 +267,17 @@ h2{
 .pagination {
     display: flex;
     justify-content: center;
+    font-weight: 800;
 }
 .pagination a+a {
     padding: 0 5px;
     font-size: 15px;
+}
+a.page.on{
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: var(--main-color);
 }
 .pagination i{
     font-size: 15px;
@@ -361,9 +372,5 @@ h2{
     border: 1px solid;
     padding: 5px;
     border-radius: 5px;
-}
-
-a.page.on{
-    font-weight: 800;
 }
 
