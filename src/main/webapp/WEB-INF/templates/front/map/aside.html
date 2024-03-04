@@ -17,7 +17,6 @@
                 <span th:if="${observatorySearch.type == 'flw'}" th:text="#{유량}"></span>
                 <span th:if="${observatorySearch.type == 'cctv'}" th:text="#{CCTV}"></span>
                 <span th:unless="${observatorySearch.type == 'cctv'}" th:text="#{관측소}"></span>
-                <span th:unless="${observatorySearch.type == 'cctv'}" th:text="#{관측소}"></span>
             </div>
             <select class="order" name="order" th:field="*{order}">
                 <option value="rf" th:if="${observatorySearch.type == 'rf'}" th:text="#{강수량}" selected></option>
