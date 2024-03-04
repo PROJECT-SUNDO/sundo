@@ -82,7 +82,7 @@
                     </a>
                 </div>
                 <div class="divTableCell delete" th:data-obscd="${item.obscd}">
-                    <a th:href="@{/list/delete/{obscd}(obscd=${item.obscd})}" onclick="return confirm('정말 관측소를 삭제하시겠습니까?');">
+                    <a th:data-obscd="${item.obscd}" class="deleteRows">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </a>
 
@@ -109,6 +109,15 @@
                 popup.open(url, 450, 450);
             });
         });
+
+        const deleteRows = document.getElementsByClassName("deleteRows");
+        for (const el of deleteRows) {
+            el.addEventListener("click", function(e) {
+                const obscd = this.dataset.obscd;
+                const url = `/list/delete/${obscd}`;
+                popup.open(url, 450, 200);
+            });
+        }
     </script>
 </main>
 </html>
