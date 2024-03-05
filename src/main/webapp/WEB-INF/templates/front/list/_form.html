@@ -38,15 +38,28 @@
         <dl>
             <dt class="latitude">위도</dt>
             <dd>
-                <input type="text" id="latitude" name="latitude" th:field="*{latitude}" placeholder="000-00-00 예)128-33-04">
+                <div class="flex ac">
+                    <input type="text"  name="latitudes" th:field="*{latitudes[0]}" size="3" class="w70">
+                    -
+                    <input type="text"  name="latitudes" th:field="*{latitudes[1]}" size="2" class="w70">
+                    -
+                    <input type="text" name="latitudes" th:field="*{latitudes[2]}" size="2" class="w70">
+                </div>
                 <div class="error" th:each="err : ${#fields.errors('latitude')}" th:text="${err}"></div>
             </dd>
             <dt class="longitude">경도</dt>
             <dd>
-                <input type="text" id="longitude" name="longitude" th:field="*{longitude}" placeholder=" 00-00-00 ex)37-37-27 ">
+                <div class="flex ac">
+                    <input type="text" name="longitudes" th:field="*{longitudes[0]}" size="3" class="w70">
+                    -
+                    <input type="text" name="longitudes" th:field="*{longitudes[1]}" size="2" class="w70">
+                    -
+                    <input type="text" name="longitudes" th:field="*{longitudes[2]}" size="2" class="w70">
+                </div>
                 <div class="error" th:each="err : ${#fields.errors('longitude')}" th:text="${err}"></div>
             </dd>
         </dl>
+
         <dl>
             <dt class="obsknd">관측 방식</dt>
             <dd>
