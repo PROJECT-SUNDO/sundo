@@ -8,7 +8,9 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -35,9 +37,14 @@ public class ObservatoryValidator implements Validator {
         RequestObservatory form = (RequestObservatory) target;
         String obsnm = form.getObsnm(); //관측소명
         String obscd = form.getObscd();// 관측소 코드
-        String latitude = form.getLatitude();
-        String longitude = form.getLongitude();
+        String latitude = form.getLatitudes() == null ? null : Arrays.stream(form.getLatitudes()).collect(Collectors.joining("-"));
+        String longitude = form.getLongitudes() == null ? null : Arrays.stream(form.getLongitudes()).collect(Collectors.joining("-"));
+
+        form.setLatitude(latitude);
+        form.setLongitude(longitude);
+
         String mode = form.getMode();
+
 
         mode = StringUtils.hasText(mode) ? mode : "write";
 
@@ -57,11 +64,11 @@ public class ObservatoryValidator implements Validator {
         }
 
         //3.경도, 위도 코드 복잡성체크
-        if(StringUtils.hasText(latitude) && Pattern.compile("[^0-9\\-]").matcher(latitude).find()){
+        if(StringUtils.hasText(latitude) && (Pattern.compile("[^0-9\\-]").matcher(latitude).find() || latitude.replace("-", "").trim().isEmpty() || latitude.length() > 10) ){
             errors.rejectValue("latitude","Format");
         }
 
-        if(StringUtils.hasText(longitude) && Pattern.compile("[^0-9\\-]").matcher(longitude).find()){
+        if(StringUtils.hasText(longitude) && (Pattern.compile("[^0-9\\-]").matcher(longitude).find() || longitude.replace("-", "").trim().isEmpty() || longitude.length() > 10)){
             errors.rejectValue("longitude","Format");
         }
 
@@ -75,11 +82,14 @@ public class ObservatoryValidator implements Validator {
             }
         }
 
+
         //3. 유효성 체크
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "latitude", "NotBlank");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "longitude", "NotBlank");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "obsknd", "NotBlank");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mngorg", "NotBlank");
+
+        System.out.printf("lat=%s, lon=%s%n", latitude, longitude);
     }
 }
 

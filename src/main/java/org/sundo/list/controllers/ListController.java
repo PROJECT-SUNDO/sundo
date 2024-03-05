@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.sundo.commons.ListData;
 import org.sundo.commons.Utils;
 import org.sundo.commons.exceptions.AlertBackException;
@@ -24,6 +25,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/list")
 @RequiredArgsConstructor
+@SessionAttributes("requestObservatory")
 public class ListController implements ExceptionProcessor {
 
 	private final Utils utils;
@@ -36,6 +38,12 @@ public class ListController implements ExceptionProcessor {
 	private final ObservationSaveService observationSaveService;
 	private final ObservatoryDeleteService observatoryDeleteService;
 	private final ObservationDeleteService observationDeleteService;
+
+	@ModelAttribute("requestObservatory")
+	public RequestObservatory requestObservatory() {
+		return new RequestObservatory();
+	}
+
 	@GetMapping
 	public String list (@ModelAttribute ObservatorySearch search, Model model){
 		commonProcess("list", model);
@@ -112,21 +120,24 @@ public class ListController implements ExceptionProcessor {
 	 * 관측소 저장 및 수정 하기
 	 */
 	@PostMapping("/save")
-	public String save (@Valid RequestObservatory form, Errors errors, Model model){
+	public String save (@Valid RequestObservatory form, Errors errors, Model model, SessionStatus status){
 		commonProcess("list", model);
 		//form에서 검증하고 실패하면 errors로 보냄
 
 		observatoryValidator.validate(form, errors);
-
+		System.out.println("---- 확인 -----");
+		System.out.println(form);
 		if (errors.hasErrors()) {
 			//실패할시 다시 양식데이터를 보여주고 필요한부분을 다시 쓰게 함
 			return "front/list/" + form.getMode();
 		}
 
 		observatorySaveService.save(form);
+		status.setComplete();
 
 		return "redirect:/list";
 	}
+
 
 
 	/**

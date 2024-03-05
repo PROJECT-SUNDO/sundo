@@ -27,8 +27,10 @@ public class RequestObservatory {
     private String add; // 위치(주소)
 
     private String latitude; // 위도
+    private String[] latitudes;
 
     private String longitude; // 경도
+    private String[] longitudes;
 
     private String obsknd; // 관측방법
 
