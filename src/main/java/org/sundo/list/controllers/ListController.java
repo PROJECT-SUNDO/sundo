@@ -34,7 +34,7 @@ public class ListController implements ExceptionProcessor {
 	private final ObservatorySettingValidator observatorySettingValidator;
 	private final ObservatoryRepository observatoryRepository;
 	private final ObservationSaveService observationSaveService;
-	private final ObservatoryDeleteService observatoryDataDelete;
+	private final ObservatoryDeleteService observatoryDeleteService;
 	private final ObservationDeleteService observationDeleteService;
 	@GetMapping
 	public String list (@ModelAttribute ObservatorySearch search, Model model){
@@ -132,13 +132,30 @@ public class ListController implements ExceptionProcessor {
 	/**
 	 * 관측소 삭제 -> 삭제 여부 팝업
 	 */
+
 	@GetMapping("/delete/{obscd}")
-	public String delete (@PathVariable("obscd") String obscd){
+	public String delete(@PathVariable("obscd") String obscd,
+							@ModelAttribute RequestObservation form,
+							Model model){
+		commonProcess("delObs", model);
+		form.setObscd(obscd);
 
-		observatoryDataDelete.delete(obscd);
-
-		return "redirect:/list";
+		return "front/list/popup/delete";
 	}
+
+	@PostMapping("/delete")
+	public String delete(RequestObservation form, Model model){
+		commonProcess("delObs", model);
+		String obscd = form.getObscd();
+
+		observatoryDeleteService.delete(obscd);
+
+		String script = "alert('삭제되었습니다.');"+ "parent.location.reload();";
+
+		model.addAttribute("script", script);
+		return "common/_execute_script";
+	}
+
 	/**
 	 * 환경설정
 	 * - 사용여부

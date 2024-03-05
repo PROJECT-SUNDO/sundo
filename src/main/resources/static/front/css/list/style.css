@@ -38,7 +38,6 @@ main {
 .observatory_box{
     border: 1px solid #222;
     border-radius: 5px;
-    height: flex;
     padding: 10px 20px;
     margin: 20px 30px;
 }
@@ -94,8 +93,10 @@ main {
 }
 
 .form_box dt {
-    width: 90px;
+    width: 110px;
     text-align: center;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .form_box dd {
@@ -103,8 +104,8 @@ main {
     }
 
 .form_box dd input {
-    font-size: 11px;
-    width: 220px;
+    font-size: 15px;
+    width : 270px;
 }
 .searchBtn {
     float: right;
@@ -122,4 +123,7 @@ main {
 .content_list {
     height: 100%;
     margin: 10px;
+}
+.pagination {
+    margin-top: 20px;
 }
