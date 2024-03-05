@@ -172,7 +172,11 @@ public class ListController implements ExceptionProcessor {
 		String type = utils.getParam("type");
 		RequestObservatory form = observatoryInfoService.getRequest(obscd, type);
 		search.setObscd(form.getObscd());
-		search.setOutlier(form.getOutlier());
+		if(type.equals("wl")){
+			search.setOutlier(form.getWrnwl());
+		}else{
+			search.setOutlier(form.getOutlier());
+		}
 		search.setType(form.getType());
 		search.setOut(true);
 

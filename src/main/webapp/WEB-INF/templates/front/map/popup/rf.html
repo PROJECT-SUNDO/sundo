@@ -13,11 +13,11 @@
             </div>
             <div class="divTableRowPopup">
                 <div class="divTableCellPopup box-bgc" th:text="#{현재강수량}"></div>
-                <div class="divTableCellPopup" th:text="*{rf + ' mm'}"></div>
+                <div class="divTableCellPopup" id="rf_current"></div>
             </div>
             <div class="divTableRowPopup">
                 <div class="divTableCellPopup box-bgc" th:text="#{누적강수량}"></div>
-                <div class="divTableCellPopup" th:text="*{rf + ' mm'}"></div>
+                <div class="divTableCellPopup" id="rf_sum"></div>
             </div>
             <div class="divTableRowPopup">
                 <div class="divTableCellPopup box-bgc" th:text="#{위치}"></div>
@@ -25,5 +25,41 @@
             </div>
         </div>
     </section>
+
+    <script>
+        const obscd = "[[${observatory.obscd}]]";
+        const _eDate = new Date();
+        const _sDate = new Date();
+        _sDate.setMonth(_sDate.getMonth() - 1);
+
+        const sdate = `${_sDate.getFullYear()}${("" + (_sDate.getMonth() + 1)).padStart(2, '0')}${("" + _sDate.getDate()).padStart(2, '0')}`;
+        const edate = `${_eDate.getFullYear()}${("" + (_eDate.getMonth() + 1)).padStart(2, '0')}${("" + _eDate.getDate()).padStart(2, '0')}`;
+
+        const search = {
+            obscd,
+            type: "rf",
+            unit: "1D",
+            sdate,
+            edate
+        };
+        api.getData(search)
+            .then(statData => {
+                const data = [];
+                statData = Object.values(statData);
+                for (const _data of statData) {
+                    const values = Object.values(_data);
+                    data.push(...values);
+                }
+
+                const sum = data.length > 0 ? data.reduce((a,b) => a + b) : 0;
+                const current = data.length > 0 ? data[0] : 0;
+
+                const currentEl = document.getElementById("rf_current");
+                const sumEl = document.getElementById("rf_sum");
+                currentEl.innerHTML = `${current} mm`;
+                sumEl.innerHTML = `${sum} mm (1달)`;
+            })
+            .catch(err => console.error(err));
+    </script>
 </main>
 </html>
