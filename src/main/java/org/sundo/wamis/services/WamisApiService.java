@@ -10,10 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.sundo.wamis.constants.ApiURL;
 import org.sundo.wamis.dto.RfObservatoryDto;
 import org.sundo.wamis.dto.Wl_FlwObservatoryDto;
-import org.sundo.wamis.entities.Observatory;
-import org.sundo.wamis.entities.Precipitation;
-import org.sundo.wamis.entities.QObservatory;
-import org.sundo.wamis.entities.WaterLevelFlow;
+import org.sundo.wamis.entities.*;
 import org.sundo.wamis.repositories.ObservatoryRepository;
 import org.sundo.wamis.repositories.PrecipitationRepository;
 import org.sundo.wamis.repositories.WaterLevelFlowRepository;
@@ -22,10 +19,7 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -200,14 +194,36 @@ public class WamisApiService {
 
             List<WaterLevelFlow> items = result.getContent();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+
+            QWaterLevelFlow waterLevelFlow = QWaterLevelFlow.waterLevelFlow;
+
             items.forEach(item -> {
                 LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
                 item.setYmd(date);
+                int uid = Objects.hash(item.getWlobscd(), item.getYmdhm());
+                item.setUid(uid);
+
+                try{
+
+                    waterLevelFlowRepository.saveAndFlush(item);
+                }catch (Exception e){
+                    // 이미 등록된 데이터의 경우
+                    WaterLevelFlow _item =  waterLevelFlowRepository.findOne(waterLevelFlow.uid.eq(uid)).orElse(null);
+                    if(_item != null){
+                        double wl = item.getWl();
+                        double fw = item.getFw();
+                        if( wl != 0.0 && wl != _item.getWl()){
+                            _item.setWl(wl);
+                        }
+                        if(fw != 0.0 && fw != _item.getFw()){
+                            _item.setFw(fw);
+                        }
+
+                    }
+                    waterLevelFlowRepository.flush();
+                }
+
             });
-
-
-
-            waterLevelFlowRepository.saveAllAndFlush(items);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -251,9 +267,13 @@ public class WamisApiService {
             items.forEach(item -> {
                 LocalDate date = LocalDate.parse(item.getYmdhm(), formatter);
                 item.setYmd(date);
+                item.setUid(Objects.hash(item.getRfobscd(), item.getYmdhm(), "rf"));
+                try{
+                    precipitationRepository.saveAndFlush(item);
+                }catch (Exception e){}
+
             });
 
-            precipitationRepository.saveAllAndFlush(items);
 
 
         } catch (JsonProcessingException e) {
@@ -329,6 +349,9 @@ public class WamisApiService {
                     oitem.setRf(Double.parseDouble(rf));
                 }
             }
+
+
+
          }
 
         observatoryRepository.saveAllAndFlush(oItems);

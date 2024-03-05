@@ -67,6 +67,11 @@ public class ObservatoryInfoService {
             }
         }
 
+        double wrnwl = 7.5;
+        if(StringUtils.hasText(obs.getWrnwl())){
+            wrnwl = Double.parseDouble(obs.getWrnwl());
+        }
+
         RequestObservatory form = RequestObservatory.builder()
                 .mode("update")
                 .obscd(obscd)
@@ -75,6 +80,7 @@ public class ObservatoryInfoService {
                 .type(type)
                 .useOutlier(obs.isUseOutlier())
                 .outlier(outlier)
+                .wrnwl(wrnwl)
                 .build();
 
         return form;

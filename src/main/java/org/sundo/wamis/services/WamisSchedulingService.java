@@ -33,10 +33,10 @@ public class WamisSchedulingService {
         apiService.updateWlFw10M();
     }
 
-    //@Scheduled(fixedRate = 10L, timeUnit = TimeUnit.MINUTES)
-    //public void updateObservation() {
-     //   apiService.update();
-    //}
+    @Scheduled(fixedRate = 10L, timeUnit = TimeUnit.MINUTES)
+    public void updateObservation() {
+        apiService.update();
+    }
 
 }
 
