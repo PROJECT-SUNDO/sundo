@@ -41,7 +41,12 @@
                     </div>
                     <div>
                         <span th:text="#{이상치_기준_설정}"></span>
-                        <input type="text" class="onlyNum" name="outlier" th:field="*{outlier}" data-form="editForm">
+                        <th:block th:unless="*{type == 'wl'}">
+                            <input type="text" class="onlyNum" name="outlier" th:field="*{outlier}" data-form="editForm">
+                        </th:block>
+                        <th:block th:if="*{type == 'wl'}">
+                            <input type="text" class="onlyNum" name="outlier" th:field="*{wrnwl}" data-form="editForm">
+                        </th:block>
                     </div>
                 </div>
                 <button type="submit" class="saveBtn mgn-bottom-10px" th:text="#{저장}"></button>

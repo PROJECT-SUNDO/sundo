@@ -19,6 +19,9 @@ public abstract class Observation extends Base {
     @GeneratedValue
     private Long seq;
 
+    @Column(unique = true)
+    private int uid;
+
     @Column(length = 12)
     @JsonFormat(pattern="yyyyMMddHHmm")
     private String ymdhm;////년월일시분
