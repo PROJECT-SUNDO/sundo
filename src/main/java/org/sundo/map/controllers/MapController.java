@@ -95,6 +95,7 @@ public class MapController {
 			pageTitle = null;
 			addScript.add("map/cctv");
 			addCss.add("map/cctv");
+			addCommonScript.add("api");
 		}else if(mode.equals("aside")){
 			pageTitle = null;
 			addCss.add("map/aside");
@@ -102,6 +103,7 @@ public class MapController {
 		}
 		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("addScript", addScript);
+		model.addAttribute("addCommonScript", addCommonScript);
 		model.addAttribute("addCss", addCss);
 	}
 }
