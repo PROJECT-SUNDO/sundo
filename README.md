@@ -59,6 +59,13 @@
 ## 📋ERD
 ![ERD.png](/img/ERD.png)
 
+## 🎥시연영상
+
+<!-- <iframe width="1044" height="587" src="https://youtu.be/yg5d9iJhfNk?si=1BofXAfhgoZ7ObmZ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+
+[![Video Label](img/메인스크린.png)](https://youtu.be/yg5d9iJhfNk?si=1BofXAfhgoZ7ObmZ)
+
+
 ## 📑기능명세
 
 <details>
