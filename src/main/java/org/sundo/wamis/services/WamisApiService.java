@@ -212,10 +212,10 @@ public class WamisApiService {
                     if(_item != null){
                         double wl = item.getWl();
                         double fw = item.getFw();
-                        if( wl != 0.0 && wl != _item.getWl()){
+                        if( _item.getWl() == 0.0 && wl != 0.0){
                             _item.setWl(wl);
                         }
-                        if(fw != 0.0 && fw != _item.getFw()){
+                        if(fw != 0.0 && _item.getFw() == 0.0){
                             _item.setFw(fw);
                         }
 
