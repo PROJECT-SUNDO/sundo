@@ -44,10 +44,10 @@
         <div class="divTableHeading">
             <div class="divTableRow">
                 <div th:text="#{연번}" class="divTableHead">head1</div>
-                <div th:text="#{관측소 명}" class="divTableHead">head2</div>
-                <div th:text="#{관측소 유형}" class="divTableHead">head3</div>
-                <div th:text="#{관측소 코드}" class="divTableHead">head4</div>
-                <div th:text="#{관측 정보}" class="divTableHead">head4</div>
+                <div th:text="#{관측소명}" class="divTableHead">head2</div>
+                <div th:text="#{관측소_유형}" class="divTableHead">head3</div>
+                <div th:text="#{관측소코드}" class="divTableHead">head4</div>
+                <div th:text="#{관측_정보}" class="divTableHead">head4</div>
                 <div th:text="#{수정}" class="divTableHead">head4</div>
                 <div th:text="#{삭제}" class="divTableHead">head4</div>
                 <div th:text="#{환경설정}" class="divTableHead">head4</div>
@@ -82,7 +82,7 @@
                     </a>
                 </div>
                 <div class="divTableCell delete" th:data-obscd="${item.obscd}">
-                    <a th:href="@{/list/delete/{obscd}(obscd=${item.obscd})}" onclick="return confirm('정말 관측소를 삭제하시겠습니까?');">
+                    <a th:data-obscd="${item.obscd}" class="deleteRows">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </a>
 
@@ -109,6 +109,15 @@
                 popup.open(url, 450, 450);
             });
         });
+
+        const deleteRows = document.getElementsByClassName("deleteRows");
+        for (const el of deleteRows) {
+            el.addEventListener("click", function(e) {
+                const obscd = this.dataset.obscd;
+                const url = `/list/delete/${obscd}`;
+                popup.open(url, 450, 200);
+            });
+        }
     </script>
 </main>
 </html>

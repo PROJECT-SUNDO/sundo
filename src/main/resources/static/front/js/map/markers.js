@@ -25,6 +25,9 @@ function addMarker(items){
 
     const type = frmSide.location.pathname.split("/").pop();
 
+    const mapProjection = "EPSG:3857";
+    const dataProjection = "EPSG:4326";
+
     // 마커 값 설정
     for(const item of items) {
 
@@ -40,10 +43,6 @@ function addMarker(items){
         lat = Number(lat1) + Number(lat2)/60 + Number(lat3)/3600;   // 위도
 
         const obscd = item.obscd;  // 관측소 코드
-
-        const mapProjection = "EPSG:3857";
-    	const dataProjection = "EPSG:4326";
-
 
         // 마커 feature 설정
         const geometry = new ol.geom.Point([lon, lat]).transform(dataProjection, mapProjection);
@@ -109,11 +108,14 @@ function addMarker(items){
         mapLib.map.getView().setZoom(11);
 
 
-
     }
 
+
+    mapLib.map.removeEventListener("click", markerClick);
     // 마커를 클릭하면 팝업 함수 실행
-    mapLib.map.addEventListener('click', function(event) {
+    mapLib.map.addEventListener('click', markerClick);
+    function markerClick(event) {
+
         // const pixel = event.pixel;
         // console.log('Screen coordinates:', pixel);
 
@@ -122,19 +124,20 @@ function addMarker(items){
             const obscd = feature.get('name');   // 클릭된 마커의 name: obscd
             const item = feature.get('properties').item;    // 클릭된 마커의 item: item
 
-            const coordinates = feature.getGeometry().getCoordinates();
-            const mapProjection = "EPSG:3857";
-            const dataProjection = "EPSG:4326";
-            const position = ol.proj.transform(coordinates, mapProjection, dataProjection); // 마커의 위치를 화면 좌표로 변환
+            // const coordinates = feature.getGeometry().getCoordinates();
+            // const position = ol.proj.transform(coordinates, mapProjection, dataProjection); // 마커의 위치를 화면 좌표로 변환
+            // const xpos = position[0];
+            // const ypos = position[1];
+            // window.popupXpos = xpos;
+            // window.popupYpos = ypos;
 
-
-            // 화면 좌표를 사용하여 팝업의 위치를 설정
-            const pixel = mapLib.map.getPixelFromCoordinate(position);
-            const popupEl = document.getElementById("layer_popup_map");
-            if (popupEl) {
-                popupEl.style.left = pixel[0] + 'px';  // 마커 오른쪽에 팝업이 뜨도록 left 속성 조정
-                popupEl.style.top = (pixel[1] - 300) + 'px';  // 마커 위에 팝업이 뜨도록 top 속성 조정
-            }
+            // // 화면 좌표를 사용하여 팝업의 위치를 설정
+            // const pixel = mapLib.map.getPixelFromCoordinate(position);
+            // const popupEl = document.getElementById("layer_popup_map");
+            // if (popupEl) {
+            //     popupEl.style.left = pixel[0] + 'px';  // 마커 오른쪽에 팝업이 뜨도록 left 속성 조정
+            //     popupEl.style.top = (pixel[1] - 300) + 'px';  // 마커 위에 팝업이 뜨도록 top 속성 조정
+            // }
 
             // item이 undefined인지 확인
             if (!item) {
@@ -166,12 +169,13 @@ function addMarker(items){
             // 팝업을 띄우는 코드
             //popup.open(url, 430, 350);
             const {width, height} = popupSizes[type]; // 타입에 맞는 팝업 크기 가져오기
+            popup.close();
             popup.open(url, width, height);
 
             // 반복 끝내기
             return true;
         });
-    });
+    }
 
     // 맵의 viewport에 'mousemove' 이벤트 리스너를 추가합니다.
     mapLib.map.getViewport().addEventListener('mousemove', function(e) {
@@ -192,9 +196,13 @@ window.addEventListener("DOMContentLoaded", function() {
     const el = document.getElementById("map");
     if (el) {
         el.addEventListener("click", function(e) {
-           const xpos = e.pageX + e.offsetX;
-           const ypos = e.pageY + e.offsetY;
-           console.log(xpos, ypos);
+            /* 클릭한 좌표 저장 S */
+            const xpos = e.pageX;
+            const ypos = e.pageY;
+            window.popupXpos = xpos;
+            window.popupYpos = ypos;
+
+            /* 클릭한 좌표 저장 E */
         });
     }
 });

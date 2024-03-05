@@ -14,11 +14,11 @@
             </div>
             <div class="divTableRowPopup">
                 <div class="divTableCellPopup box-bgc" th:text="#{현재수위}"></div>
-                <div class="divTableCellPopup" th:text="*{wl}"></div>
+                <div class="divTableCellPopup" id="wl_current"></div>
             </div>
             <div class="divTableRowPopup">
                 <div class="divTableCellPopup box-bgc" th:text="#{수위변화}"></div>
-                <div class="divTableCellPopup" th:text="*{wl}"></div>
+                <div class="divTableCellPopup" id="wl_change"></div>
             </div>
             <div class="divTableRowPopup">
                 <div class="divTableCellPopup box-bgc" th:text="#{위치}"></div>
@@ -26,5 +26,42 @@
             </div>
         </div>
     </section>
+
+    <script>
+        const obscd = "[[${observatory.obscd}]]";
+        const _eDate = new Date();
+        const _sDate = new Date();
+        _sDate.setDate(_sDate.getDate() - 1);
+
+        const sdate = `${_sDate.getFullYear()}${("" + (_sDate.getMonth() + 1)).padStart(2, '0')}${("" + _sDate.getDate()).padStart(2, '0')}`;
+        const edate = `${_eDate.getFullYear()}${("" + (_eDate.getMonth() + 1)).padStart(2, '0')}${("" + _eDate.getDate()).padStart(2, '0')}`;
+
+        const search = {
+            obscd,
+            type: "wl",
+            unit: "1D",
+            sdate,
+            edate
+        };
+        api.getData(search)
+            .then(statData => {
+                const values = Object.values(statData)[0];
+                const data = [];
+                for (const [k, v] of Object.entries(values)) {
+                    if (k.indexOf("wl_") != -1) {
+                        data.push(v);
+                    }
+                }
+
+                const gap = data.length == 2 ? (data[1] - data[0]).toFixed(2) : 0;
+                const current = data.length > 0 ? data.pop() : 0;
+
+                const changeEl = document.getElementById("wl_change");
+                const currentEl = document.getElementById("wl_current");
+                changeEl.innerHTML = `${gap} m`;
+                currentEl.innerHTML = `${current} m`;
+            })
+            .catch(err => console.error(err));
+    </script>
 </main>
 </html>

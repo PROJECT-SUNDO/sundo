@@ -1,12 +1,13 @@
 const mapLib = {
     draw: null,
+    map: null,
 };
 
 window.addEventListener("DOMContentLoaded", function(){
 
     /*  지도 표시 S */
-	const mapProjection = "EPSG:3857";
-	const dataProjection = "EPSG:4326";
+    const mapProjection = "EPSG:3857";
+    const dataProjection = "EPSG:4326";
     const center = new ol.geom.Point([126.976882 , 37.574187 ]).transform(dataProjection, mapProjection);
 
     const mapBaseSource = new ol.source.XYZ({
@@ -78,9 +79,9 @@ window.addEventListener("DOMContentLoaded", function(){
     mapLib.map = map;
     map.addControl(new ol.control.ScaleLine());
 
-	/* 지도 표시 E */
+    /* 지도 표시 E */
 
-	/* geoserver - 한강하천, 한강수계 S */
+    /* geoserver - 한강하천, 한강수계 S */
 
     const river = new ol.layer.Tile({
         source: geoSource,
@@ -129,10 +130,10 @@ window.addEventListener("DOMContentLoaded", function(){
             const lineSource = new ol.source.Vector();
 
             const lineVector = new ol.layer.Vector({
-               properties: {name: 'distance'},
-               source: lineSource,
-               style: vectorStyle,
-           });
+                properties: {name: 'distance'},
+                source: lineSource,
+                style: vectorStyle,
+            });
             map.addLayer(lineVector);
             addDraw(isDraw, map, lineSource, 'distance');
         }
@@ -163,10 +164,10 @@ window.addEventListener("DOMContentLoaded", function(){
             const lineSource = new ol.source.Vector();
 
             const lineVector = new ol.layer.Vector({
-               properties: { name: 'area'},
-               source: lineSource,
-               style: vectorStyle,
-           });
+                properties: { name: 'area'},
+                source: lineSource,
+                style: vectorStyle,
+            });
             map.addLayer(lineVector);
             mapLib.draw = addDraw(isDraw, map, lineSource, 'area');
         }
@@ -188,17 +189,17 @@ window.addEventListener("DOMContentLoaded", function(){
 
     const mapBtns = document.querySelectorAll(".map_btns .map_btn");
 
-   	for(const mapBtn of mapBtns){
-   	    mapBtn.addEventListener("click", function(){
-   	        const version = this.dataset.map;
-   	        for(const el of mapBtns){
-   	            if(el.classList.contains("on")){
-   	                el.classList.remove("on");
-   	            }
-   	        }
-   	        mapBtn.classList.add("on");
+    for(const mapBtn of mapBtns){
+        mapBtn.addEventListener("click", function(){
+            const version = this.dataset.map;
+            for(const el of mapBtns){
+                if(el.classList.contains("on")){
+                    el.classList.remove("on");
+                }
+            }
+            mapBtn.classList.add("on");
 
-   	         if(version == 'Base'){
+            if(version == 'Base'){
                 satelliteLayer.setVisible(false);
                 baseLayer.setVisible(true);
                 satelliteOverview.setVisible(false);
@@ -210,20 +211,20 @@ window.addEventListener("DOMContentLoaded", function(){
                 satelliteOverview.setVisible(true);
                 baseOverview.setVisible(false);
             }
-   	    })
-   	}
+        })
+    }
     /* 지도 전환 버튼 E */
 
-	/* 전체 버튼 - 경기도까지 보이게 줌 설정 S */
-	const allBtn = document.querySelector("#all");
-	allBtn.addEventListener("click", function(){
-	    const view = map.getView();
+    /* 전체 버튼 - 경기도까지 보이게 줌 설정 S */
+    const allBtn = document.querySelector("#all");
+    allBtn.addEventListener("click", function(){
+        const view = map.getView();
 
-	    view.setCenter(center.getCoordinates());
-	    view.setZoom(8.5);
-	});
+        view.setCenter(center.getCoordinates());
+        view.setZoom(8.5);
+    });
 
-	/* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
+    /* 전체 버튼 - 경기도까지 보이게 줌 설정 E */
 
 
     /* 저장하기 버튼 S */
@@ -235,15 +236,22 @@ window.addEventListener("DOMContentLoaded", function(){
     const btnBox = document.getElementById("save_map_box");
 
     // 저장 버튼을 눌렀을 때의 동작
-    saveBtn.onclick = function() {
-        btnBox.style.display = "flex"; // 이미지 저장, PDF 저장 버튼을 보여줌
-        saveBtn.disabled = true; // 저장 버튼을 비활성화
-    };
+    saveBtn.addEventListener("click", function(){
+        if(saveBtn.classList.contains("on")){
+            saveBtn.classList.remove("on");
+            btnBox.classList.add("dn");
+        }else{
+            saveBtn.classList.add("on");
+            btnBox.classList.remove("dn");
+        }
+    });
 
     // 이미지 저장 버튼을 눌렀을 때의 동작
-    savePngBtn.onclick = function() {
+    savePngBtn.addEventListener("click", function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
-        saveBtn.disabled = false; // 저장 버튼을 활성화
+        // 'on' 클래스 추가
+        this.classList.add("on");
+        // saveBtn.disabled = false; // 저장 버튼을 활성화
         // 이미지 저장 관련 코드를 작성
 
         html2canvas(document.querySelector("#map"), {
@@ -259,25 +267,40 @@ window.addEventListener("DOMContentLoaded", function(){
             aLink.download="map.png";
             aLink.href = dataURL;
             aLink.click();
+
+            // 이미지 저장 작업이 끝난 후 'on' 클래스 제거
+            saveBtn.classList.remove("on");
+            btnBox.style.display = ""; // 빈 문자열을 설정하면 원래의 값으로 변경 btnBox 스타일 초기화
+            btnBox.classList.add("dn");
+            this.classList.remove("on");
         });
-    };
+    });
 
     // PDF 저장 버튼을 눌렀을 때의 동작
-    savePdfBtn.onclick = function() {
+    savePdfBtn.addEventListener("click", function() {
         btnBox.style.display = "none"; // 이미지 저장, PDF 저장 버튼을 숨김
-        saveBtn.disabled = false; // 저장 버튼을 활성화
-        // PDF 저장 관련 코드를 작성
+        // 'on' 클래스 추가
+        this.classList.add("on");
+        // saveBtn.disabled = false; // 저장 버튼을 활성화
 
+        // PDF 저장 관련 코드를 작성
         print();
 
-    };
+        // PDF 저장 작업이 끝난 후 'on' 클래스 제거
+        saveBtn.classList.remove("on");
+        btnBox.style.display = ""; // 빈 문자열을 설정하면 원래의 값으로 변경 btnBox 스타일 초기화
+        btnBox.classList.add("dn");
+        this.classList.remove("on");
+    });
     /* 저장하기 버튼 E */
-    
+
     /* 마커 추가 s */
     window.addEventListener("message", function(e) {
         if (!e.data.map) {
             return;
         }
+        const { popup } = commonLib;
+        popup.close();
 
         const items = e.data.map;
         addMarker(items);
@@ -286,3 +309,9 @@ window.addEventListener("DOMContentLoaded", function(){
 });
 
 
+function mapToMove(lonDecimal, latDecimal) {
+    if (mapLib.map) {
+        mapLib.map.getView().animate({center: ol.proj.fromLonLat([lonDecimal, latDecimal])});
+        mapLib.map.getView().setZoom(11);
+    }
+}

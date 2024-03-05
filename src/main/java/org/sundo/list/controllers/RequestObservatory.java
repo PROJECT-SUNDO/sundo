@@ -39,4 +39,6 @@ public class RequestObservatory {
     private Double outlier; // 이상치
 
     private Boolean clsyn; // 사용여부
+
+    private Double wrnwl; //주의보수위
 }

@@ -102,6 +102,11 @@ h2{
     font-size: 15px;
     font-weight: 500;
 }
+
+.font-13px{
+    font-size: 13px;
+    font-weight: 500;
+}
 .cursor {
     cursor: pointer;
 }
@@ -192,12 +197,14 @@ h2{
   text-align: left;
   border-collapse: collapse;
 }
+
 .divTable.minimalistBlack .divTableCell, .divTable.minimalistBlack .divTableHead {
+  text-align:center;
   border: 1px solid #000000;
   padding: 5px 4px;
 }
 .divTable.minimalistBlack .divTableBody .divTableCell {
-  font-size: 13px;
+  text-align:center;
 }
 .divTable.minimalistBlack .divTableHeading {
   background: #CFCFCF;
@@ -210,7 +217,7 @@ h2{
   font-size: 15px;
   font-weight: bold;
   color: #000000;
-  text-align: left;
+  text-align: center;
 }
 
 .divTable .minimalistBlack .divTableRow
@@ -260,10 +267,17 @@ h2{
 .pagination {
     display: flex;
     justify-content: center;
+    font-weight: 800;
 }
 .pagination a+a {
     padding: 0 5px;
     font-size: 15px;
+}
+a.page.on{
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: var(--main-color);
 }
 .pagination i{
     font-size: 15px;
@@ -360,6 +374,3 @@ h2{
     border-radius: 5px;
 }
 
-a.page.on{
-    font-weight: 800;
-}

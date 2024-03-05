@@ -89,11 +89,13 @@ public class MapController {
 			addScript.add("map/aside");
 			addScript.add("map/draw");
 			addScript.add("map/markers");
+			addScript.add("map/legand");
 			addCss.add("map/map");
 		} else if (mode.equals("info")) {
 			pageTitle = null;
 			addScript.add("map/cctv");
 			addCss.add("map/cctv");
+			addCommonScript.add("api");
 		}else if(mode.equals("aside")){
 			pageTitle = null;
 			addCss.add("map/aside");
@@ -101,6 +103,7 @@ public class MapController {
 		}
 		model.addAttribute("pageTitle", pageTitle);
 		model.addAttribute("addScript", addScript);
+		model.addAttribute("addCommonScript", addCommonScript);
 		model.addAttribute("addCss", addCss);
 	}
 }
